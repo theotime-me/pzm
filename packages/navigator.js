@@ -44,18 +44,6 @@ Prizm.title = title => { // title: string || number
 	return document.title; // On retourne la titre actuel
 };
 
-Prizm.print = () => {
-	if (window.print){ // Si "window.print" existe
-		window.print(); // Alors on affiche la boîte de dialogue pour imprimer la page
-	}
-};
-
-Prizm.popup = (url, name, height, width) => { // url: string, name: string, height: number || string, width: number || string
-	if (url && name && height && width){ // Si tous les paramètres sont présents
-		window.open(url, name,+"menubar=no, status=no, scrollbars=no, menubar=no, width="+width+", height="+height); // Alors lancement de la fenêtre popup
-	}
-};
-
 Prizm.screen = length => { // length: string (width || height)
 	if (length == 'width'){
 		return window.innerWidth;

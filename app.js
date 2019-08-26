@@ -15,26 +15,25 @@ ______________________________________________
 var server = http.createServer(function(req, res) {
     var page = url.parse(req.url).pathname;
 	let minify = cp,
-		tempPKG = page.replace("/", "").split("|");
+		settings = page.replace("/", "").split("/"),
+		packages = settings.length > 1 ? settings[1].split("|") : [""],
+		alias;
 
-		if (tempPKG[tempPKG.length -1] == "") {
-			tempPKG.pop();
+		if (typeof settings[0] === "string" && ["_", "$", "p"].includes(settings[0])) {
+			alias = settings[0];
 		}
-
-	minify += "  > core"+(tempPKG.length != 0 ? " | "+tempPKG.join(" | ") : tempPKG.join(" | "))+"\n\n\n";
-	minify += "// PRIZM core */ \n"+compress("./prizm.js");
-
-	if (page === "/") {
-		res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
-		res.end(minify);
-	} else {
-		let packages = page.replace("/", "").split("|"),
-			all = fs.readdirSync("./packages"),
-			allRegistered = true;
 
 		if (packages[packages.length -1] == "") {
 			packages.pop();
 		}
+
+	minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n";
+	minify += "  ? https://prizm.netlify.com/?pkg=<package>\n\n";
+	minify += "  } https://github.com/theotime-me/pzm\n\n\n";
+	minify += "// PRIZM core */ \n"+compress("./prizm.js");
+
+		let	all = fs.readdirSync("./packages"),
+			allRegistered = true;
 
 		packages.forEach(pkg => {
 			if (!all.includes(pkg+".js")) {
@@ -57,11 +56,14 @@ res.end(`
 
 				minify += compress("./packages/"+pkg+".js");
 			});
-
-			res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
-			res.end(minify);
 		}
-	}
+
+		if (alias) {
+			minify += "// PRIZM alias\nwindow['"+alias+"'] = Prizm;";
+		}
+
+		res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
+		res.end(minify);
 });
 
 function compress(url) {
