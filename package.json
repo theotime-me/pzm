@@ -1,0 +1,16 @@
+{
+  "name": "prizm-cdn",
+  "version": "1.0.0",
+  "description": "a simple cdn to deliver prizm with packages",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "cdn",
+    "prizm"
+  ],
+  "author": "theotime.me",
+  "license": "MIT",
+  "dependencies": {}
+}
