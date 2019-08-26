@@ -1,0 +1,21 @@
+{"packages": {
+	"ajax": {
+		"desc": "Use XHR and FETCH technologies to get a file from its URL."
+	},
+
+	"date": {
+		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc."
+	},
+
+	"scrolltop": {
+		"desc": "A simple package which scroll to the top of the page when it's called."
+	},
+
+	"cookies": {
+		"desc": "Two function, to setCookie() and getCookie() in Javascript. Usefull and so simple !"
+	},
+
+	"os": {
+		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned."
+	}
+}}
