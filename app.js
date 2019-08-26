@@ -75,4 +75,4 @@ function compress(url) {
 	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '')+"\n\n";
 }
 
-server.listen(80);
+server.listen(process.env.PORT || 3000);
