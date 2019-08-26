@@ -14,11 +14,15 @@ ______________________________________________
 
 var server = http.createServer(function(req, res) {
     var page = url.parse(req.url).pathname;
-	let minify = cp;
+	let minify = cp,
+		tempPKG = page.replace("/", "").split("|");
 
+		if (tempPKG[tempPKG.length -1] == "") {
+			tempPKG.pop();
+		}
 
-	minify += "  > core | "+(page.replace("/", "").split("|").join(" | "))+"\n\n\n";
-	minify += "// PRIZM core \n"+compress("./prizm.js");
+	minify += "  > core"+(tempPKG.length != 0 ? " | "+tempPKG.join(" | ") : tempPKG.join(" | "))+"\n\n\n";
+	minify += "// PRIZM core */ \n"+compress("./prizm.js");
 
 	if (page === "/") {
 		res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
