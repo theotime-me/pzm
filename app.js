@@ -17,7 +17,7 @@ var server = http.createServer(function(req, res) {
 	let minify = cp;
 
 
-	minify += "  > "+(page.replace("/", "").split("|").join(" | "))+"\n\n\n";
+	minify += "  > core | "+(page.replace("/", "").split("|").join(" | "))+"\n\n\n";
 	minify += "// PRIZM core \n"+compress("./prizm.js");
 
 	if (page === "/") {
