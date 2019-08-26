@@ -9,24 +9,24 @@ var http = require('http'),
    | |   | |  | |/ /| | | | | |
    |_|   |_|  |_/___|_| |_| |_|
 ______________________________________________
---- Prizm Framework © MIT 2019 theotime.me ---
-""""""""""""""""""""""""""""""""""""""""""""""
-
-   v2.0 - Product
-
-""""""""""""""""""""""""""""""""""""""""""""""*/\n\n`;
+--- Prizm Framework © MIT ${new Date().getFullYear()} theotime.me ---
+""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
 
 var server = http.createServer(function(req, res) {
     var page = url.parse(req.url).pathname;
+	let minify = cp;
+
+
+	minify += "  > "+(page.replace("/", "").split("|").join(" | "))+"\n\n\n";
+	minify += "// PRIZM core \n"+compress("./prizm.js");
 
 	if (page === "/") {
-		res.writeHead(200);
-		res.end(fs.readFileSync("./prizm.js", "utf8"));
+		res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
+		res.end(minify);
 	} else {
 		let packages = page.replace("/", "").split("|"),
 			all = fs.readdirSync("./packages"),
-			allRegistered = true,
-			response = "";
+			allRegistered = true;
 
 		if (packages[packages.length -1] == "") {
 			packages.pop();
@@ -48,9 +48,6 @@ res.end(`
 
 		// Write
 		if (allRegistered) {
-			let minify = cp;
-			minify += "// PRIZM core \n"+compress("./prizm.js");
-
 			packages.forEach(pkg => {
 				minify += "// "+pkg+" package \n";
 
