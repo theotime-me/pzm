@@ -12,10 +12,46 @@
 	},
 
 	"cookies": {
-		"desc": "Two function, to setCookie() and getCookie() in Javascript. Usefull and so simple !"
+		"desc": "Add two function, to setCookie() and getCookie() in Javascript. Usefull and so simple !"
 	},
 
 	"os": {
 		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned."
+	},
+
+	"browser": {
+		"desc": "Get the browser of any user and return it (Firefox, Opera, Safari, IE, Edge, etc.)."
+	},
+
+	"history": {
+		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.)."
+	},
+
+	"isMobile": {
+		"desc": "Return true if the used device is a mobile."
+	},
+
+	"lang": {
+		"desc": "Return the language used (fr-fr) or test it."
+	},
+
+	"popup": {
+		"desc": "Show a popup of any website which allow this."
+	},
+
+	"print": {
+		"desc": "Ask the user about print the page."
+	},
+
+	"screen": {
+		"desc": "Get info about the screen width and height."
+	},
+
+	"title": {
+		"desc": "Get or set the current title of the page."
+	},
+
+	"url": {
+		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url()."
 	}
 }}
