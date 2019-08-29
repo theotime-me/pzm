@@ -1,57 +1,75 @@
 {"packages": {
 	"ajax": {
-		"desc": "Use XHR and FETCH technologies to get a file from its URL."
+		"desc": "Use XHR and FETCH technologies to get a file from its URL.",
+		"examples": ["ajax({url: string, async: boolean, success: function, })"],
+		"keywords": ["xhr", "fetch", "get", "post"]
 	},
 
 	"date": {
-		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc."
+		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc.",
+		"examples": ["date(request: string, addZero: boolean)"],
+		"keywords": ["month", "day", "year", "hour", "minute", "second"]
 	},
 
 	"scrolltop": {
-		"desc": "A simple package which scroll to the top of the page when it's called."
+		"desc": "A very simple package which scroll to the top of the page when it's called.",
+		"examples": ["scrolltop()"],
+		"keywords": ["page", "scroll", "top"]
 	},
 
 	"cookies": {
-		"desc": "Add two function, to setCookie() and getCookie() in Javascript. Usefull and so simple !"
+		"desc": "Add two function, to setCookie() and getCookie() in Javascript. Usefull and so simple to use !",
+		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
+		"keywords": ["cookie", "set", "get", "save", "navigator"]
 	},
 
 	"os": {
-		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned."
+		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned.",
+		"keywords": ["system", "computer", "operating"]
 	},
 
 	"browser": {
-		"desc": "Get the browser of any user and return it (Firefox, Opera, Safari, IE, Edge, etc.)."
+		"desc": "Detect the browser and return it (Firefox, Opera, Safari, IE, Edge, etc.).",
+		"keywords": ["navigator", "detect"]
 	},
 
 	"history": {
-		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.)."
+		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.).",
+		"keywords": ["back", "prev", "next", "previous", "browse"]
 	},
 
 	"isMobile": {
-		"desc": "Return true if the used device is a mobile."
+		"desc": "Return true if the used device is a mobile.",
+		"keywords": ["phone", "responsive", "mobile"]
 	},
 
 	"lang": {
-		"desc": "Return the language used (fr-fr) or test it."
+		"desc": "Return the language used (fr-fr) or test it.",
+		"keywords": ["language", "translate", "speak", "speaking"]
 	},
 
 	"popup": {
-		"desc": "Show a popup of any website which allow this."
+		"desc": "Show a popup of any website which allow this.",
+		"keywords": ["url", "show", "window"]
 	},
 
 	"print": {
-		"desc": "Ask the user about print the page."
+		"desc": "Ask the user about print the page.",
+		"keywords": ["page"]
 	},
 
 	"screen": {
-		"desc": "Get info about the screen width and height."
+		"desc": "Get info about the screen width and height.",
+		"keywords": ["width", "height", "page"]
 	},
 
 	"title": {
-		"desc": "Get or set the current title of the page."
+		"desc": "Get or set the current title of the page.",
+		"keywords": ["tab"]
 	},
 
 	"url": {
-		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url()."
+		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
+		"keywords": ["get", "param", "set"]
 	}
 }}
