@@ -58,7 +58,7 @@ function handle(req, res) {
 			if (alias) {
 				minify += "\n\n// PRIZM alias\nwindow['"+alias+"'] = Prizm;";
 
-				res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
+				res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 				res.end(minify);
 			} else {
 				alias = req.params.alias;
