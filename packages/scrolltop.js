@@ -1,7 +1,7 @@
 Prizm.scrollTop = () => {
-	let currentScroll = document.body.scrollTop;
+	let currentScroll = document.querySelector("html").scrollTop;
 	if (currentScroll > 0) {
 		 window.requestAnimationFrame(Prizm.scrollTop);
-		 document.body.scrollTo(0, 0);
+		 document.querySelector("html").scrollTo(0, 0);
 	}
 };

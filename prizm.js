@@ -32,6 +32,8 @@ function Prizm(q, ctx) {
 
     if (typeof q == "function") {
         Prizm.ready(q);
+    } else if (Array.isArray(q)) {
+        return Prizm(Prizm.toNodeList(q));
     } else if (typeof q != "undefined") {
 
             // Check si le sélecteur est un string ou un élément DOM
@@ -56,7 +58,7 @@ function Prizm(q, ctx) {
 			}
 
 			if (q && ((q.querySelector && q.charset && q.cookie) || (q.document && q.location && q.alert && q.setInterval))) {
-				this.selector = q;
+				this.selector = [q];
 				this.win_doc = true;
 			} else {
 				this.selector = (ctx || document).querySelectorAll(q);
@@ -80,9 +82,9 @@ function Prizm(q, ctx) {
  */
 
     this.each = cb =>{
-        return this.selector.forEach(el => {
-            return cb(el);
-        });
+		this.selector.forEach(el => {
+            return cb.call(el, el);
+		});
 	};
 
 /**
@@ -117,7 +119,13 @@ function Prizm(q, ctx) {
 		}
 
         return this.selector[this.selector.length -1];
-    };
+	};
+	
+	this.prop = prop => {
+		return this.first(el => {
+			return el[prop];
+		});
+	};
 
     this.array = cb => {
         let val = [];
@@ -197,7 +205,11 @@ function Prizm(q, ctx) {
     this.attr = (name, value, data) => {
         data = data ? 'data-' : '';
 
-        if (value != undefined) {
+        if (typeof value === "function") {
+			this.each(el => {
+				el.setAttribute(data+name, value(el.innerHTML));
+			});
+		} else if (value != undefined) {
             this.each(el => {
                 if (value) {
                     el.setAttribute(data + name, value);
@@ -226,29 +238,27 @@ function Prizm(q, ctx) {
         return this.attr(name, value, true);
     };
 
-    this.on = (event, cb) => {
+    this.on = function(event, cb) {
         switch(event){
             case "leave": event = "mouseleave"; break;
             case "down": event = "mousedown"; break;
             case "enter": event = "mouseenter"; break;
             case "hover": event = "mouseover"; break;
-        }
+		}
 
-		this.each(el => {
-			el.addEventListener(event, (e) => {
-				cb(el, e);
-			});
+		(this.win_doc ? this.first : this.each)(el => {
+			el.addEventListener(event, e => cb.call(el, e));
 		});
 
 		return this;
     };
 
-    this.hover = (fn) => { return this.on('hover', fn); };
-    this.click = (fn) => { return this.on('click', fn); };
-    this.enter = (fn) => { return this.on('enter', fn); };
-    this.leave = (fn) => { return this.on('leave', fn); };
-    this.focus = (fn) => { return this.on('focus', fn); };
-    this.blur = (fn) =>{ return this.on('blur', fn); };
+    this.hover = function(fn) { return this.on('hover', fn); };
+    this.click = function(fn) { return this.on('click', fn); };
+    this.enter = function(fn) { return this.on('enter', fn); };
+    this.leave = function(fn) { return this.on('leave', fn); };
+    this.focus = function(fn) { return this.on('focus', fn); };
+    this.blur = function(fn) { return this.on('blur', fn); };
 
     this.off = (event) => {
 		if (event != undefined) {
@@ -266,7 +276,11 @@ function Prizm(q, ctx) {
     };
 
     this.html = (str) => {
-        if (typeof str != "undefined") {
+		if (typeof str === "function") {
+			this.each(el => {
+				el.innerHTML = str(el.innerHTML);
+			});
+		} else if (typeof str != "undefined") {
             this.each(el => {
                 el.innerHTML = str;
 			});
@@ -339,8 +353,12 @@ function Prizm(q, ctx) {
 		var callback = (node) => {
 			node.matches = node.matches || node.msMatchesSelector || node.webkitMatchesSelector; // Make it compatible with some other browsers
 
-			// Check if it's the same element (or any element if no selector was passed)
-			return node.matches(selector || '*');
+			if (typeof selector === "function") {
+				return selector(node);
+			} else {
+				// Check if it's the same element (or any element if no selector was passed)
+				return node.matches(selector || '*');
+			}
 		}, out = [];
 
 		if (selector instanceof Prizm) {
@@ -409,22 +427,33 @@ Prizm.log = (message, state) => { // message: string, state: string (success || 
 						console.log(message);
 					}
 				}
+			} else {
+				console.log(message);
 			}
 
-			console.log(message);
 		break;
 	  }
 	}
-},
-
-Prizm.ready = cb => { // cb: function
-	document.addEventListener('DOMContentLoaded', cb); // Quand la page est chargée, lance le callback "cb()"
 };
 
-Prizm.init = ({alias}) => {
-	if (typeof alias === "string") {
-		window[alias] = Prizm;
-	}
+Prizm.toNodeList = function(arrayOfNodes){
+	let fragment = document.createDocumentFragment();
+	arrayOfNodes.forEach(function(item){
+	  fragment.appendChild(item.cloneNode());
+	});
+
+	return fragment.childNodes;
+};
+
+Prizm.ready = cb => { // cb: function
+	document.addEventListener('DOMContentLoaded', cb.call(this)); // Quand la page est chargée, lance le callback "cb()"
+};
+
+Prizm.info = () => {
+	Prizm.log({
+		packages: Prizm.packages,
+		alias: Prizm.alias
+	});
 };
 
 console.log("%cPRIZM.js", "color: #333; font-size: 30px; padding: 5px 20px; line-height: 50px; background-color: #fff; border-radius: 6px; border: 2px solid rgba(0, 0, 0, .2);");

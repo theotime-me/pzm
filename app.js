@@ -1,6 +1,7 @@
 var http = require('http'),
 	fs = require("fs"),
 	url = require("url"),
+	app = require("express")();
 	cp = `
 /*  _____      _
    |  __ \\    (_)
@@ -9,42 +10,39 @@ var http = require('http'),
    | |   | |  | |/ /| | | | | |
    |_|   |_|  |_/___|_| |_| |_|
 ______________________________________________
---- Prizm Framework © MIT ${new Date().getFullYear()} theotime.me ---
+--- Prizm Framework © CC BY SA ${new Date().getFullYear()} theotime.me ---
 """"""""""""""""""""""""""""""""""""""""""""""\n\n`;
 
-var server = http.createServer(function(req, res) {
-    var page = url.parse(req.url).pathname;
-	let minify = cp,
-		settings = page.replace("/", "").split("/"),
-		packages = settings.length > 1 ? settings[1].split("|") : [""],
-		alias;
+app.get('/:alias/:packages', handle);
+app.get('/:alias/', handle);
+app.get('/', handle);
 
-		if (typeof settings[0] === "string" && ["_", "$", "p"].includes(settings[0])) {
-			alias = settings[0];
-		}
+// 404 handle
+app.use(function(req, res, next) {
+	res.render("notfound.ejs");
+});
+
+function handle(req, res) {
+	let minify = cp,
+		alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
+		packages = req.params.packages ? req.params.packages.split("|") : [""],
+		all = fs.readdirSync("./packages"),
+		allRegistered = true;
 
 		if (packages[packages.length -1] == "") {
 			packages.pop();
 		}
 
-	minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n";
-	minify += "  ? https://prizm.netlify.com/?pkg=<package>\n\n";
-	minify += "  } https://github.com/theotime-me/pzm\n\n\n";
-	minify += "// PRIZM core */ \n"+compress("./prizm.js");
-
-		let	all = fs.readdirSync("./packages"),
-			allRegistered = true;
+		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? https://prizm.netlify.com/?pkg=<package>\n\n  } https://github.com/theotime-me/pzm\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
 
 		packages.forEach(pkg => {
+			pkg = pkg.toLowerCase();
+
 			if (!all.includes(pkg+".js")) {
-				res.writeHead(404);
-res.end(`
-<body style="display: flex; justify-content: center; align-items: center; height: 80%; font-family: 'Roboto', sans-serif;">
-	<div style="background-color: #3fdb90; height: 160px; width: 350px; display: flex; align-items: center; justify-content: center;">
-		The package <b style="margin-left: 5px; margin-right: 5px; padding: 5px 10px; background-color: #5da493;"> ${pkg} </b> isn't registered.
-	</div>
-</body>
-`);
+				
+				href = "/"+req.params.alias+"/"+packages.filter(item => item !== pkg).join("|");
+
+				res.render("package.ejs", {href: href, pkg: pkg.length > 15 ? pkg.substring(0, 12)+"..." : pkg});
 				allRegistered = false;
 			}
 		});
@@ -52,30 +50,38 @@ res.end(`
 		// Write
 		if (allRegistered) {
 			packages.forEach(pkg => {
-				minify += "// "+pkg+" package \n";
+				pkg = pkg.toLowerCase();
 
-				minify += compress("./packages/"+pkg+".js");
+				minify += "\n\n// "+pkg+" package \n"+compress("./packages/"+pkg+".js");
 			});
-		}
 
-		if (alias) {
-			minify += "// PRIZM alias\nwindow['"+alias+"'] = Prizm;";
-		}
+			if (alias) {
+				minify += "\n\n// PRIZM alias\nwindow['"+alias+"'] = Prizm;";
 
-		res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
-		res.end(minify);
-});
+				res.writeHead(200, {"content-type":  "text/javascript;charset=utf8"});
+				res.end(minify);
+			} else {
+				alias = req.params.alias;
+
+				if (!alias) {
+					return res.redirect("/$/"+packages.filter(item => item !== pkg).join("|"));
+				} else {
+					res.render("notfound.ejs", {alias: alias.length > 15 ? alias.substring(0, 12)+"..." : alias});
+				}
+			}
+		}
+}
 
 function compress(url) {
-	let code = fs.readFileSync(url, "utf8"),
-		lines = code.split("\n"),
+	let code = fs.readFileSync(url, "utf8");
+		/*lines = code.split("\n"),
 		output = "";
 
 	lines.forEach(el => {
 		output += el.replace("//"+el.split("//")[1], "").replace(/	/g, " ").replace(/ +(?= )/g, "");
-	});
+	});*/
 
-	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '')+"\n\n";
+	return /*output*/code.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
 }
 
-server.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000);
