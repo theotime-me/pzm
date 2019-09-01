@@ -23,6 +23,10 @@ app.use(function(req, res, next) {
 });
 
 function handle(req, res) {
+	if (req.params.alias == "dev") {
+		res.end(compress("dev.js"));
+	}
+
 	let minify = cp,
 		alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
 		packages = req.params.packages ? req.params.packages.split("|") : [""],
