@@ -73,15 +73,15 @@ function handle(req, res) {
 }
 
 function compress(url) {
-	let code = fs.readFileSync(url, "utf8");
-		/*lines = code.split("\n"),
+	let code = fs.readFileSync(url, "utf8"),
+		lines = code.split("\n"),
 		output = "";
 
 	lines.forEach(el => {
 		output += el.replace("//"+el.split("//")[1], "").replace(/	/g, " ").replace(/ +(?= )/g, "");
-	});*/
+	});
 
-	return /*output*/code.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
+	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
 }
 
 app.listen(process.env.PORT || 3000);
