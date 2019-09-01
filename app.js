@@ -24,8 +24,7 @@ app.use(function(req, res, next) {
 
 function handle(req, res) {
 	if (req.params.alias == "dev") {
-		res.writeHead(200, {"content-type": "text/javascript;charset=utf8"});
-		res.end(fs.readFileSync("dev.js", "utf8"));
+		res.redirect("https://raw.githubusercontent.com/theotime-me/pzm/master/dev.js");
 	}
 
 	let minify = cp,
