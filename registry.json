@@ -25,51 +25,61 @@
 
 	"os": {
 		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned.",
+		"examples": ["os(name: string)"],
 		"keywords": ["system", "computer", "operating"]
 	},
 
 	"browser": {
 		"desc": "Detect the browser and return it (Firefox, Opera, Safari, IE, Edge, etc.).",
+		"examples": ["browser(name: string)"],
 		"keywords": ["navigator", "detect"]
 	},
 
 	"history": {
 		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.).",
+		"examples": ["history(name: string)"],
 		"keywords": ["back", "prev", "next", "previous", "browse"]
 	},
 
 	"isMobile": {
 		"desc": "Return true if the used device is a mobile.",
+		"examples": ["isMobile()"],
 		"keywords": ["phone", "responsive", "mobile"]
 	},
 
 	"lang": {
 		"desc": "Return the language used (fr-fr) or test it.",
+		"examples": ["isMobile(lang: string)"],
 		"keywords": ["language", "translate", "speak", "speaking"]
 	},
 
 	"popup": {
 		"desc": "Show a popup of any website which allow this.",
+		"examples": ["popup(url: string, title: string, height: number, width: number)"],
 		"keywords": ["url", "show", "window"]
 	},
 
 	"print": {
 		"desc": "Ask the user about print the page.",
+		"examples": ["print()"],
 		"keywords": ["page"]
 	},
 
 	"screen": {
 		"desc": "Get info about the screen width and height.",
+		"examples": ["screen(value: \"height\" OR \"width\")"],
 		"keywords": ["width", "height", "page"]
 	},
 
 	"title": {
 		"desc": "Get or set the current title of the page.",
+		"examples": ["title(newTitle: string)"],
 		"keywords": ["tab"]
 	},
 
 	"url": {
 		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
+		"examples": ["get(param: string)", "url(url: string)"],
 		"keywords": ["get", "param", "set"]
 	}
 }}
