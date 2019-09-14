@@ -93,8 +93,74 @@
 
 	"append": {
 		"examples": ["append(html: string)"],
-		"keywords": ["html", "innerhtml", "fill", "text", "append", "after"],
+		"keywords": ["html", "innerhtml", "fill", "text", "after"],
 		"desc": "Append html string to all matched nodes."
+	},
+
+	"prepend": {
+		"examples": ["prepend(callback: function)"],
+		"keywords": ["html", "innerhtml", "fill", "text", "before"],
+		"desc": "Loop into all matched nodes and call a function for each."
+	},
+
+	"each": {
+		"examples": ["each(callback: function)"],
+		"keywords": ["loop", "foreach", "for"],
+		"desc": "Loop into all matched nodes and call a function for each."
+	},
+
+	"first": {
+		"examples": ["first(callback: function)"],
+		"keywords": ["node"],
+		"desc": "return the first node or call a function with the first node."
+	},
+
+	"last": {
+		"examples": ["last(callback: function)"],
+		"keywords": ["node"],
+		"desc": "return the last node or call a function with the last node."
+	},
+
+	"prop": {
+		"examples": ["prop(prop: string, value: string|number)"],
+		"keywords": ["property", "get", "set"],
+		"desc": "Set or get a property of any element."
+	},
+
+	"addClass": {
+		"examples": ["addClass(className: string|array)"],
+		"keywords": ["add", "class", "classname"],
+		"desc": "Adds class to all matching nodes."
+	},
+
+	"removeClass": {
+		"examples": ["removeClass(className: string|array)"],
+		"keywords": ["remove", "class", "classname"],
+		"desc": "Removes class to all matching nodes."
+	},
+
+	"toggleClass": {
+		"examples": ["toggleClass(className: string|array)"],
+		"keywords": ["toggle", "class", "classname"],
+		"desc": "Toggles class to all matching nodes."
+	},
+
+	"hasClass": {
+		"examples": ["hasClass(className: string)"],
+		"keywords": ["has", "class", "classname"],
+		"desc": "Returns \"true\" if the first node has the specify class"
+	},
+
+	"remove": {
+		"examples": ["remove()"],
+		"keywords": ["remove", "node", "element"],
+		"desc": "Removes all matched nodes."
+	},
+
+	"removeAttr": {
+		"examples": ["removeAttr(attr: string)"],
+		"keywords": ["remove", "attr", "attribute"],
+		"desc": "Removes an attribute of an element."
 	}
 }
 }
