@@ -1,7 +1,7 @@
 {"packages": {
 	"ajax": {
 		"desc": "Use XHR and FETCH technologies to get a file from its URL.",
-		"examples": ["ajax({url: string, async: boolean, success: function, })"],
+		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"]
 	},
 
@@ -82,4 +82,19 @@
 		"examples": ["get(param: string)", "url(url: string)"],
 		"keywords": ["get", "param", "set"]
 	}
-}}
+},
+
+"core": {
+	"html": {
+		"examples": ["html(html: string)"],
+		"keywords": ["html", "innerhtml", "fill", "text"],
+		"desc": "Fill all matched nodes with a string."
+	},
+
+	"append": {
+		"examples": ["append(html: string)"],
+		"keywords": ["html", "innerhtml", "fill", "text", "append", "after"],
+		"desc": "Append html string to all matched nodes."
+	}
+}
+}
