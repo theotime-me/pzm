@@ -160,7 +160,13 @@
 	"removeAttr": {
 		"examples": ["removeAttr(attr: string)"],
 		"keywords": ["remove", "attr", "attribute"],
-		"desc": "Removes an attribute of an element."
+		"desc": "Removes an attribute to any element."
+	},
+
+	"attr": {
+		"examples": ["attr(attr: string, value: string|number)"],
+		"keywords": ["set", "add", "attr", "attribute"],
+		"desc": "Set an attribute to any element."
 	}
 }
 }
