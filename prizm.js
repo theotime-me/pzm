@@ -73,7 +73,48 @@ function Prizm(q, ctx) {
 ===============
 
 - each
--
+- first
+- last
+
+- append
+- prepend
+- html
+
+- addClass
+- removeClass
+- toggleClass
+- hasClass
+
+- attr
+- removeAttr
+- data
+- prop
+
+- on
+- off
+- hover
+- click
+- enter
+- leave
+
+- is
+- filter
+
+- show
+- hide
+
+- css
+- scrollTo
+- remove
+- val
+- log
+
+- log
+- toNodeList
+- isElement
+- parse
+- ready
+- info
 
 */
 
@@ -81,116 +122,325 @@ function Prizm(q, ctx) {
  * @param {function} cb Will be call for each HTML element
  */
 
-    this.each = cb =>{
-		this.selector.forEach(el => {
-            return cb.call(el, el);
-		});
-	};
-
-/**
- * @param {string} html Append html to node(s)
- */
-
-	this.append = html => {
-		this.each(el => {
-			el.innerHTML += html;
-		});
-	};
+this.each = cb =>{
+	this.selector.forEach(el => {
+        return cb.call(el, el);
+	});
+};
 
 /**
  * @param {function} cb called with the first node
  */
 
-    this.first = cb =>{
-		if (cb) {
-			return cb(this.selector[0]);
-		}
+this.first = cb =>{
+	if (cb) {
+		return cb(this.selector[0]);
+	}
 
-        return this.selector[0];
-	};
+    return this.selector[0];
+};
 
 /**
  * @param {function} cb called with the last node
  */
 	
-	this.last = cb =>{
-		if (cb) {
-			return cb(this.selector[this.selector.length -1]);
+this.last = cb =>{
+	if (cb) {
+		return cb(this.selector[this.selector.length -1]);
+	}
+
+	return this.selector[this.selector.length -1];
+};
+
+/**
+ * @param {string} data Append html to node(s)
+ */
+
+this.append = data => {
+	this.each(el => {
+		if (Prizm.isElement(data)) {
+			el.insertAfter(data, el.firstChild);
+		} else {
+			el.innerHTML += data;
 		}
+	});
+};
 
-        return this.selector[this.selector.length -1];
-	};
-	
-	this.prop = prop => {
+/**
+ * @param {string} data Prepend html to node(s)
+ */
+
+this.prepend = data => {
+	this.each(el => {
+		if (Prizm.isElement(data)) {
+			el.insertBefore(data, el.firstChild);
+		} else {
+			el.innerHTML = data+el.innerHTML;
+		}
+	});
+};
+
+/**
+ * @param {string} html Prepend html to node(s)
+ */
+
+this.html = str => {
+	if (typeof str === "function") {
+		this.each(el => {
+			el.innerHTML = str(el.innerHTML);
+		});
+	} else if (typeof str != "undefined") {
+		this.each(el => {
+			el.innerHTML = str;
+		});
+		
+		return this;
+	} else {
 		return this.first(el => {
-			return el[prop];
+			return el.innerHTML;
 		});
-	};
+	}
+};
 
-    this.array = cb => {
-        let val = [];
-
-        this.each(el => {
-            if (cb) {
-                val.push(cb(el));
-            } else {
-                val.push(el.innerHTML);
-            }
-        });
-
-        return val;
-	};
+this.addClass = (className) => {
+	this.each(el => {
+		if (Array.isArray(className)) {
+			for (let i = 0; i< className.length; i++) {
+				el.classList.add(className[i]);
+			}
+		} else {
+			el.classList.add(className);
+		}
+	});
 	
-	this.sleep = ms => {
-		let now = new Date().getTime();
+	return this;
+};
 
-		while (new Date().getTime() < now + ms){}
-		return this;
-	};
+this.removeClass = (className) => {
+	this.each(el => {
+		if (Array.isArray(className)) {
+			for (let i = 0; i< className.length; i++) {
+				el.classList.remove(className[i]);
+			}
+		} else {
+			el.classList.remove(className);
+		}
+	});
+	
+	return this;
+};
 
-    this.addClass = (className) => {
-        this.each(el => {
-			if (Array.isArray(className)) {
-				for (let i = 0; i< className.length; i++) {
-					el.classList.add(className[i]);
-				}
+this.toggleClass = (className) => {
+	if (Array.isArray(className)) {
+		className.forEach(el => {
+			if (this.hasClass(el)){
+				this.removeClass(el);
 			} else {
-				el.classList.add(className);
+				this.addClass(el);
 			}
 		});
-		
-		return this;
-    };
-
-    this.removeClass = (className) => {
-        this.each(el => {
-			if (Array.isArray(className)) {
-				for (let i = 0; i< className.length; i++) {
-					el.classList.remove(className[i]);
-				}
-			} else {
-				el.classList.remove(className);
-			}
-		});
-		
-		return this;
-	};
-
-	this.toggleClass = (className) => {
+	} else {
 		if (this.hasClass(className)){
 			this.removeClass(className);
 		} else {
 			this.addClass(className);
 		}
+	}
+
+	return this;
+};
+
+this.hasClass = (className) => {
+	return this.first(el => {
+		return el.classList.contains(className);
+	});
+};
+
+this.attr = (name, value, data) => {
+	data = data ? 'data-' : '';
+
+	if (typeof value === "function") {
+		this.each(el => {
+			el.setAttribute(data+name, value(el.innerHTML));
+		});
+	} else if (value != undefined) {
+		this.each(el => {
+			if (value) {
+				el.setAttribute(data + name, value);
+			}
+		});
+	} else {
+		return this.first().getAttribute(data + name);
+	}
+
+	return this;
+};
+
+this.removeAttr = attr => {
+	this.each(el => {
+		if (Array.isArray(el)) {
+			el.forEach(attrEl => {
+				el.removeAttribute(attrEl);
+			});
+		} else {
+			el.removeAttribute(attr);				
+		}
+	});
+
+	return this;
+};
+
+this.data = (name, value) => {
+	return this.attr(name, value, true);
+};
+
+this.prop = (prop, value) => {
+	if (value != undefined) {
+		this.each(el => {
+			el[prop] = value;
+		});
 
 		return this;
-	};
+	}
 
-    this.hasClass = (className) => {
-        return this.first(el => {
-            return el.classList.contains(className);
-        });
-    };
+	return this.first(el => {
+		return el[prop];
+	});
+};
+
+this.on = function(event, cb) {
+	switch(event){
+		case "leave": event = "mouseleave"; break;
+		case "down": event = "mousedown"; break;
+		case "enter": event = "mouseenter"; break;
+		case "hover": event = "mouseover"; break;
+	}
+
+	(this.win_doc ? this.first : this.each)(el => {
+		el.addEventListener(event, e => cb.call(el, e));
+	});
+
+	return this;
+};
+
+this.off = event => {
+	if (event != undefined) {
+		this.each(el => {
+			el.removeEventListener(event);
+		});
+	} else {
+		let oldNode = this.first();
+		var newNode = oldNode.cloneNode(true);
+		oldNode.parentNode.insertBefore(newNode, oldNode);
+		oldNode.parentNode.removeChild(oldNode);
+	}
+
+	return this;
+};
+
+this.hover = fn => this.on('hover', fn);
+this.click = fn => this.on('click', fn);
+this.enter = fn => this.on('enter', fn);
+this.leave = fn => this.on('leave', fn);
+
+this.is = selector => {
+	return this.filter(selector).length > 0;
+};
+
+this.filter = selector => {
+
+	var callback = (node) => {
+		node.matches = node.matches || node.msMatchesSelector || node.webkitMatchesSelector; // Make it compatible with some other browsers
+
+		if (typeof selector === "function") {
+			return selector(node);
+		} else {
+			// Check if it's the same element (or any element if no selector was passed)
+			return node.matches(selector || '*');
+		}
+	}, out = [];
+
+	if (selector instanceof Prizm) {
+		return this.first() == selector.first();
+	} else if (typeof selector === "function") {
+		callback = selector;
+	}
+
+	for (var i = 0; i < this.selector.length; i++) {
+		if (callback(this.selector[i]) == true) {
+			out.push(this.selector[i]);
+		}
+	}
+
+	return out;
+};
+
+this.show = function(data, cb) {
+	let time = 0,
+		unit = "ms";
+
+	if (( typeof data == "number" && !isNaN(parseFloat(data)) )) {
+		time = data;
+	} else if (typeof data == "string" && ["ms", "s"].includes(data.replace(/\d|\./g, ""))) {
+		time = parseFloat(data.replace(/[A-z]/g, ""));
+		unit = data.replace(/\d|\./g, "")[0];
+	}
+
+	this.each(el => {
+		Prizm(el).css({
+			transition: "opacity "+time+unit+" ease",
+			display: "",
+			opacity: "0",
+		});
+	});
+
+	let t = this;
+
+	setTimeout(function() {
+		t.css({
+			opacity: "1",
+		});
+	}, 10);
+
+	setTimeout(function() {
+		if (cb) cb.apply(this);
+	}, unit == "ms" ? time : time * 1000);
+
+	return this;
+};
+
+this.hide = function(data, cb) {
+	let time = 0,
+		unit = "ms";
+
+	if (( typeof data == "number" && !isNaN(parseFloat(data)) )) {
+		time = data;
+	} else if (typeof data == "string" && ["ms", "s"].includes(data.replace(/\d|\./g, ""))) {
+		time = parseFloat(data.replace(/[A-z]/g, ""));
+		unit = data.replace(/\d|\./g, "")[0];
+	}
+
+	if (time != 0) {
+		this.css({
+			transition: "opacity "+time+unit+" ease",
+			opacity: "0",
+		});
+	}
+
+	let _this = this;
+
+	setTimeout(function() {
+		_this.css({
+			display: "none",
+			transition: "",
+			opacity: ""
+		});
+
+		if (cb) cb.apply(this);
+	}, unit == "ms" ? time : time * 1000);
+
+	return this;
+};
 
     this.remove = () => {
         this.each(function (node) {
@@ -202,103 +452,16 @@ function Prizm(q, ctx) {
 		return this;
     };
 
-    this.attr = (name, value, data) => {
-        data = data ? 'data-' : '';
-
-        if (typeof value === "function") {
-			this.each(el => {
-				el.setAttribute(data+name, value(el.innerHTML));
-			});
-		} else if (value != undefined) {
-            this.each(el => {
-                if (value) {
-                    el.setAttribute(data + name, value);
-                }
-            });
-        } else {
-			return this.first().getAttribute(data + name);
-		}
-
-        return this;
-	};
-
-	this.removeAttr = attr => {
-		return this.each(el => {
-			if (Array.isArray(el)) {
-				el.forEach(attrEl => {
-					el.removeAttribute(attrEl);
-				});
-			} else {
-				el.removeAttribute(attr);				
-			}
-		});
-	};
-
-    this.data = (name, value) => {
-        return this.attr(name, value, true);
-    };
-
-    this.on = function(event, cb) {
-        switch(event){
-            case "leave": event = "mouseleave"; break;
-            case "down": event = "mousedown"; break;
-            case "enter": event = "mouseenter"; break;
-            case "hover": event = "mouseover"; break;
-		}
-
-		(this.win_doc ? this.first : this.each)(el => {
-			el.addEventListener(event, e => cb.call(el, e));
-		});
-
-		return this;
-    };
-
-    this.hover = function(fn) { return this.on('hover', fn); };
-    this.click = function(fn) { return this.on('click', fn); };
-    this.enter = function(fn) { return this.on('enter', fn); };
-    this.leave = function(fn) { return this.on('leave', fn); };
-    this.focus = function(fn) { return this.on('focus', fn); };
-    this.blur = function(fn) { return this.on('blur', fn); };
-
-    this.off = (event) => {
-		if (event != undefined) {
-			this.each(el => {
-				el.removeEventListener(event);
-			});
-		} else {
-			let oldNode = this.first();
-			var newNode = oldNode.cloneNode(true);
-			oldNode.parentNode.insertBefore(newNode, oldNode);
-			oldNode.parentNode.removeChild(oldNode);
-		}
-
-		return this;
-    };
-
-    this.html = (str) => {
-		if (typeof str === "function") {
-			this.each(el => {
-				el.innerHTML = str(el.innerHTML);
-			});
-		} else if (typeof str != "undefined") {
-            this.each(el => {
-                el.innerHTML = str;
-			});
-			
-			return this;
-        } else {
-			return this.first(el => {
-				return el.innerHTML;
-			});
-		}
-    };
-
     this.css = (property, value) => {
         if (typeof property === "object") {
             let keys = Object.keys(property);
 			this.each(el => {
                 for (let i = 0; i<keys.length; i++) {
-                    el.style.setProperty(keys[i], property[keys[i]]);
+					if (property[keys[i]] == "") {
+						el.style.removeProperty(keys[i]);
+					} else {
+						el.style.setProperty(keys[i], property[keys[i]]);
+					}
                 }
 			});
 			
@@ -312,7 +475,7 @@ function Prizm(q, ctx) {
         		    a = el.style[property];
                 }); return a;
         	} else if (typeof value === "string"){
-            	this.each(function(node) {
+            	this.each(node => {
             		node.style[property] = value;
 				});
 
@@ -327,7 +490,7 @@ function Prizm(q, ctx) {
 		return this;
 	};
 
-    this.val = (value) => { // value: string || boolean
+    this.val = value => { // value: string || boolean
         if (value != undefined) {
             this.each(el => {
                 el.value = value;
@@ -342,38 +505,6 @@ function Prizm(q, ctx) {
 
             return a;
 		}
-	};
-
-	this.is = (selector) => {
-		return this.filter(selector).length > 0;
-	};
-
-	this.filter = (selector) => {
-
-		var callback = (node) => {
-			node.matches = node.matches || node.msMatchesSelector || node.webkitMatchesSelector; // Make it compatible with some other browsers
-
-			if (typeof selector === "function") {
-				return selector(node);
-			} else {
-				// Check if it's the same element (or any element if no selector was passed)
-				return node.matches(selector || '*');
-			}
-		}, out = [];
-
-		if (selector instanceof Prizm) {
-			return this.first() == selector.first();
-		} else if (typeof selector === "function") {
-			callback = selector;
-		}
-
-		for (var i = 0; i < this.selector.length; i++) {
-			if (callback(this.selector[i]) == true) {
-				out.push(this.selector[i]);
-			}
-		}
-
-		return out;
 	};
 
 /* 01.1 / DEV
@@ -420,7 +551,7 @@ Prizm.log = (message, state) => { // message: string, state: string (success || 
 				if (message instanceof Prizm) {
 					message.log();
 					return;
-				} else if ((typeof message==="object") && (message.nodeType===1) && (typeof message.style === "object") && (typeof message.ownerDocument ==="object")) {
+				} else if (Prizm.isElement(message)) {
 					if (message.length == 1) {
 						console.log(message[0]);
 					} else {
@@ -445,15 +576,56 @@ Prizm.toNodeList = function(arrayOfNodes){
 	return fragment.childNodes;
 };
 
+Prizm.isElement = function(obj) {
+	try {
+	  //Using W3 DOM2 (works for FF, Opera and Chrome)
+	  return obj instanceof HTMLElement;
+	}
+	catch(e){
+	  //Browsers not supporting W3 DOM2 don't have HTMLElement and
+	  //an exception is thrown and we end up here. Testing some
+	  //properties that all elements have (works on IE7)
+	  return (typeof obj==="object") &&
+		(obj.nodeType===1) && (typeof obj.style === "object") &&
+		(typeof obj.ownerDocument ==="object");
+	}
+};
+
+Prizm.parse = function(str) {
+	let tagName = str.match(/[A-z]+/)[0].split("[")[0],
+		classes = str.match(/\.[A-z0-9]+/g) || [],
+		outElement = document.createElement(tagName);	
+		
+		for (let i = 0; i<classes.length; i++) {
+			classes[i] = classes[i].replace(".", "");
+
+			outElement.classList.add(classes[i]);
+		}
+
+	let	attributes = str.match(/\[[A-z]+=[A-z]+\]/g) || [],
+		outAttrs = [];
+
+	attributes.forEach(el => {
+		let a = el.replace(/\[|\]/g, "").split("=");
+
+		outAttrs.push({});
+
+		outAttrs[outAttrs.length -1][a[0]] = a[1];
+		outElement.setAttribute(a[0], a[1]);
+	});
+
+	return outElement;
+};
+
 Prizm.ready = cb => { // cb: function
 	document.addEventListener('DOMContentLoaded', cb.call(this)); // Quand la page est chargée, lance le callback "cb()"
 };
 
-Prizm.info = () => {
-	Prizm.log({
-		packages: Prizm.packages,
-		alias: Prizm.alias
-	});
+Prizm.info = {
+	packages: Prizm.packages || [],
+	alias: Prizm.alias
 };
+
+if (window.pzm == undefined) window.pzm = {};
 
 console.log("%cPRIZM.js", "color: #333; font-size: 30px; padding: 5px 20px; line-height: 50px; background-color: #fff; border-radius: 6px; border: 2px solid rgba(0, 0, 0, .2);");

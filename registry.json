@@ -81,6 +81,13 @@
 		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
 		"examples": ["get(param: string)", "url(url: string)"],
 		"keywords": ["get", "param", "set"]
+	},
+
+	"getScript": {
+		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
+		"examples": ["get(param: string)", "url(url: string)"],
+		"dependencies": ["ajax"],
+		"keywords": ["get", "param", "set"]
 	}
 },
 
@@ -164,6 +171,18 @@
 	},
 
 	"attr": {
+		"examples": ["attr(attr: string, value: string|number)"],
+		"keywords": ["set", "add", "attr", "attribute"],
+		"desc": "Set an attribute to any element."
+	},
+
+	"hide": {
+		"examples": ["hide(duration: string|number)"],
+		"keywords": ["opacity", "fade"],
+		"desc": "Set an attribute to any element."
+	},
+
+	"show": {
 		"examples": ["attr(attr: string, value: string|number)"],
 		"keywords": ["set", "add", "attr", "attribute"],
 		"desc": "Set an attribute to any element."
