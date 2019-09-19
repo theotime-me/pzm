@@ -1,7 +1,8 @@
 var http = require('http'),
 	fs = require("fs"),
 	url = require("url"),
-	app = require("express")();
+	registry = require("./registry.json").packages,
+	app = require("express")(),
 	cp = `
 /*  _____      _
    |  __ \\    (_)
@@ -22,28 +23,43 @@ app.use(function(req, res, next) {
 	res.render("notfound.ejs");
 });
 
+function remove_duplicates(arr) {
+	var obj = {};
+	var ret_arr = [];
+	for (var i = 0; i < arr.length; i++) {
+		obj[arr[i]] = true;
+	}
+	for (var key in obj) {
+		ret_arr.push(key);
+	}
+	return ret_arr;
+}
+
 function handle(req, res) {
 	if (req.params.alias == "dev") {
 		res.writeHead(200, {"content-type": "text/javascript;charset=utf8"});
 		res.end(fs.readFileSync("dev.js", "utf8"));
 	}
 
+	req.params.alias = req.params.alias.replace(/ /g, "");
+
 	let minify = cp,
 		alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
 		packages = req.params.packages ? req.params.packages.split("|") : [""],
-		all = fs.readdirSync("./packages"),
+		all = Object.keys(registry),
 		allRegistered = true;
 
 		if (packages[packages.length -1] == "") {
 			packages.pop();
 		}
 
-		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? https://prizm.netlify.com/?pkg=<package>\n\n  } https://github.com/theotime-me/pzm\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
+		packages = remove_duplicates(packages);
+
+		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? https://prizm.netlify.com/?pkg=<package>\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
 
 		packages.forEach(pkg => {
-			pkg = pkg.toLowerCase();
-
-			if (!all.includes(pkg+".js")) {
+			pkg = pkg.replace(/ /g, "");
+			if (!all.includes(pkg)) {
 				
 				href = "/"+req.params.alias+"/"+packages.filter(item => item !== pkg).join("|");
 
@@ -55,7 +71,14 @@ function handle(req, res) {
 		// Write
 		if (allRegistered) {
 			packages.forEach(pkg => {
-				pkg = pkg.toLowerCase();
+				pkg = pkg.replace(/ /g, "");
+				if (registry[pkg].dependencies) {
+					registry[pkg].dependencies.forEach(el => {
+						if (!packages.includes(el)) {
+							minify += "\n\n// "+el+" package \n"+compress("./packages/"+el+".js");
+						}
+					});
+				}
 
 				minify += "\n\n// "+pkg+" package \n"+compress("./packages/"+pkg+".js");
 			});
