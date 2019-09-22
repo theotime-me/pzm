@@ -41,7 +41,7 @@ function handle(req, res) {
 		res.end(fs.readFileSync("dev.js", "utf8"));
 	}
 
-	req.params.alias = req.params.alias.replace(/ /g, "");
+	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
 
 	let minify = cp,
 		alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
