@@ -1,6 +1,6 @@
 {"packages": {
 	"ajax": {
-		"desc": "Use XHR and FETCH technologies to get a file from its URL.",
+		"desc": "Use the XmlHttpRequest technology to get a file from its URL.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"],
 		"size": 1.02
@@ -101,8 +101,16 @@
 		"desc": "Get a javascript or css script from an url.",
 		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
-		"keywords": ["get", "script", "eval", "download"],
+		"keywords": ["get", "script", "eval", "download", "fetch"],
 		"size": 0.233
+	},
+
+	"getJSON": {
+		"desc": "Get a JSON file from an url. Usefull to get results of APIs !",
+		"examples": ["getJSON(url: string, cb: function)"],
+		"dependencies": ["ajax"],
+		"keywords": ["get", "json", "data", "api", "fetch"],
+		"size": 0.487
 	}
 },
 
