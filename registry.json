@@ -109,7 +109,7 @@
 		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download", "fetch"],
-		"size": 0.233
+		"size": 0.424
 	},
 
 	"getJSON": {
