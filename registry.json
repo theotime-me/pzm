@@ -31,7 +31,7 @@
 		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned.",
 		"examples": ["os(name: string)"],
 		"keywords": ["system", "computer", "operating"],
-		"size": 
+		"size": 0.406
 	},
 
 	"browser": {
@@ -99,7 +99,7 @@
 
 	"getScript": {
 		"desc": "Get a javascript or css script from an url.",
-		"examples": ["get(param: string)", "url(url: string)"],
+		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download"],
 		"size": 0
