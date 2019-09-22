@@ -1,5 +1,5 @@
-Prizm.ajax = ({ url, method, async, success, error, progress, parse}) => { // url: string, method: string, async: boolean, success: function, error: function, progress: function
-    method = method || "GET";
+Prizm.ajax = ({ url, method, data, async, success, error, progress, parse}) => { // url: string, method: string, async: boolean, success: function, error: function, progress: function
+    method = method.toUpperCase() || "GET";
 	async = async || false;
 	parse = typeof parse != "undefined" ? parse : true;
 
@@ -37,7 +37,17 @@ Prizm.ajax = ({ url, method, async, success, error, progress, parse}) => { // ur
 				progress((e.loaded / e.total)*100);
 			}
         });
-    }
+	}
+	
+	if (method == "POST") {
+		var formData = new FormData();
 
-	xhr.send(null);
+		Object.keys(data).forEach(el => {
+			formData.append(el, data[el]);
+		});
+
+		xhr.send(formData);
+	} else {
+		xhr.send(null);
+	}
 };
