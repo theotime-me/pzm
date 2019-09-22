@@ -1,5 +1,5 @@
 Prizm.ajax = ({ url, method, data, async, headers, success, error, progress, parse}) => { // url: string, method: string, async: boolean, success: function, error: function, progress: function
-    method = method.toUpperCase() || "GET";
+    method = method != undefined ? method.toUpperCase() : "GET";
 	async = async || false;
 	parse = typeof parse != "undefined" ? parse : true;
 
