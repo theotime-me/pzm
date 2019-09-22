@@ -39,13 +39,13 @@ Prizm.ajax = ({ url, method, data, async, headers, success, error, progress, par
         });
 	}
 
-	if (headers) {
+	if (headers != undefined) {
 		Object.keys(headers).forEach(el => {
 			xhr.setRequestHeader(el, headers[el]);
 		});
 	}
 	
-	if (method == "POST") {
+	if (method == "POST" && data != undefined) {
 		var formData = new FormData();
 
 		Object.keys(data).forEach(el => {
