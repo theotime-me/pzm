@@ -90,15 +90,22 @@
 		"size": 0.249
 	},
 
+	"get": {
+		"desc": "Get url parameters after the \"?\".",
+		"examples": ["url(param: string)"],
+		"keywords": ["get", "param", "url"],
+		"size": 0.340
+	},
+
 	"url": {
-		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
-		"examples": ["get(param: string)", "url(url: string)"],
-		"keywords": ["get", "param", "set"],
-		"size": 0.591
+		"desc": "Set or get the current url to a new destination.",
+		"examples": ["url(target: string)"],
+		"keywords": ["set", "target", "link"],
+		"size": 0.261
 	},
 
 	"getScript": {
-		"desc": "Get a javascript or css script from an url.",
+		"desc": "Get a javascript or css script from an url and execute it.",
 		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download", "fetch"],
@@ -106,7 +113,7 @@
 	},
 
 	"getJSON": {
-		"desc": "Get a JSON file from an url. Usefull to get results of APIs !",
+		"desc": "Get a JSON file from an url and return it in a callback. Usefull to get results of APIs !",
 		"examples": ["getJSON(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
