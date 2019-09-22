@@ -2,92 +2,107 @@
 	"ajax": {
 		"desc": "Use XHR and FETCH technologies to get a file from its URL.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
-		"keywords": ["xhr", "fetch", "get", "post"]
+		"keywords": ["xhr", "fetch", "get", "post"],
+		"size": 1.02
 	},
 
 	"date": {
 		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc.",
 		"examples": ["date(request: string, addZero: boolean)"],
-		"keywords": ["month", "day", "year", "hour", "minute", "second"]
+		"keywords": ["month", "day", "year", "hour", "minute", "second"],
+		"size": 0.921
 	},
 
 	"scrolltop": {
 		"desc": "A very simple package which scroll to the top of the page when it's called.",
 		"examples": ["scrolltop()"],
-		"keywords": ["page", "scroll", "top"]
+		"keywords": ["page", "scroll", "top"],
+		"size": 0.220
 	},
 
 	"cookies": {
 		"desc": "Add two function, to setCookie() and getCookie() in Javascript. Usefull and so simple to use !",
 		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
-		"keywords": ["cookie", "set", "get", "save", "navigator"]
+		"keywords": ["cookie", "set", "get", "save", "navigator"],
+		"size": 0.744
 	},
 
 	"os": {
 		"desc": "Know the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned.",
 		"examples": ["os(name: string)"],
-		"keywords": ["system", "computer", "operating"]
+		"keywords": ["system", "computer", "operating"],
+		"size": 
 	},
 
 	"browser": {
 		"desc": "Detect the browser and return it (Firefox, Opera, Safari, IE, Edge, etc.).",
 		"examples": ["browser(name: string)"],
-		"keywords": ["navigator", "detect"]
+		"keywords": ["navigator", "detect"],
+		"size": 0.688
 	},
 
 	"history": {
 		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.).",
 		"examples": ["history(name: string)"],
-		"keywords": ["back", "prev", "next", "previous", "browse"]
+		"keywords": ["back", "prev", "next", "previous", "browse"],
+		"size": 0.468
 	},
 
 	"isMobile": {
 		"desc": "Return true if the used device is a mobile.",
 		"examples": ["isMobile()"],
-		"keywords": ["phone", "responsive", "mobile"]
+		"keywords": ["phone", "responsive", "mobile"],
+		"size": 0.288
 	},
 
 	"lang": {
 		"desc": "Return the language used (fr-fr) or test it.",
 		"examples": ["isMobile(lang: string)"],
-		"keywords": ["language", "translate", "speak", "speaking"]
+		"keywords": ["language", "translate", "speak", "speaking"],
+		"size": 0.233
 	},
 
 	"popup": {
 		"desc": "Show a popup of any website which allow this.",
 		"examples": ["popup(url: string, title: string, height: number, width: number)"],
-		"keywords": ["url", "show", "window"]
+		"keywords": ["url", "show", "window"],
+		"size": 0.363
 	},
 
 	"print": {
 		"desc": "Ask the user about print the page.",
 		"examples": ["print()"],
-		"keywords": ["page"]
+		"keywords": ["page"],
+		"size": 0.157
 	},
 
 	"screen": {
 		"desc": "Get info about the screen width and height.",
 		"examples": ["screen(value: \"height\" OR \"width\")"],
-		"keywords": ["width", "height", "page"]
+		"keywords": ["width", "height", "page"],
+		"size": 0.245
 	},
 
 	"title": {
 		"desc": "Get or set the current title of the page.",
 		"examples": ["title(newTitle: string)"],
-		"keywords": ["tab"]
+		"keywords": ["tab"],
+		"size": 0.249
 	},
 
 	"url": {
 		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
 		"examples": ["get(param: string)", "url(url: string)"],
-		"keywords": ["get", "param", "set"]
+		"keywords": ["get", "param", "set"],
+		"size": 0.591
 	},
 
 	"getScript": {
-		"desc": "Get url parameters (?a=b) with get(\"a\") or set the current url of the page with url().",
+		"desc": "Get a javascript or css script from an url.",
 		"examples": ["get(param: string)", "url(url: string)"],
 		"dependencies": ["ajax"],
-		"keywords": ["get", "param", "set"]
+		"keywords": ["get", "script", "eval", "download"],
+		"size": 0
 	}
 },
 
