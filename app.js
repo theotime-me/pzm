@@ -38,7 +38,7 @@ function remove_duplicates(arr) {
 function handle(req, res) {
 	if (req.params.alias == "dev") {
 		res.writeHead(200, {"content-type": "text/javascript;charset=utf8"});
-		res.end(fs.readFileSync("dev.js", "utf8"));
+		res.end(compress("dev.js"));
 	}
 
 	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
