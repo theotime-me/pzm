@@ -37,8 +37,7 @@ function remove_duplicates(arr) {
 
 function handle(req, res) {
 	if (req.params.alias == "dev") {
-		res.writeHead(200, {"content-type": "text/javascript;charset=utf8"});
-		res.end(compress("dev.js"));
+		res.redirect('https://cdn.jsdelivr.net/gh/theotime-me/pzm/dev.min.js');
 	}
 
 	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
