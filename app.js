@@ -86,7 +86,7 @@ function handle(req, res) {
 					});
 				}
 
-				minify += "\n\n// "+pkg+" package \n"+compress("./packages/"+pkg+".js");
+				minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+" \n"+compress("./packages/"+pkg+".js");
 			});
 
 			if (alias) {
@@ -131,7 +131,7 @@ function stats(type, res) {
 
 		end = [];
 
-		res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+		res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
 
 		db.get("all", function(err, val) {
 			if (err && err.notFound) db.put("all", 0);
@@ -189,7 +189,7 @@ function stats(type, res) {
 		let current = (parseInt(val) || 0);
 
 		db.put(type, current+1, function() {
-			res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+			res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
 			res.end("{\"type\": \""+type+"\",\"value\":"+(current+1)+"}");
 		});
 	});
