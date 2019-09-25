@@ -42,6 +42,9 @@ function handle(req, res) {
 	} else if (req.params.alias == "stats") {
 		stats(req.params.packages, res);
 		return false;
+	} else if (req.params.alias == "dm$") {
+		req.params.alias = "$";
+		req.params.packages = "ajax|get";
 	}
 
 	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
