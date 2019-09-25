@@ -152,7 +152,7 @@ const pzm = {
 		let list = document.querySelector("#pzm-window .list");
 			list.innerHTML = "";
 
-		(pzm.pkgs.split("|")[0] == "" ? [] : this.pkgs.split("|")).forEach(el => {
+		((pzm.pkgs || "").split("|")[0] == "" ? [] : this.pkgs.split("|")).forEach(el => {
 			let size = pzm.registry[el].size,
 				unit = "KB";
 
@@ -164,7 +164,7 @@ const pzm = {
 			list.innerHTML += '<div class="'+el+'"><a href="https://prizm.netlify.com/?pkg='+el+'" target="blank">'+el+'</a><p>'+size+' '+unit+'</p><svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"></path><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"></path><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"></path><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"></path><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"></path><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"></rect><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"></path><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"></path><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"></path><rect y="3.86397" width="6" height="34"></rect></svg></div>';
 		});
 
-		let pkgs = pzm.pkgs.split("|")[0] == "" ? [] : this.pkgs.split("|"),
+		let pkgs = (pzm.pkgs || "").split("|")[0] == "" ? [] : this.pkgs.split("|"),
 			deps = [],
 			size = 0;
 
@@ -192,7 +192,7 @@ const pzm = {
 
 		size = Math.floor(size*10) / 10;
 
-		document.querySelector("#pzm-window .header .pkgs").innerHTML = '<b>14</b> package'+(pzm.pkgs.split("|").length > 1 ? "s" : "");
+		document.querySelector("#pzm-window .header .pkgs").innerHTML = '<b>14</b> package'+(pzm.pkgs ? pzm.pkgs.split("|").length > 1 ? "s" : "": "");
 
 		document.querySelector("#pzm-window .header .size b").innerHTML = size;
 		document.querySelector("#pzm-window .header .core b").innerHTML = pzm.alias;
@@ -222,6 +222,28 @@ document.querySelector("#pzm-window-background").onclick = function() {
 window.onkeydown = function(e) {
 	if (e.shiftKey && e.keyCode == 80) {
 		pzm.showed ? pzm.hide() : pzm.show();
+	}
+};
+
+window.onerror = function(msg, url, line, col, error) {
+	let variable = msg;
+
+	if (variable.includes(":")) {
+		variable = variable.split(":")[1];
+		
+		if (variable.includes(" ")) {
+			variable = variable.split(" ")[1];
+
+			if (variable.includes(".")) {
+				if (variable.split(".")[0] == pzm.alias) {
+					variable = variable.split(".")[1];
+				}
+			}
+		}
+	}
+
+	if (Object.keys(pzm.registry).includes(variable)) {
+		console.log("The \""+variable+"\" package isn't installed. http://cpkg.rf.gd/"+variable);
 	}
 };
 
