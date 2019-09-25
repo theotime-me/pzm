@@ -42,7 +42,7 @@ function handle(req, res) {
 	} else if (req.params.alias == "stats") {
 		stats(req.params.packages, res);
 		return false;
-	} else if (req.params.alias == "dm$") {
+	} else if (req.params.alias == "dm$.js") {
 		req.params.alias = "$";
 		req.params.packages = "ajax|get";
 	}
