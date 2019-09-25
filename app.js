@@ -178,7 +178,7 @@ function stats(type, res) {
 			db.put("all", current+1);
 		});
 
-		res.writeHead(403, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+		res.writeHead(403, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
 		res.end("{\"error\": 403,\"message\": \"unregistred service ("+type+")\"}");
 		return false;
 	}
