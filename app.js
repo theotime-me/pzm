@@ -61,7 +61,7 @@ function handle(req, res) {
 
 		packages = remove_duplicates(packages);
 
-		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? http://pkg.rf.gd/<package>\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
+		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
 
 		packages.forEach(pkg => {
 			pkg = pkg.replace(/ /g, "");
@@ -86,7 +86,7 @@ function handle(req, res) {
 					});
 				}
 
-				minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+" \n"+compress("./packages/"+pkg+".js");
+				minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+"\n"+compress("./packages/"+pkg+".js");
 			});
 
 			if (alias) {
