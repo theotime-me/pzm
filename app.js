@@ -2,6 +2,7 @@ var http = require('http'),
 	fs = require("fs"),
 	url = require("url"),
 	registry = require("./registry.json").packages,
+	db = require("level")("stats"),
 	app = require("express")(),
 	cp = `
 /*  _____      _
@@ -38,6 +39,9 @@ function remove_duplicates(arr) {
 function handle(req, res) {
 	if (req.params.alias == "dev") {
 		res.redirect('https://cdn.jsdelivr.net/gh/theotime-me/pzm/dev.min.js');
+	} else if (req.params.alias == "stats") {
+		stats(req.params.packages, res);
+		return false;
 	}
 
 	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
@@ -109,6 +113,91 @@ function compress(url) {
 	});
 
 	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
+}
+
+let services = ["ouoio", "sckpm", "fb", "yt", "pkg", "bitly", "isgd", "console", "thme", "tw", "ig", "dis"];
+
+function stats(type, res) {
+	type = type == undefined ? undefined : type.replace(/ |\./g, "").toLowerCase();
+
+	if (type == undefined) {
+		let a = {
+			from: {},
+			all: {}
+		},
+
+		end = [];
+
+		res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+
+		db.get("all", function(err, val) {
+			if (err && err.notFound) db.put("all", 0);
+
+			a.all = parseInt(val);
+
+			end.push("all");
+
+			if (end.includes("from")) {
+				res.end(JSON.stringify(a));
+			}
+		});
+
+		services.forEach(el => {
+			db.get(el, function(err, val) {
+				if (err && err.notFound) {
+					if (el == services[services.length -1]) {
+						res.end(JSON.stringify(a));
+					}
+
+					return false;
+				}
+
+				a.from[el] = parseInt(val);
+
+				if (el == services[services.length -1]) {
+					end.push("from");
+
+					if (end.includes("all")) {
+						res.end(JSON.stringify(a));
+					}
+				}
+			});
+		});
+
+
+		return false;
+	} else if (!services.includes(type)) {
+		db.get("all", function(err, val) {
+			if (err && err.notFound) db.put("all", 0);
+
+			let current = (parseInt(val) || 0);
+
+			db.put("all", current+1);
+		});
+
+		res.writeHead(403, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+		res.end("{\"error\": 403,\"message\": \"unregistred service ("+type+")\"}");
+		return false;
+	}
+	
+	db.get(type, function(err, val) {
+		if (err && err.notFound) db.put(type, 0);
+
+		let current = (parseInt(val) || 0);
+
+		db.put(type, current+1, function() {
+			res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "prizm.netlify.com"});
+			res.end("{\"type\": \""+type+"\",\"value\":"+(current+1)+"}");
+		});
+	});
+
+	db.get("all", function(err, val) {
+		if (err && err.notFound) db.put("all", 0);
+
+		let current = (parseInt(val) || 0);
+
+		db.put("all", current+1);
+	});
 }
 
 app.listen(process.env.PORT || 3000);
