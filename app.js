@@ -123,7 +123,7 @@ function compress(url) {
 	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
 }
 
-let services = ["ouoio", "sckpm", "fb", "yt", "pkg", "bitly", "isgd", "console", "thme", "tw", "ig", "dis"];
+let services = ["github", "ouoio", "sckpm", "fb", "yt", "pkg", "bitly", "isgd", "console", "thme", "tw", "ig", "dis"];
 
 function stats(type, res) {
 	type = type == undefined ? undefined : type.replace(/ |\./g, "").toLowerCase();

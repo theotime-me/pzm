@@ -43,7 +43,7 @@
 
 	"history": {
 		"desc": "Move into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.).",
-		"examples": ["history(name: string)"],
+		"examples": ["history(go: string|number)"],
 		"keywords": ["back", "prev", "next", "previous", "browse"],
 		"size": 0.468
 	},
@@ -216,6 +216,18 @@
 		"examples": ["attr(attr: string, value: string|number)"],
 		"keywords": ["set", "add", "attr", "attribute"],
 		"desc": "Set an attribute to any element."
+	},
+
+	"after": {
+		"examples": ["after(html: string)"],
+		"keywords": ["insert", "after", "html", "adjacent"],
+		"desc": "Insert html after node(s)."
+	},
+
+	"before": {
+		"examples": ["before(html: string)"],
+		"keywords": ["insert", "before", "html", "adjacent"],
+		"desc": "Insert html before node(s)."
 	}
 }
 }

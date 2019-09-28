@@ -79,6 +79,8 @@ function Prizm(q, ctx) {
 - append
 - prepend
 - html
+- after
+- before
 
 - addClass
 - removeClass
@@ -200,6 +202,26 @@ this.html = str => {
 			return el.innerHTML;
 		});
 	}
+};
+
+/**
+ * @param {string} after Insert html after node(s)
+ */
+
+this.after = str => {
+	this.each(el => {
+		el.insertAdjacentHTML('afterend', str);
+	});
+};
+
+ /**
+ * @param {string} before Insert before after node(s)
+ */
+
+this.before = str => {
+	this.each(el => {
+		el.insertAdjacentHTML('beforebegin', str);
+	});
 };
 
 this.addClass = (className) => {
