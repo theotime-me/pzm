@@ -3,6 +3,7 @@ var http = require('http'),
 	url = require("url"),
 	registry = require("./registry.json").packages,
 	db = require("level")("stats"),
+	pkgsStats = {},
 	app = require("express")(),
 	cp = `
 /*  _____      _
@@ -77,6 +78,10 @@ function handle(req, res) {
 		// Write
 		if (allRegistered) {
 			packages.forEach(pkg => {
+				(function() {
+					let current = pkgsStats[pkg] || 0;
+					pkgsStats[pkg] = current+1;
+				})();
 				pkg = pkg.replace(/ /g, "");
 				if (registry[pkg].dependencies) {
 					registry[pkg].dependencies.forEach(el => {
@@ -126,7 +131,8 @@ function stats(type, res) {
 	if (type == undefined) {
 		let a = {
 			from: {},
-			all: {}
+			all: {},
+			packages: pkgsStats
 		},
 
 		end = [];
