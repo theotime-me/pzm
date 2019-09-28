@@ -210,8 +210,10 @@ this.html = str => {
 
 this.after = str => {
 	this.each(el => {
-		el.insertAdjacentHTML('afterend', str);
+		el.insertAdjacentElement('afterend', Prizm.parse(str));
 	});
+
+	return this;
 };
 
  /**
@@ -220,8 +222,10 @@ this.after = str => {
 
 this.before = str => {
 	this.each(el => {
-		el.insertAdjacentHTML('beforebegin', str);
+		el.insertAdjacentElement('beforebegin', Prizm.parse(str));
 	});
+
+	return this;
 };
 
 this.addClass = (className) => {
