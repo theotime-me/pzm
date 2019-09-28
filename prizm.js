@@ -614,29 +614,10 @@ Prizm.isElement = function(obj) {
 };
 
 Prizm.parse = function(str) {
-	let tagName = str.match(/[A-z]+/)[0].split("[")[0],
-		classes = str.match(/\.[A-z0-9]+/g) || [],
-		outElement = document.createElement(tagName);	
-		
-		for (let i = 0; i<classes.length; i++) {
-			classes[i] = classes[i].replace(".", "");
+	let a = document.createElement("div");
+		a.innerHTML = str;
 
-			outElement.classList.add(classes[i]);
-		}
-
-	let	attributes = str.match(/\[[A-z]+=[A-z]+\]/g) || [],
-		outAttrs = [];
-
-	attributes.forEach(el => {
-		let a = el.replace(/\[|\]/g, "").split("=");
-
-		outAttrs.push({});
-
-		outAttrs[outAttrs.length -1][a[0]] = a[1];
-		outElement.setAttribute(a[0], a[1]);
-	});
-
-	return outElement;
+	return a.firstChild;
 };
 
 Prizm.ready = cb => { // cb: function
