@@ -248,23 +248,24 @@ window.onerror = function(msg, url, line, col, error) {
 };
 
 window.onmessage = function(ev) {
-	if (ev.data.reload) {
-		location.href = location.href;
-	}
-
 	pzm.pkgs = ev.data.pkgs;
 	pzm.alias = ev.data.alias;
 	pzm.loadPrizm(ev.data.pkgs, ev.data.alias);
+	console.log(ev.data);
 
-	fetch("https://cdn.jsdelivr.net/gh/theotime-me/pzm/registry.json")
-	.then(function (response) {
-		return response.json();
-	  })
-	.then(function (response) {
-		pzm.registry = response.packages;
+	if (!ev.data.reload && !pzm.registry) {
+		fetch("https://cdn.jsdelivr.net/gh/theotime-me/pzm/registry.json")
+		.then(function (response) {
+			return response.json();
+		  })
+		.then(function (response) {
+			pzm.registry = response.packages;
+			pzm.display();
+		})
+		.catch(function (err) {
+			console.error(err);
+		});
+	} else {
 		pzm.display();
-	})
-	.catch(function (err) {
-		console.error(err);
-	});
+	}
 };
