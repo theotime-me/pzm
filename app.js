@@ -39,7 +39,7 @@ function remove_duplicates(arr) {
 
 function handle(req, res) {
 	if (req.params.alias == "dev") {
-		res.redirect('https://cdn.jsdelivr.net/gh/theotime-me/pzm/dev.min.js');
+		res.end(fs.readFileSync("./dev.js", "utf-8"));
 	} else if (req.params.alias == "stats") {
 		stats(req.params.packages, res);
 		return false;
