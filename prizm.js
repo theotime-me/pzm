@@ -631,9 +631,12 @@ Prizm.ready = cb => { // cb: function
 Prizm.info = () => {
 	return {
 		packages: Prizm.packages || [],
-		alias: Prizm.alias,
-		more: "pzm.rf.gd/c/"+Prizm.alias+"/"+Prizm.packages.join("|")
+		alias: Prizm.alias
 	};
+};
+
+Prizm.config = () => {
+	return "http://pzm.rf.gd/c/"+Prizm.alias+"/"+Prizm.packages.join("|");
 };
 
 if (window.pzm == undefined) window.pzm = {};
