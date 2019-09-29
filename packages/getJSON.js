@@ -3,7 +3,7 @@ Prizm.getJSON = (url, cb) => {
         url: url,
         async: true,
         success(res, type) {
-            if (type.startsWith("application/json")) {
+            if (type && type.startsWith("application/json")) {
                 cb(res);
             } else {
                 try {
