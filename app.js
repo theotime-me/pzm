@@ -39,6 +39,7 @@ function remove_duplicates(arr) {
 
 function handle(req, res) {
 	if (req.params.alias == "dev") {
+		res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 		res.end(fs.readFileSync("./dev.js", "utf-8"));
 	} else if (req.params.alias == "stats") {
 		stats(req.params.packages, res);
