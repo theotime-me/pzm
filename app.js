@@ -1,10 +1,9 @@
-var http = require('http'),
-	fs = require("fs"),
-	url = require("url"),
+var fs = require("fs"),
 	registry = require("./registry.json").packages,
 	db = require("level")("stats"),
 	pkgsStats = {},
 	app = require("express")(),
+	Terser = require("terser"),
 	cp = `
 /*  _____      _
    |  __ \\    (_)
@@ -87,7 +86,7 @@ function handle(req, res) {
 				if (registry[pkg].dependencies) {
 					registry[pkg].dependencies.forEach(el => {
 						if (!packages.includes(el)) {
-							minify += "\n\n// "+el+" package \n"+compress("./packages/"+el+".js");
+							minify += "\n\n// "+el+" package (dep) \n"+compress("./packages/"+el+".js");
 						}
 					});
 				}
@@ -114,14 +113,13 @@ function handle(req, res) {
 
 function compress(url) {
 	let code = fs.readFileSync(url, "utf8"),
-		lines = code.split("\n"),
-		output = "";
+		result = Terser.minify(code);
 
-	lines.forEach(el => {
-		output += el.replace("//"+el.split("//")[1], "").replace(/	/g, " ").replace(/ +(?= )/g, "");
-	});
-
-	return output.replace(/(\/\*.*?\*\/)|(\/\*[\w\W\n\s]+?\*\/)/g, '');
+	if (result.error) {
+		throw result.error;
+	} else {
+		return result.code;
+	}
 }
 
 let services = ["github", "ouoio", "sckpm", "fb", "yt", "pkg", "bitly", "isgd", "console", "thme", "tw", "ig", "dis"];

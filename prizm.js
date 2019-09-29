@@ -628,9 +628,12 @@ Prizm.ready = cb => { // cb: function
 	document.addEventListener('DOMContentLoaded', cb.call(this)); // Quand la page est chargée, lance le callback "cb()"
 };
 
-Prizm.info = {
-	packages: Prizm.packages || [],
-	alias: Prizm.alias
+Prizm.info = () => {
+	return {
+		packages: Prizm.packages || [],
+		alias: Prizm.alias,
+		more: "pzm.rf.gd/c/"+Prizm.alias+"/"+Prizm.packages.join("|")
+	};
 };
 
 if (window.pzm == undefined) window.pzm = {};
