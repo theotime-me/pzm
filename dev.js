@@ -251,7 +251,6 @@ window.onmessage = function(ev) {
 	pzm.pkgs = ev.data.pkgs;
 	pzm.alias = ev.data.alias;
 	pzm.loadPrizm(ev.data.pkgs, ev.data.alias);
-	console.log(ev.data);
 
 	if (!ev.data.reload && !pzm.registry) {
 		fetch("https://cdn.jsdelivr.net/gh/theotime-me/pzm/registry.json")
