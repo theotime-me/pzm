@@ -49,8 +49,14 @@ function handle(req, res) {
 		stats(req.params.packages, res);
 		return false;
 	} else if (req.params.alias == "config") {
-		res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
-		res.end(JSON.stringify(configs[hashids.decode(req.params.packages)]));
+		if (Object.keys(configs).includes(hashids.decode(req.params.packages))) {
+			res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
+			res.end(JSON.stringify(configs[hashids.decode(req.params.packages)]));
+		} else {
+			res.writeHead(404, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
+			res.end(JSON.stringify({error: 404, message: 'The "'+req.params.packages+'" configuration wasn\'t found. Remember that configs codes are not permanent...'}));
+		}
+
 		return false;
 	}
 
