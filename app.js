@@ -2,6 +2,7 @@ var fs = require("fs"),
 	registry = require("./registry.json").packages,
 	db = require("level")("stats"),
 	pkgsStats = {},
+	configs = [],
 	app = require("express")(),
 	Terser = require("terser"),
 	cp = `
@@ -15,7 +16,10 @@ __________________________________________________
 --- Prizm Framework © CC BY SA ${new Date().getFullYear()} theotime.me ---
 """"""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
 
-app.get('/:alias/:packages', handle);
+const Hashids = require('hashids/cjs');
+const hashids = new Hashids();
+
+app.get('/:alias/:packages/', handle);
 app.get('/:alias/', handle);
 app.get('/', handle);
 
@@ -40,12 +44,14 @@ function handle(req, res) {
 	if (req.params.alias == "dev") {
 		res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 		res.end(fs.readFileSync("./dev.js", "utf-8"));
+		return false;
 	} else if (req.params.alias == "stats") {
 		stats(req.params.packages, res);
 		return false;
-	} else if (req.params.alias == "dm$.js") {
-		req.params.alias = "$";
-		req.params.packages = "ajax|get";
+	} else if (req.params.alias == "config") {
+		res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
+		res.end(JSON.stringify(configs[hashids.decode(req.params.packages)]));
+		return false;
 	}
 
 	req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
@@ -54,15 +60,17 @@ function handle(req, res) {
 		alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
 		packages = req.params.packages ? req.params.packages.split("|") : [""],
 		all = Object.keys(registry),
-		allRegistered = true;
+		allRegistered = true,
+		configToAdd = {
+			alias: alias,
+			pkgs: packages
+		};
 
 		if (packages[packages.length -1] == "") {
 			packages.pop();
 		}
 
 		packages = remove_duplicates(packages);
-
-		minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+compress("./prizm.js")+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";";
 
 		packages.forEach(pkg => {
 			pkg = pkg.replace(/ /g, "");
@@ -77,6 +85,29 @@ function handle(req, res) {
 
 		// Write
 		if (allRegistered) {
+			let found = false,
+				id = 0,
+				config = "http://pzm.rf.gd/c/";
+
+			for (let i = 0; i<configs.length; i++) {
+				if (JSON.stringify(configs[i]) == JSON.stringify(configToAdd)) {
+					found = i;
+				}
+			}
+
+			if (found == false) {
+				configs.push(configToAdd);
+				id = configs.length-1;
+			} else {
+				id = found;
+			}
+
+			id = hashids.encode(id);
+
+			config += id;
+
+			minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+compress("./prizm.js");
+
 			packages.forEach(pkg => {
 				(function() {
 					let current = pkgsStats[pkg] || 0;
@@ -95,17 +126,16 @@ function handle(req, res) {
 			});
 
 			if (alias) {
-				minify += "\n\n// PRIZM alias\nwindow['"+alias+"'] = Prizm;";
+				minify += "\n\n// PRIZM metadata\n"+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";Prizm.config='"+config+"';window['"+alias+"'] = Prizm;";
 
 				res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 				res.end(minify);
 			} else {
 				alias = req.params.alias;
-
 				if (!alias) {
 					return res.redirect("/$/"+packages.filter(item => item !== pkg).join("|"));
 				} else {
-					res.render("notfound.ejs", {alias: alias.length > 15 ? alias.substring(0, 12)+"..." : alias});
+					res.render("notfound.ejs");
 				}
 			}
 		}
