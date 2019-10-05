@@ -49,7 +49,7 @@ function handle(req, res) {
 		stats(req.params.packages, res);
 		return false;
 	} else if (req.params.alias == "config") {
-		if (Object.keys(configs).includes(hashids.decode(req.params.packages))) {
+		if (configs[hashids.decode(req.params.packages)] != undefined) {
 			res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
 			res.end(JSON.stringify(configs[hashids.decode(req.params.packages)]));
 		} else {
