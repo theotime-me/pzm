@@ -103,6 +103,9 @@ this.selector.forEach((el, index) => {
 - enter
 - leave
 
+- focus
+- blur
+
 - is
 - filter
 
@@ -384,6 +387,22 @@ this.hover = fn => this.on('hover', fn);
 this.click = fn => this.on('click', fn);
 this.enter = fn => this.on('enter', fn);
 this.leave = fn => this.on('leave', fn);
+
+this.focus = () => {
+	this.each(el => {
+		el[0].focus();
+	});
+
+	return this;
+};
+
+this.blur = () => {
+	this.each(el => {
+		el[0].blur();
+	});
+
+	return this;
+};
 
 this.is = selector => {
 	return this.filter(selector).length > 0;
