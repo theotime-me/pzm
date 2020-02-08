@@ -205,6 +205,8 @@ this.html = str => {
 		this.each(el => {
 			el[0].innerHTML = str(el.innerHTML);
 		});
+
+		return this;
 	} else if (typeof str != "undefined") {
 		this.each(el => {
 			el[0].innerHTML = str;
@@ -212,7 +214,7 @@ this.html = str => {
 
 		return this;
 	} else {
-		return el[0].innerHTML;
+		return this.getNode(0).innerHTML;
 	}
 };
 
