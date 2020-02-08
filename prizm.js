@@ -502,9 +502,9 @@ this.hide = function(data, cb) {
 };
 
     this.remove = () => {
-        this.each(function (node) {
-            if (node[0].parentNode) {
-                node[0].parentNode.removeChild(node);
+        this.each(el => {
+            if (el[0].parentNode) {
+                el[0].parentNode.removeChild(el[0]);
             }
 		});
 		
