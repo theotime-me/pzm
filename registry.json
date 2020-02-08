@@ -118,6 +118,14 @@
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
 		"size": 0.487
+	},
+
+	"id": {
+		"desc": "Create a random and unique identifier",
+		"examples": ["getJSON(params: object, cb: function)"],
+		"dependencies": [],
+		"keywords": ["identifier", "get", "random", "unique"],
+		"size": 0
 	}
 },
 

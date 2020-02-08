@@ -46,7 +46,7 @@ function Prizm(q, ctx) {
         } else {
 
 			if (ctx instanceof Prizm) {
-				ctx = ctx.first();
+				ctx = ctx[0];
 			}
 
 			if (typeof ctx === "string") {
@@ -68,6 +68,10 @@ function Prizm(q, ctx) {
     } else {
         return false;
 	}
+
+this.selector.forEach((el, index) => {
+	this[index] = el;
+});
 
 /* 01 / DOM
 ===============
@@ -121,12 +125,22 @@ function Prizm(q, ctx) {
 */
 
 /**
+ * @param {function} id Node to retrieve
+ */
+
+this.getNode = id =>{
+	if (this.selector[id]) {
+		return this.selector[id];
+	}
+};
+
+/**
  * @param {function} cb Will be call for each HTML element
  */
 
 this.each = cb =>{
 	this.selector.forEach(el => {
-        return cb.call(el, el);
+        return cb.call(Prizm(el), Prizm(el));
 	});
 };
 
@@ -136,10 +150,10 @@ this.each = cb =>{
 
 this.first = cb =>{
 	if (cb) {
-		return cb(this.selector[0]);
+		return cb(Prizm(this[0]));
 	}
 
-    return this.selector[0];
+    return Prizm(this[0]);
 };
 
 /**
@@ -148,10 +162,10 @@ this.first = cb =>{
 	
 this.last = cb =>{
 	if (cb) {
-		return cb(this.selector[this.selector.length -1]);
+		return cb(Prizm(this.selector[this.selector.length -1]));
 	}
 
-	return this.selector[this.selector.length -1];
+	return Prizm(this.selector[this.selector.length -1]);
 };
 
 /**
@@ -161,9 +175,9 @@ this.last = cb =>{
 this.append = data => {
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el.insertAfter(data, el.firstChild);
+			el[0].insertAfter(data, el.firstChild);
 		} else {
-			el.innerHTML += data;
+			el[0].innerHTML += data;
 		}
 	});
 };
@@ -175,9 +189,9 @@ this.append = data => {
 this.prepend = data => {
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el.insertBefore(data, el.firstChild);
+			el[0].insertBefore(data, el.firstChild);
 		} else {
-			el.innerHTML = data+el.innerHTML;
+			el[0].innerHTML = data+el.innerHTML;
 		}
 	});
 };
@@ -189,18 +203,16 @@ this.prepend = data => {
 this.html = str => {
 	if (typeof str === "function") {
 		this.each(el => {
-			el.innerHTML = str(el.innerHTML);
+			el[0].innerHTML = str(el.innerHTML);
 		});
 	} else if (typeof str != "undefined") {
 		this.each(el => {
-			el.innerHTML = str;
+			el[0].innerHTML = str;
 		});
-		
+
 		return this;
 	} else {
-		return this.first(el => {
-			return el.innerHTML;
-		});
+		return el[0].innerHTML;
 	}
 };
 
@@ -208,10 +220,16 @@ this.html = str => {
  * @param {string} after Insert html after node(s)
  */
 
-this.after = str => {
-	this.each(el => {
-		el.insertAdjacentElement('afterend', Prizm.parse(str));
-	});
+this.after = data => {
+	if (Prizm.isElement(data)) {
+		this.each(el => {
+			el[0].insertAdjacentElement('afterend', data);
+		});
+	} else {
+		this.each(el => {
+			el[0].insertAdjacentElement('afterend', Prizm.parse(data));
+		});
+	}
 
 	return this;
 };
@@ -222,7 +240,7 @@ this.after = str => {
 
 this.before = str => {
 	this.each(el => {
-		el.insertAdjacentElement('beforebegin', Prizm.parse(str));
+		el[0].insertAdjacentElement('beforebegin', Prizm.parse(str));
 	});
 
 	return this;
@@ -232,10 +250,10 @@ this.addClass = (className) => {
 	this.each(el => {
 		if (Array.isArray(className)) {
 			for (let i = 0; i< className.length; i++) {
-				el.classList.add(className[i]);
+				el[0].classList.add(className[i]);
 			}
 		} else {
-			el.classList.add(className);
+			el[0].classList.add(className);
 		}
 	});
 	
@@ -246,10 +264,10 @@ this.removeClass = (className) => {
 	this.each(el => {
 		if (Array.isArray(className)) {
 			for (let i = 0; i< className.length; i++) {
-				el.classList.remove(className[i]);
+				el[0].classList.remove(className[i]);
 			}
 		} else {
-			el.classList.remove(className);
+			el[0].classList.remove(className);
 		}
 	});
 	
@@ -277,9 +295,7 @@ this.toggleClass = (className) => {
 };
 
 this.hasClass = (className) => {
-	return this.first(el => {
-		return el.classList.contains(className);
-	});
+	return el[0].classList.contains(className);
 };
 
 this.attr = (name, value, data) => {
@@ -287,16 +303,16 @@ this.attr = (name, value, data) => {
 
 	if (typeof value === "function") {
 		this.each(el => {
-			el.setAttribute(data+name, value(el.innerHTML));
+			el[0].setAttribute(data+name, value(el.innerHTML));
 		});
 	} else if (value != undefined) {
 		this.each(el => {
 			if (value) {
-				el.setAttribute(data + name, value);
+				el[0].setAttribute(data + name, value);
 			}
 		});
 	} else {
-		return this.first().getAttribute(data + name);
+		return this[0].getAttribute(data + name);
 	}
 
 	return this;
@@ -305,11 +321,11 @@ this.attr = (name, value, data) => {
 this.removeAttr = attr => {
 	this.each(el => {
 		if (Array.isArray(el)) {
-			el.forEach(attrEl => {
-				el.removeAttribute(attrEl);
+			el[0].forEach(attrEl => {
+				el[0].removeAttribute(attrEl);
 			});
 		} else {
-			el.removeAttribute(attr);				
+			el[0].removeAttribute(attr);				
 		}
 	});
 
@@ -323,15 +339,13 @@ this.data = (name, value) => {
 this.prop = (prop, value) => {
 	if (value != undefined) {
 		this.each(el => {
-			el[prop] = value;
+			el[0][prop] = value;
 		});
 
 		return this;
 	}
 
-	return this.first(el => {
-		return el[prop];
-	});
+	return el[0][prop];
 };
 
 this.on = function(event, cb) {
@@ -343,7 +357,7 @@ this.on = function(event, cb) {
 	}
 
 	(this.win_doc ? this.first : this.each)(el => {
-		el.addEventListener(event, e => cb.call(el, e));
+		el[0].addEventListener(event, e => cb.call(el, e));
 	});
 
 	return this;
@@ -352,10 +366,10 @@ this.on = function(event, cb) {
 this.off = event => {
 	if (event != undefined) {
 		this.each(el => {
-			el.removeEventListener(event);
+			el[0].removeEventListener(event);
 		});
 	} else {
-		let oldNode = this.first();
+		let oldNode = this[0];
 		var newNode = oldNode.cloneNode(true);
 		oldNode.parentNode.insertBefore(newNode, oldNode);
 		oldNode.parentNode.removeChild(oldNode);
@@ -378,19 +392,17 @@ this.filter = selector => {
 	var callback = (node) => {
 		node.matches = node.matches || node.msMatchesSelector || node.webkitMatchesSelector; // Make it compatible with some other browsers
 
-		if (typeof selector === "function") {
-			return selector(node);
-		} else {
-			// Check if it's the same element (or any element if no selector was passed)
-			return node.matches(selector || '*');
+		switch (typeof selector) {
+			case "function": return selector(node); // Check if it's the same element (or any element if no selector was passed)
+			case "string": return node.matches(selector || '*');
+			default:
+				if (Prizm.isElement(selector)) {
+					return this.getNode(0) === selector;
+				} else if (selector instanceof Prizm) {
+					return this.getNode(0) === selector[0];
+				}
 		}
 	}, out = [];
-
-	if (selector instanceof Prizm) {
-		return this.first() == selector.first();
-	} else if (typeof selector === "function") {
-		callback = selector;
-	}
 
 	for (var i = 0; i < this.selector.length; i++) {
 		if (callback(this.selector[i]) == true) {
@@ -413,7 +425,7 @@ this.show = function(data, cb) {
 	}
 
 	this.each(el => {
-		Prizm(el).css({
+		el.css({
 			transition: "opacity "+time+unit+" ease",
 			display: "",
 			opacity: "0",
@@ -470,8 +482,8 @@ this.hide = function(data, cb) {
 
     this.remove = () => {
         this.each(function (node) {
-            if (node.parentNode) {
-                node.parentNode.removeChild(node);
+            if (node[0].parentNode) {
+                node[0].parentNode.removeChild(node);
             }
 		});
 		
@@ -484,9 +496,9 @@ this.hide = function(data, cb) {
 			this.each(el => {
                 for (let i = 0; i<keys.length; i++) {
 					if (property[keys[i]] == "") {
-						el.style.removeProperty(keys[i]);
+						el[0].style.removeProperty(keys[i]);
 					} else {
-						el.style.setProperty(keys[i], property[keys[i]]);
+						el[0].style.setProperty(keys[i], property[keys[i]]);
 					}
                 }
 			});
@@ -496,13 +508,10 @@ this.hide = function(data, cb) {
 
         if (typeof property === "string") {
         	if (typeof value === "undefined") {
-				let a;
-                this.first(el => {
-        		    a = el.style[property];
-                }); return a;
+                return this[0].style[property];
         	} else if (typeof value === "string"){
             	this.each(node => {
-            		node.style[property] = value;
+            		node[0].style[property] = value;
 				});
 
 				return this;
@@ -511,7 +520,7 @@ this.hide = function(data, cb) {
 	};
 	
 	this.scrollTo = () => {
-		this.first().scrollIntoView({ behavior: 'smooth' }); // Essaie le Scroll adouci si il est disponible
+		this.getNode(0).scrollIntoView({ behavior: 'smooth' }); // Essaie le Scroll adouci si il est disponible
 
 		return this;
 	};
@@ -519,17 +528,12 @@ this.hide = function(data, cb) {
     this.val = value => { // value: string || boolean
         if (value != undefined) {
             this.each(el => {
-                el.value = value;
+                el[0].value = value;
 			});
 			
 			return this;
         } else {
-            let a;
-            this.first(el => {
-                a = el.value;
-            });
-
-            return a;
+            return this[0].value;
 		}
 	};
 
