@@ -172,6 +172,19 @@ this.last = cb =>{
 };
 
 /**
+ * @param {function} cb called with the parent node
+ */
+	
+this.parent = cb =>{
+	if (cb) {
+		return cb(Prizm(this[0].parentElement));
+	}
+
+	return Prizm(this[0].parentElement);
+};
+
+
+/**
  * @param {string} data Append html to node(s)
  */
 
