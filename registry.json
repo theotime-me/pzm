@@ -123,7 +123,6 @@
 	"id": {
 		"desc": "Create a random and unique identifier",
 		"examples": ["getJSON(params: object, cb: function)"],
-		"dependencies": [],
 		"keywords": ["identifier", "get", "random", "unique"],
 		"size": 0
 	}
