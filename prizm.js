@@ -297,7 +297,7 @@ this.toggleClass = (className) => {
 };
 
 this.hasClass = (className) => {
-	return el[0].classList.contains(className);
+	return this.selector[0].classList.contains(className);
 };
 
 this.attr = (name, value, data) => {
@@ -347,7 +347,7 @@ this.prop = (prop, value) => {
 		return this;
 	}
 
-	return el[0][prop];
+	return this.getNode(0)[prop];
 };
 
 this.on = function(event, cb) {
@@ -359,7 +359,7 @@ this.on = function(event, cb) {
 	}
 
 	(this.win_doc ? this.first : this.each)(el => {
-		el[0].addEventListener(event, e => cb.call(el, e));
+		this.getNode(0).addEventListener(event, e => cb.call(el, e));
 	});
 
 	return this;
