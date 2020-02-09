@@ -13,6 +13,6 @@ Example:
 ``` js
   // Javascript code
   
-  Prizm("p").last().html()
-  // Returns "Goodbye !"
+  Prizm("p").first().html()
+  // Returns "Hi !"
 ```
