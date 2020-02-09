@@ -201,7 +201,7 @@ this.find = selector =>{
 this.append = data => {
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el[0].insertAfter(data, el.firstChild);
+			el[0].appendChild(data);
 		} else {
 			el[0].innerHTML += data;
 		}
@@ -215,7 +215,7 @@ this.append = data => {
 this.prepend = data => {
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el[0].insertBefore(data, el.firstChild);
+			el[0].insertBefore(data, el[0].firstChild);
 		} else {
 			el[0].innerHTML = data+el.innerHTML;
 		}
@@ -233,6 +233,10 @@ this.html = str => {
 		});
 
 		return this;
+	} else if (Prizm.isElement(str)) {
+		this.each(el => {
+			el[0].innerHTML = str;
+		});
 	} else if (typeof str != "undefined") {
 		this.each(el => {
 			el[0].innerHTML = str;
@@ -266,10 +270,16 @@ this.after = data => {
  * @param {string} before Insert before after node(s)
  */
 
-this.before = str => {
-	this.each(el => {
-		el[0].insertAdjacentElement('beforebegin', Prizm.parse(str));
-	});
+this.before = data => {
+	if (Prizm.isElement(data)) {
+		this.each(el => {
+			el[0].insertAdjacentElement('beforebegin', data);
+		});
+	} else {
+		this.each(el => {
+			el[0].insertAdjacentElement('beforebegin', Prizm.parse(data));
+		});
+	}
 
 	return this;
 };
