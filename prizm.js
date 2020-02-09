@@ -187,8 +187,10 @@ this.parent = cb =>{
  */
 
 this.find = selector =>{
+	if (data instanceof Prizm) data = data[0];
+
 	if (Prizm.isElement(selector)) {
-		return Prizm(selector);
+		return Prizm(selector.cloneNode(true));
 	} else {
 		return Prizm(selector, this);
 	}
@@ -199,9 +201,11 @@ this.find = selector =>{
  */
 
 this.append = data => {
+	if (data instanceof Prizm) data = data[0];
+
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el[0].appendChild(data);
+			el[0].appendChild(data.cloneNode(true));
 		} else {
 			el[0].innerHTML += data;
 		}
@@ -213,9 +217,11 @@ this.append = data => {
  */
 
 this.prepend = data => {
+	if (data instanceof Prizm) data = data[0];
+
 	this.each(el => {
 		if (Prizm.isElement(data)) {
-			el[0].insertBefore(data, el[0].firstChild);
+			el[0].insertBefore(data.cloneNode(true), el[0].firstChild);
 		} else {
 			el[0].innerHTML = data+el.innerHTML;
 		}
@@ -227,6 +233,8 @@ this.prepend = data => {
  */
 
 this.html = str => {
+	if (data instanceof Prizm) data = data[0].cloneNode(true);
+
 	if (typeof str === "function") {
 		this.each(el => {
 			el[0].innerHTML = str(el.innerHTML);
@@ -235,7 +243,8 @@ this.html = str => {
 		return this;
 	} else if (Prizm.isElement(str)) {
 		this.each(el => {
-			el[0].innerHTML = str;
+			el.html("");
+			el.append(str);
 		});
 	} else if (typeof str != "undefined") {
 		this.each(el => {
@@ -253,9 +262,11 @@ this.html = str => {
  */
 
 this.after = data => {
+	if (data instanceof Prizm) data = data[0];
+
 	if (Prizm.isElement(data)) {
 		this.each(el => {
-			el[0].insertAdjacentElement('afterend', data);
+			el[0].insertAdjacentElement('afterend', data.cloneNode(true));
 		});
 	} else {
 		this.each(el => {
@@ -271,9 +282,11 @@ this.after = data => {
  */
 
 this.before = data => {
+	if (data instanceof Prizm) data = data[0];
+
 	if (Prizm.isElement(data)) {
 		this.each(el => {
-			el[0].insertAdjacentElement('beforebegin', data);
+			el[0].insertAdjacentElement('beforebegin', data.cloneNode(true));
 		});
 	} else {
 		this.each(el => {
