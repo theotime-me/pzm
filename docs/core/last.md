@@ -1,4 +1,4 @@
-This method return a Prizm object including ___only___ the last node found with your selector
+This method return a Prizm object including ___only___ the last node found with your selector.
 
 Example:
 
