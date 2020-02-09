@@ -31,7 +31,7 @@ function Prizm(q, ctx) {
     if (!(this instanceof Prizm)) return new Prizm(q, ctx);
 
     if (typeof q == "function") {
-        Prizm.ready(q);
+        return Prizm.ready(q);
     } else if (Array.isArray(q)) {
         return Prizm(Prizm.toNodeList(q));
     } else if (typeof q != "undefined") {
@@ -346,7 +346,13 @@ this.toggleClass = (className) => {
 };
 
 this.hasClass = (className) => {
-	return this.selector[0].classList.contains(className);
+	let hasClass = false;
+
+	this.each(el => {
+		if (el[0].classList.contains(className)) hasClass = true;
+	});
+
+	return hasClass;
 };
 
 this.attr = (name, value, data) => {
@@ -714,6 +720,8 @@ Prizm.createNode = name => {
 
 Prizm.ready = cb => { // cb: function
 	document.addEventListener('DOMContentLoaded', cb.call(this)); // Quand la page est chargée, lance le callback "cb()"
+
+	return cb;
 };
 
 Prizm.info = () => {
