@@ -376,16 +376,26 @@ this.prop = (prop, value) => {
 	return this.getNode(0)[prop];
 };
 
-this.on = function(event, cb) {
-	switch(event){
-		case "leave": event = "mouseleave"; break;
-		case "down": event = "mousedown"; break;
-		case "enter": event = "mouseenter"; break;
-		case "hover": event = "mouseover"; break;
+this.on = function(_event, cb) {
+	let events = [];
+
+	if (typeof _event === "string") {
+		events = _event.split(" ");
+	} else if (Array.isArray(_event)) {
+		events = _event;
 	}
 
-	(this.win_doc ? this.first : this.each)(el => {
-		this.getNode(0).addEventListener(event, e => cb.call(el, e));
+	events.forEach(event => {
+		switch(event){
+			case "leave": event = "mouseleave"; break;
+			case "down": event = "mousedown"; break;
+			case "enter": event = "mouseenter"; break;
+			case "hover": event = "mouseover"; break;
+		}
+	
+		(this.win_doc ? this.first : this.each)(el => {
+			this.getNode(0).addEventListener(event, e => cb.call(el, e));
+		});
 	});
 
 	return this;
