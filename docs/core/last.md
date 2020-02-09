@@ -1,4 +1,4 @@
-This method return a Prizm object including ___only___ the last node found with your selector.
+This method return a Prizm object including ___only___ the last node found with your selector. You can pass a function as first argument, it will be called with the Prizm object in first argument too.
 
 Example:
 
@@ -15,4 +15,12 @@ Example:
   
   Prizm("p").last().html()
   // Returns "Goodbye !"
+```
+or
+``` js
+  Prizm("p").last(el => {
+    el.log();
+  });
+
+  // Log <p class="two"> in the console
 ```
