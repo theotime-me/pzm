@@ -6,7 +6,7 @@ Example:
   <!-- HTML code-->
   <div>
     <p class="one">Hi !</p>
-    <p class="one">Goodbye !</p>
+    <p class="two">Goodbye !</p>
   </div>
 ```
 
