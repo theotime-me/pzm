@@ -44,7 +44,6 @@ function Prizm(q, ctx) {
         } else if ((typeof q === "object") && q instanceof Prizm) {
             this.selector = q.selector;
         } else {
-
 			if (ctx instanceof Prizm) {
 				ctx = ctx[0];
 			}
@@ -174,7 +173,7 @@ this.last = cb =>{
 /**
  * @param {function} cb called with the parent node
  */
-	
+
 this.parent = cb =>{
 	if (cb) {
 		return cb(Prizm(this[0].parentElement));
@@ -183,6 +182,17 @@ this.parent = cb =>{
 	return Prizm(this[0].parentElement);
 };
 
+/**
+ * @param {function} selector to find a node which is a child from the original selector
+ */
+
+this.find = selector =>{
+	if (Prizm.isElement(selector)) {
+		return Prizm(selector);
+	} else {
+		return Prizm(selector, this);
+	}
+};
 
 /**
  * @param {string} data Append html to node(s)
