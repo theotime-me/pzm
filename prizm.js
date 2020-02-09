@@ -376,7 +376,7 @@ this.prop = (prop, value) => {
 	return this.getNode(0)[prop];
 };
 
-this.on = function(_event, cb) {
+this.on = function(_event, cb, preventDefault) {
 	let events = [];
 
 	if (typeof _event === "string") {
@@ -394,11 +394,19 @@ this.on = function(_event, cb) {
 		}
 	
 		(this.win_doc ? this.first : this.each)(el => {
-			this.getNode(0).addEventListener(event, e => cb.call(el, e));
+			if (preventDefault) {
+				this.getNode(0).addEventListener(event, e => { e.preventDefault(); cb.call(el, e); });
+			} else {
+				this.getNode(0).addEventListener(event, e => cb.call(el, e));
+			}
 		});
 	});
 
 	return this;
+};
+
+this.handle = (event, cb) => {
+	this.on(event, cb, true);
 };
 
 this.off = event => {
@@ -416,25 +424,20 @@ this.off = event => {
 	return this;
 };
 
-this.hover = fn => this.on('hover', fn);
-this.click = fn => this.on('click', fn);
-this.enter = fn => this.on('enter', fn);
-this.leave = fn => this.on('leave', fn);
+this.hover = fn => typeof fn === "function" ? this.on('hover', fn) : this.trigger("hover");
+this.click = fn => typeof fn === "function" ? this.on('click', fn) : this.trigger("click");
+this.enter = fn => typeof fn === "function" ? this.on('enter', fn) : this.trigger("enter");
+this.leave = fn => typeof fn === "function" ? this.on('leave', fn) : this.trigger("leave");
+this.focus = fn => typeof fn === "function" ? this.on('focus', fn) : this.trigger("focus");
+this.blur  = fn => typeof fn === "function" ? this.on('blur', fn)  : this.trigger("blur");
 
-this.focus = () => {
+this.trigger = eventName => {
 	this.each(el => {
-		el[0].focus();
+		let event = document.createEvent('HTMLEvents');
+			event.initEvent(eventName, true, false);
+
+		el[0].dispatchEvent(event);
 	});
-
-	return this;
-};
-
-this.blur = () => {
-	this.each(el => {
-		el[0].blur();
-	});
-
-	return this;
 };
 
 this.is = selector => {
