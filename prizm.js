@@ -708,6 +708,10 @@ Prizm.parse = function(str) {
 	return a.firstChild;
 };
 
+Prizm.createNode = name => {
+	return document.createElement(name);
+};
+
 Prizm.ready = cb => { // cb: function
 	document.addEventListener('DOMContentLoaded', cb.call(this)); // Quand la page est chargée, lance le callback "cb()"
 };
