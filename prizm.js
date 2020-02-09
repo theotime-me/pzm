@@ -229,26 +229,26 @@ this.prepend = data => {
 };
 
 /**
- * @param {string} html Prepend html to node(s)
+ * @param {string} data Fill node(s) with a string or a DOM element
  */
 
-this.html = str => {
+this.html = data => {
 	if (data instanceof Prizm) data = data[0].cloneNode(true);
 
-	if (typeof str === "function") {
+	if (typeof data === "function") {
 		this.each(el => {
-			el[0].innerHTML = str(el.innerHTML);
+			el[0].innerHTML = data(el.innerHTML);
 		});
 
 		return this;
-	} else if (Prizm.isElement(str)) {
+	} else if (Prizm.isElement(data)) {
 		this.each(el => {
 			el.html("");
-			el.append(str);
+			el.append(data);
 		});
-	} else if (typeof str != "undefined") {
+	} else if (typeof data != "undefined") {
 		this.each(el => {
-			el[0].innerHTML = str;
+			el[0].innerHTML = data;
 		});
 
 		return this;
