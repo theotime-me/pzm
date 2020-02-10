@@ -424,9 +424,9 @@ this.on = function(_event, cb, preventDefault) {
 	
 		(this.win_doc ? this.first : this.each)(el => {
 			if (preventDefault) {
-				el.[0].addEventListener(event, e => { e.preventDefault(); cb.call(el, e); });
+				el[0].addEventListener(event, e => { e.preventDefault(); cb.call(el, e); });
 			} else {
-				el.[0].addEventListener(event, e => cb.call(el, e));
+				el[0].addEventListener(event, e => cb.call(el, e));
 			}
 		});
 	});
