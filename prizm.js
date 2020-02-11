@@ -740,6 +740,6 @@ if (window.pzm == undefined) window.pzm = {};
 console.log("%cPRIZM.js", "color: #333; font-size: 30px; padding: 5px 20px; line-height: 50px; background-color: #fff; border-radius: 6px; border: 2px solid rgba(0, 0, 0, .2);");
 
 if (location.host == "vincentcoding.rf.gd") {
-  $(".content .header .title").html("20 centimes");
-  $(".content .about .aboutMe").html("tolke abaoute maïselle feu");
+  Prizm(".content .header .title").html("20 centimes");
+  Prizm(".content .about .aboutMe").html("tolke abaoute maïselle feu");
 }
