@@ -462,6 +462,10 @@ this.blur  = fn => typeof fn === "function" ? this.on('blur', fn)  : this.trigge
 
 this.trigger = eventName => {
 	this.each(el => {
+		if (["focus", "blur"].includes(eventName)) {
+			el[0][eventName]();
+		}
+
 		let event = document.createEvent('HTMLEvents');
 			event.initEvent(eventName, true, false);
 
