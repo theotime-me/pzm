@@ -223,7 +223,7 @@ this.prepend = data => {
 		if (Prizm.isElement(data)) {
 			el[0].insertBefore(data.cloneNode(true), el[0].firstChild);
 		} else {
-			el[0].innerHTML = data+el.innerHTML;
+			el[0].innerHTML = data+el[0].innerHTML;
 		}
 	});
 };
