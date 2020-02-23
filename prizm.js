@@ -362,17 +362,19 @@ this.attr = (name, value, data) => {
 		this.each(el => {
 			el[0].setAttribute(data+name, value(el.innerHTML));
 		});
+
+		return this;
 	} else if (value != undefined) {
 		this.each(el => {
 			if (value) {
 				el[0].setAttribute(data + name, value);
 			}
 		});
+
+		return this;
 	} else {
 		return this[0].getAttribute(data + name);
 	}
-
-	return this;
 };
 
 this.removeAttr = attr => {
