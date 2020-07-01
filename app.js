@@ -13,7 +13,7 @@ var fs = require("fs"),
    | |   | |  | |/ /| | | | | |
    |_|   |_|  |_/___|_| |_| |_|
 ___________________________________________________
---- Prizm Framework © CC-BY-NC-SA ${new Date().getFullYear()} theotime.me ---
+--- Prizm Framework © CC-BY-SA-ND ${new Date().getFullYear()} theotime.me ---
 """""""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
 
 const Hashids = require('hashids/cjs');
