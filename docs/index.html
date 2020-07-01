@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>PRIZM Framework</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<div id="nav">
+		<div class="logo" onclick="engine.load('../')">
+			<svg class="icon" viewBox="0 0 45 46"><path d="M19 5L22 1L44.6274 23L41.0919 26.5355L19 5Z"/><rect x="8" y="24" width="2" height="24" transform="rotate(-90 8 24)"/><path d="M5 17L5 15L26 15L28 17L5 17Z"/><path d="M3 10L3 8L19 8L21 10L3 10Z"/><rect y="5" width="4" height="22" transform="rotate(-90 0 5)"/><path d="M5 31L5 29L28 29L26 31L5 31Z"/><path d="M3 38L3 36L21 36L19 38L3 38Z"/><rect y="45" width="4" height="22" transform="rotate(-90 0 45)"/><path d="M22 45L19 41L41.0919 19.4645L44.6274 23L22 45Z"/></svg>					
+			<svg class="type" viewBox="0 0 84 32"><rect width="3" height="32"/><rect y="3" width="3" height="20" transform="rotate(-90 0 3)"/><rect x="23" y="3" width="3" height="12" transform="rotate(-90 23 3)"/><rect x="44" y="3" width="3" height="15" transform="rotate(-90 44 3)"/><path d="M46 13L44 11L59 6L59 9L46 13Z"/><rect x="17" width="3" height="20"/><rect x="23" width="3" height="20"/><rect x="56" width="3" height="9"/><rect x="44" y="11" width="3" height="9"/><rect x="38" width="3" height="20"/><rect x="62" width="3" height="20"/><rect x="81" width="3" height="20"/><path d="M81 8.55713e-09L81 4L76.375 8.625L74.375 6.625L81 8.55713e-09Z"/><rect x="20" y="17" width="3" height="20" transform="rotate(90 20 17)"/><rect x="65" y="17" width="3" height="15" transform="rotate(90 65 17)"/><path d="M75 10L73.1066 12.2279L64.5 3.5L65 3.51791e-07L75 10Z"/></svg>
+		</div>
+
+		<div class="input">
+			<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+			<input onkeydown="if ([37, 38, 39, 40, 13, 17, 225, 18, 20, 16].includes(event.keyCode)) {return false;}let a = this; setTimeout(function() {search.input(a.value);}, 50);" placeholder="Loading data ..." type="search" autocomplete="off">
+			<p><span>0</span> registered packages</p>
+		</div>
+
+		<div class="results hidden" style="display: none"></div>
+
+		<div class="right">
+			<svg class="config hidden" style="display: none;" viewBox="0 0 24 24"><path clip-rule="evenodd" fill="none" d="M0 0h24v24H0z"/><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+
+			<p class="size"><span>13.3</span> KB</p>
+			<svg class="download" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+			<svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"/><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"/><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"/><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"/><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"/><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"/><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"/><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"/><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"/><rect y="3.86397" width="6" height="34"/></svg>
+			<svg class="menu" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+		</div>
+	</div>
+
+	<div id="packages" class="hidden" style="display: none;">
+		<p>PACKAGES</p>
+		<svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"/><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"/><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"/><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"/><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"/><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"/><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"/><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"/><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"/><rect y="3.86397" width="6" height="34"/></svg>
+		<div class="list"></div>
+		<a href="/packages" class="add">
+			<span>GET MORE PACKAGES</span>
+		</a>
+	</div>
+
+	<div id="alias" class="hidden" style="display: none;">
+		<div class="hidden" style="display: none;">
+			<h4>ALIAS</h4>
+			<p>Here you can choose the variable that will be the alias of the Prizm function.</p>
+
+			<div class="choose">
+				<h1 class="selected" data-alias="$">$ <span>Dollar</span></h1>
+				<h1 data-alias="_">_ <span>Underscore</span></h1>
+				<h1 data-alias="p">p <span>for Prizm</span></h1>
+				<h1 data-alias="z">z <span>Z letter</span></h1>
+			</div>
+
+			<code><span>Prizm</span>(el)</code>
+			<h5>will be</h5>
+			<code><span class="aka">$</span>(el)</code>
+
+			<a onclick="alias.hide()">OK</a>
+		</div>
+	</div>
+
+	<div id="config" class="hidden" style="display: none;">
+		<div class="hidden" style="display: none;">
+			<h4>CONFIGURATION</h4>
+			<p>This is a <span class="pkgs"></span> configuration using the <span class="alias"></span> alias</p>
+
+			<h5>Packages</h5>
+			<div class="packages"></div>
+
+			<a onmousedown="return false;" class="switch" onclick="config.switchConfirm()">Switch <span>to this configuration </span>now !</a>
+		</div>
+	</div>
+
+	<div id="install" class="hidden" style="display: none;">
+		<div class="hidden" style="display: none;">
+		<svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"/><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"/><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"/><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"/><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"/><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"/><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"/><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"/><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"/><rect y="3.86397" width="6" height="34"/></svg>
+			<a class="button" onmousedown="return false;">INSTALL</a>
+			<h4>wait</h4>
+			<p>Loading ...</p>
+			<h5 class="tags"></h5>
+			<a target="blank" class="github">
+				<svg viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path fill-rule="evenodd" clip-rule="evenodd" fill="#181616" d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"/></svg>
+				<span>/<span class="name"></span>.js</span>
+				<span class="size-wrapper">- <span class="size"></span> KB</span>
+			</a>
+		</div>
+	</div>
+
+	<div id="wrapper">
+		<div id="deps" class="hidden" style="display: none;">
+			<div class="hidden" style="display: none;">
+				<h4>Dependencies</h4>
+				<p>for <svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"/><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"/><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"/><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"/><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"/><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"/><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"/><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"/><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"/><rect y="3.86397" width="6" height="34"/></svg> <span>ajax</span></p>
+
+				<div class="list"></div>
+			</div>
+		</div>
+
+		<div id="panel">
+			<div class="header"></div>
+			<div class="start">
+				<a onclick="engine.load('/docs/?pkg=start')">
+					<svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+					<span>Get started</span>
+				</a>
+			</div>
+			<div class="content load"></div>
+		</div>
+
+		<div id="readme" class="hidden" style="display: none;">
+			<div class="header">
+				<div class="top">
+					<div class="left">
+						<h4>load</h4>
+						<p class="desc">Please wait few seconds...</p>
+					</div>
+	
+					<a class="button" onmousedown="return false;">INSTALL</a>
+					<a target="blank" class="github">
+						<svg viewBox="0 0 50 50" enable-background="new 0 0 50 50"><path fill-rule="evenodd" clip-rule="evenodd" fill="#181616" d="M25 10c-8.3 0-15 6.7-15 15 0 6.6 4.3 12.2 10.3 14.2.8.1 1-.3 1-.7v-2.6c-4.2.9-5.1-2-5.1-2-.7-1.7-1.7-2.2-1.7-2.2-1.4-.9.1-.9.1-.9 1.5.1 2.3 1.5 2.3 1.5 1.3 2.3 3.5 1.6 4.4 1.2.1-1 .5-1.6 1-2-3.3-.4-6.8-1.7-6.8-7.4 0-1.6.6-3 1.5-4-.2-.4-.7-1.9.1-4 0 0 1.3-.4 4.1 1.5 1.2-.3 2.5-.5 3.8-.5 1.3 0 2.6.2 3.8.5 2.9-1.9 4.1-1.5 4.1-1.5.8 2.1.3 3.6.1 4 1 1 1.5 2.4 1.5 4 0 5.8-3.5 7-6.8 7.4.5.5 1 1.4 1 2.8v4.1c0 .4.3.9 1 .7 6-2 10.2-7.6 10.2-14.2C40 16.7 33.3 10 25 10z"/></svg>
+						<span>/packages/<span class="name"></span>.js</span>
+						<span class="size-wrapper">- <span class="size"></span> KB</span>
+					</a>
+	
+					<a class="deps">
+						<svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+						<p>USE</p>
+						<h5></h5>
+					</a>
+				</div>
+
+				<code class="plaintext">loading of docs ...</code>
+			</div>
+
+			<div class="hr">
+				<p>README</p>
+				<div class="line"></div>
+			</div>
+
+			<div class="content">
+
+			</div>
+		</div>
+
+		<div id="chooseDocs" style="display: none" class="hidden">
+			<div class="packages" onclick="engine.load('/docs/?pkg=start');">
+				<h4>Packages</h4>
+				<svg class="packages" viewBox="0 0 83 39"><path d="M6.00001 11.364L6.00001 3.86397L23.2721 20.864L19.0294 25.1066L6.00001 11.364Z"/><path d="M6 37.864L6 29.864L19.0294 16.6213L23.2721 20.864L6 37.864Z"/><path d="M24 3.86397L31.7574 3.8934L48.7279 20.864L42 21.864L24 3.86397Z"/><path d="M30 9.86397L24 3.86397L66 3.86397L66 9.86397L30 9.86397Z"/><path d="M29 31.864L23 37.864L66 37.864L66 31.864L29 31.864Z"/><rect x="31.7574" y="37.8345" width="6" height="24" transform="rotate(-135 31.7574 37.8345)"/><path d="M31.7574 37.8345L27 33.864L44.4853 16.6213L48.7279 20.864L31.7574 37.8345Z"/><path d="M62 8.10661L66 3.86397L83 20.864L79 24.864L62 8.10661"/><path d="M66 37.864L61.4558 33.5919L78.4264 16.6213L83 20.864L66 37.864Z"/><rect y="3.86397" width="6" height="34"/></svg>
+				<p>Learn more about packages in a dedicated documentation.</p>
+			</div>
+
+			<div class="core" onclick="engine.load('/docs/?core=start');">
+				<h4>Core</h4>
+				<svg class="core" viewBox="0 0 78 90" fill="none"><path d="M5.02886 25.3868L39 5.7735L72.9711 25.3868V64.6133L39 84.2265L5.02886 64.6133V25.3868Z" stroke-width="10"/><line x1="2.97101" y1="66.285" x2="72.971" y2="24.285" stroke-width="4"/><line x1="39" y1="9" x2="39" y2="84" stroke-width="4"/><line x1="2.21411" y1="23.8146" x2="74.2141" y2="63.8146" stroke-width="5"/><path d="M74.4697 24.0354L74.4697 65.5354L39.4697 46.0354L74.4697 24.0354Z" class="fill" /><path class="fill" d="M74.4401 63.3109L38.5 84.0609L37.8875 44L74.4401 63.3109Z"/></svg>
+				<p>All the functions of the Prizm core explained.</p>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://pzm.herokuapp.com/$/scrolltop|ajax|get|cookies"></script>
+	<script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+	<script src="../highlight.pack.js"></script>
+	<script src="../engine.js"></script>
+	<script src="../deps.js"></script>
+	<script src="../main.js"></script>
+</body>
+</html>

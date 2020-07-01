@@ -12,16 +12,16 @@ var fs = require("fs"),
    |  ___/ '__| |_  / '_ \` _ \\
    | |   | |  | |/ /| | | | | |
    |_|   |_|  |_/___|_| |_| |_|
-__________________________________________________
---- Prizm Framework © CC BY SA ${new Date().getFullYear()} theotime.me ---
-""""""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
+___________________________________________________
+--- Prizm Framework © CC-BY-NC-SA ${new Date().getFullYear()} theotime.me ---
+"""""""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
 
 const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
 
-app.get('/:alias/:packages/', handle);
-app.get('/:alias/', handle);
-app.get('/', handle);
+app.get('/code/:alias/:packages/', handle);
+app.get('/code/:alias/', handle);
+app.get('/code/', handle);
 
 // 404 handle
 app.use(function(req, res, next) {

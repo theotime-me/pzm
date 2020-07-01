@@ -14,7 +14,7 @@ Prizm.ajax({
 ---
 
 ## Arguments
-There are all arguments availables as [destructured parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Unpacking_fields_from_objects_passed_as_function_parameter).
+All theses arguments are availables as [destructured parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Unpacking_fields_from_objects_passed_as_function_parameter).
 
 | Argument    | Description | Type  | Default
 | ----------- | ----------- | ----  |--------
