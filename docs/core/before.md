@@ -6,10 +6,10 @@ See instead this basic HTML code:
 <p class="old-content">How are you ?</p>
 ```
 
-Then whether the `after()` method is called like that,
+Then whether the `before()` method is called like that,
 
 ```js
-Prizm("one").after('<h4 class="new-content">Hello !</h4>');
+Prizm("one").before('<h4 class="new-content">Hello !</h4>');
 ```
 
 the DOM will look like this.
