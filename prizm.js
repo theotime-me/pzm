@@ -473,6 +473,8 @@ this.trigger = eventName => {
 
 		el[0].dispatchEvent(event);
 	});
+
+	return this;
 };
 
 this.is = selector => {
@@ -552,16 +554,18 @@ this.hide = function(data, cb) {
 
 	if (time != 0) {
 		this.css({
-			transition: "opacity "+time+unit+" ease",
-			opacity: "0",
+			transition: "opacity "+time+unit+" ease"
 		});
 	}
 
-	let _this = this;
+	setTimeout(() => {
+		this.css({
+			opacity: 0
+		});
+	}, 50);
 
-	setTimeout(function() {
-		_this.css({
-			display: "none",
+	setTimeout(() => {
+		this.css({
 			transition: "",
 			opacity: ""
 		});
@@ -645,6 +649,14 @@ this.hide = function(data, cb) {
 
 		return this;
 	};
+
+/* 01.2 / NO NODE
+================= */ 
+if (!this[0]) {
+	this = undefined;
+}
+
+
 }
 
 /* 02 / METHODS
