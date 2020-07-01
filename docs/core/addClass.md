@@ -1,4 +1,4 @@
-The .addClass Prizm's method allows you to add a className to any DOM element. You have to pass a string as argument or an array to add multiples classes.
+The `$.addClass()` Prizm's method allows you to add one (or more) className to any DOM element(s). You have to pass a string or an array as argument to add multiples classes.
 
 ``` html
   <!-- HTML code-->
