@@ -7,7 +7,7 @@
 	},
 
 	"date": {
-		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc.",
+		"desc": "A unique way to manipulate time values.",
 		"examples": ["date(parameter: string|number|Date)"],
 		"keywords": ["month", "day", "year", "hour", "minute", "second"],
 		"size": 0.921
