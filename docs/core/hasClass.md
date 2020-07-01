@@ -1,5 +1,6 @@
 Check if one of the matched node(s) has the specified class.
-If several elements are matched and just one has the requested class, `Prizm(<selector>).hasClass(<className>)` will return `true`. If 0 node has the class, it returns false.
+If several elements are matched and just one has the requested class, `Prizm(<selector>).hasClass(<className>)` will return `true`.
+If no node has the class, it returns false.
 
 examples:
 
