@@ -1,4 +1,5 @@
-Check if one of the matched node(s) has the specified class. If 3 elements are matched and only one has the requested class, `Prizm(<selector>).hasClass(<className>)` will return `true`. If 0 node has the class, it returns false.
+Check if one of the matched node(s) has the specified class.
+If several elements are matched and just one has the requested class, `Prizm(<selector>).hasClass(<className>)` will return `true`. If 0 node has the class, it returns false.
 
 examples:
 
@@ -12,8 +13,9 @@ examples:
 
 ``` js
   Prizm("p").hasClass("one");
-  // In this case Prizm returns true.
+  Prizm("p").hasClass("two");
+  // In theses case Prizm returns true.
   
     Prizm("p").hasClass("three");
-  // But here false
+  // But here it returns false !
 ```
