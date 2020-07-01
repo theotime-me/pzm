@@ -650,13 +650,6 @@ this.hide = function(data, cb) {
 		return this;
 	};
 
-/* 01.2 / NO NODE
-================= */ 
-if (!this[0]) {
-	this = undefined;
-}
-
-
 }
 
 /* 02 / METHODS
