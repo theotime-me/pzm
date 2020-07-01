@@ -22,5 +22,5 @@ or
     el.log();
   });
 
-  // Log the [Prizm DOM Element] in the console
+  // Log the [Prizm DOM Element] of <p class="one">Hi !</p> in the console
 ```
