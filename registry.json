@@ -8,7 +8,7 @@
 
 	"date": {
 		"desc": "A simplified function to know the date, year, months, days, hours, minutes, etc.",
-		"examples": ["date(request: string, addZero: boolean)"],
+		"examples": ["date(parameter: string|number|Date)"],
 		"keywords": ["month", "day", "year", "hour", "minute", "second"],
 		"size": 0.921
 	},
@@ -21,49 +21,49 @@
 	},
 
 	"cookies": {
-		"desc": "Adds two function, to setCookie() and getCookie() in Javascript. Usefull and so simple to use !",
+		"desc": "Allow to set and get cookies quickly and easily in Javascript !",
 		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
 		"keywords": ["cookie", "set", "get", "save", "navigator"],
 		"size": 0.744
 	},
 
 	"os": {
-		"desc": "Knows the OS (Operating System) of any user. Windows, MacOS, UNIX or Linux will be returned.",
+		"desc": "Get the OS of any user.",
 		"examples": ["os(name: string)"],
 		"keywords": ["system", "computer", "operating"],
 		"size": 0.406
 	},
 
 	"browser": {
-		"desc": "Detects the browser and return it (Firefox, Opera, Safari, IE, Edge, etc.).",
+		"desc": "Detects and compares the user's web browser.",
 		"examples": ["browser(name: string)"],
 		"keywords": ["navigator", "detect"],
 		"size": 0.688
 	},
 
 	"history": {
-		"desc": "Moves into the history with \"back\" and \"forward\", or using a number (-3, 1, etc.).",
+		"desc": "Browse into the browser's history.",
 		"examples": ["history(go: string|number)"],
 		"keywords": ["back", "prev", "next", "previous", "browse"],
 		"size": 0.468
 	},
 
 	"isMobile": {
-		"desc": "Returns true if the used device is a mobile.",
+		"desc": "Check if the page is displayed on a mobile device.",
 		"examples": ["isMobile()"],
 		"keywords": ["phone", "responsive", "mobile"],
 		"size": 0.288
 	},
 
 	"lang": {
-		"desc": "Returns the language used (fr-fr) or test it.",
-		"examples": ["isMobile(lang: string)"],
+		"desc": "Detects and compares the user language.",
+		"examples": ["lang(lang: string)"],
 		"keywords": ["language", "translate", "speak", "speaking"],
 		"size": 0.233
 	},
 
 	"popup": {
-		"desc": "Shows a popup of any website which allow this.",
+		"desc": "Shows a popup page on the browser.",
 		"examples": ["popup(url: string, title: string, height: number, width: number)"],
 		"keywords": ["url", "show", "window"],
 		"size": 0.363
@@ -122,7 +122,7 @@
 
 	"id": {
 		"desc": "Creates a random and unique identifier",
-		"examples": ["getJSON(params: object, cb: function)"],
+		"examples": ["id(params: object, cb: function)"],
 		"keywords": ["identifier", "get", "random", "unique"],
 		"size": 0
 	}
@@ -156,13 +156,13 @@
 	"first": {
 		"examples": ["first(callback: function)"],
 		"keywords": ["node"],
-		"desc": "Returns the first node or call a function with the first node."
+		"desc": "Returns the first node or call a function with it."
 	},
 
 	"last": {
 		"examples": ["last(callback: function)"],
 		"keywords": ["node"],
-		"desc": "Returns the last node or call a function with the last node."
+		"desc": "Returns the last node or call a function with it."
 	},
 
 	"parent": {
