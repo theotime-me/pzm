@@ -14,7 +14,7 @@ examples:
 ``` js
   Prizm("p").hasClass("one");
   Prizm("p").hasClass("two");
-  // In theses case Prizm returns true.
+  // In theses cases Prizm returns true.
   
     Prizm("p").hasClass("three");
   // But here it returns false !
