@@ -41,7 +41,9 @@ function Prizm(q, ctx) {
             this.selector = [q];
         } else if (q.isNodeList) {
             this.selector = q;
-        } else if ((typeof q === "object") && q instanceof Prizm) {
+        } else if (!q.isNodeList && Array.isArray(q)) {
+            this.selector = Prizm.toNodeList(q);
+        }  else if ((typeof q === "object") && q instanceof Prizm) {
             this.selector = q.selector;
         } else {
 			if (ctx instanceof Prizm) {
@@ -74,7 +76,9 @@ this.selector.forEach((el, index) => {
 
 /* 01 / DOM
 ===============
-
+- getNode
+- parents
+- add
 - each
 - first
 - last
@@ -134,6 +138,47 @@ this.getNode = id =>{
 	if (this.selector[id]) {
 		return this.selector[id];
 	}
+};
+
+/**
+ * @param {function} cb Add some elements to Prizm()
+ */
+
+this.add = cb =>{
+	let elements = Prizm.toArray(this.selector),
+		new_elements = Prizm.toArray(Prizm(cb).selector);
+
+	new_elements.forEach(N => {
+		if (!elements.includes(N)) {
+			elements.push(N);
+		}
+	});
+
+	return Prizm(elements);
+};
+
+/**
+ * @param {function} cb Find parents of an element
+ */
+
+this.parents = (cb) =>{
+	// @ref https://gomakethings.com/how-to-get-all-parent-elements-with-vanilla-javascript/#1-get-all-parents
+
+	// Set up a parent array
+	let parents = [],
+		elem = this.selector[0];
+
+	// Push each parent element to the array
+	for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		if (elem == this.selector[0]) continue;
+
+		parents.push(elem);
+
+		if (cb) cb(Prizm(elem));
+	}
+
+	// Return our parent array
+	return Prizm(parents);
 };
 
 /**
@@ -567,7 +612,8 @@ this.hide = function(data, cb) {
 	setTimeout(() => {
 		this.css({
 			transition: "",
-			opacity: ""
+			opacity: "",
+			display: "none"
 		});
 
 		if (cb) cb.apply(this);
@@ -701,6 +747,22 @@ Prizm.toNodeList = function(arrayOfNodes){
 	});
 
 	return fragment.childNodes;
+};
+
+Prizm.toArray = function(list){
+	if (list.isNodeList()) {
+		let array = [];
+
+		list.forEach(el => {
+			if (Prizm.isElement(el)) {
+				array.push(el);
+			}
+		});
+
+		return array;
+	} else { // not a nodelist
+		return list;
+	}
 };
 
 Prizm.isElement = function(obj) {
