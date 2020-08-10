@@ -1,6 +1,6 @@
 {"packages": {
 	"ajax": {
-		"desc": "Uses the XmlHttpRequest technology to get a file from its URL.",
+		"desc": "Access any file over the Internet, with any browser.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"],
 		"size": 1.02
