@@ -34,7 +34,8 @@
 }
 
 [prizm-package] .text {
-    width: calc(100% - 160px);
+    width: calc(100% - 145px);
+    height: 130px;
     padding: 20px 20px;
     box-sizing: border-box;
     border: 2px solid rgba(0, 0, 0, .2);
@@ -67,7 +68,6 @@
 [prizm-package] .background {
     background: pink;
     width: 145px;
-    margin-left: 15px;
     height: 130px;
     float: left;
 }
@@ -79,7 +79,6 @@
     width: 30px;
     margin-left: -15px;
     position: absolute;
-    bottom: 0;
     display: block;
     transform: skew(12deg);
     -webkit-transform: skew(12deg);
