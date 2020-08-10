@@ -14,7 +14,7 @@
 	},
 
 	"scrolltop": {
-		"desc": "A very simple package which scrolls to the top of the page when it's called.",
+		"desc": "Scroll to the top of the page with one function.",
 		"examples": ["scrolltop()"],
 		"keywords": ["page", "scroll", "top"],
 		"size": 0.220
@@ -113,7 +113,7 @@
 	},
 
 	"getJSON": {
-		"desc": "Gets a JSON file from an url and return it in a callback. Usefull to get results of APIs !",
+		"desc": "Gets a JSON file from an url and return it.",
 		"examples": ["getJSON(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
