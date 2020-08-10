@@ -1,5 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,400;1,800&family=Raleway:wght@500;600&family=IBM+Plex+Mono&display=swap');
 
+* {
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    font-family: "Poppins", sans-serif;
+
+    --ultradarkblue: #1b253f;
+    --darkblue: #003049;
+    --deepblue: #324376;
+    --blue: #586ba4;
+    --lightblue: #b2bee4;
+    --red: #f76c5e;
+    --orange: #f68e5f;
+    --vivid-yellow: #fcbf49;
+    --yellow: #f5dd90;
+    --beige: #eae2b7;
+    --light-gray: #f0eddf;
+
+    --border-radius: 16px;
+}
+
 [prizm-package] {
     overflow: hidden;
     width: 370px;
