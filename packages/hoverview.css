@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Poppins:wght@400;500;600&family=Raleway&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    --prizm-hoverview-background: #f0f0f0;
+}
+
+.hoverview {
+    font-family: "Poppins";
+    font-weight: 400;
+    background-color: var(--prizm-hoverview-background);
+    width: 340px;
+    height: 70px;
+    box-sizing: border-box;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    transition-property: left, right, top, opacity, transform, height;
+    transition-duration: .2s, .2s, .2s, .35s, .3s, .2s;
+    transition-timing-function: ease;
+    cursor: default;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, .17);
+}
+
+.hoverview[type='large-picture'] {
+    height: 90px;
+}
+
+.hoverview.blur {
+    background-color: rgba(243, 243, 243, 0.75);   
+    backdrop-filter: blur(15px) saturate(10%);
+}
+
+.hoverview-arrow {
+    position: fixed;
+    margin-left: 10px;
+    width: 15px;
+    height: 10px;
+    border-left: 7.5px solid transparent;
+    border-right: 7.5px solid transparent;
+    border-bottom: 10px solid transparent;
+    box-sizing: border-box;
+    border-bottom-color: var(--prizm-hoverview-background);
+    transition: .3s ease;
+    -webkit-transition: .3s ease;
+    -moz-transition: .3s ease;
+    -ms-transition: .3s ease;
+    -o-transition: .3s ease;
+}
+
+.hoverview.hidden, .hoverview-arrow.hidden, .hoverview[type='error'], .hoverview-arrow[type='error'] {
+    opacity: 0;
+    transform: scale(.95);
+    -webkit-transform: scale(.95);
+    -moz-transform: scale(.95);
+    -ms-transform: scale(.95);
+    -o-transform: scale(.95);
+}
+
+.hoverview .list > * {
+    display: block;
+    overflow: hidden;
+    height: 100%;
+    transition: .25s ease;
+    -webkit-transition: .25s ease;
+    -moz-transition: .25s ease;
+    -ms-transition: .25s ease;
+    -o-transition: .25s ease;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.hoverview .list .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+}
+
+.hoverview .list .loading svg {
+	width: 96px;
+	height: auto;
+}
+
+.hoverview .list .loading svg circle.stroke {
+    stroke: rgba(0, 0, 0, .4);
+    stroke-width: 1px;
+    fill: transparent;
+}
+
+.hoverview .list .loading svg circle.spinner {
+    stroke: rgba(0, 0, 0, .75);
+    stroke-width: 3px;
+    fill: transparent;
+    stroke-dasharray: 100;
+	stroke-dashoffset: 0;
+	transform-origin: center;
+    animation: dash 1.5s ease-in-out infinite, spin 2s linear infinite;
+    -webkit-animation: dash 1.5s ease-in-out infinite, spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { 
+      transform: 
+        rotate(0deg); 
+    }
+    to { 
+      transform: 
+        rotate(360deg); 
+    }
+}
+  
+@keyframes dash {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+    60% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124;
+    }
+}
+
+.hoverview .list .default {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+}
+
+.hoverview .list .default .img {
+	width: 90px;
+	height: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+	background-size: cover;
+	background-color: #dbdbdb;
+	border-radius: 7px;
+	transition: .2s ease;
+	-webkit-transition: .2s ease;
+	-moz-transition: .2s ease;
+	-ms-transition: .2s ease;
+	-o-transition: .2s ease;
+}
+
+.hoverview .list .default .img.hidden, .hoverview:not(.image) .list .default .img {
+	width: 0px;
+}
+
+.hoverview .list .default svg {
+    width: 0;
+    height: 0;
+}
+
+.hoverview.icon .list .default svg {
+    height: 36px;
+    width: 36px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.hoverview .list .default .text {
+    margin-left: 12px;
+}
+
+.hoverview .list .default .text h4 .favicon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    display: inline-block;
+    transform: translateY(3px);
+    transition: .2s ease;
+    -webkit-transition: .2s ease;
+    -moz-transition: .2s ease;
+    -ms-transition: .2s ease;
+    -o-transition: .2s ease;
+}
+
+.hoverview .list .default .text h4 .favicon.hidden {
+    width: 0;
+    margin-right: 0;
+    background: #c5c5c5;
+	border-radius: 50px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	-ms-border-radius: 50px;
+	-o-border-radius: 50px;
+}
+
+.hoverview .list .default .text h4 span {
+    font-family: "Poppins";
+    font-weight: 500;
+}
+
+.hoverview .list .default .text p {
+    font-family: "Raleway";
+    font-size: 12px;
+    max-width: 230px;
+}
+
+.hoverview:not(.image) .list .default .text p {
+    max-width: 300px;
+}
+
+.hoverview .list .large-picture {
+    background-position: center;
+    background-size: cover;
+    width: 340px;
+    height: 90px;
+}
+
+.hoverview .list > .hidden {
+	max-height: 0;
+    max-width: 0;
+    padding: 0;
+    opacity: 0;
+}

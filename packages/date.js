@@ -1,4 +1,4 @@
-if (typeof Prizm === "undefined") Prizm = {}; // With this line, the package can be used without the whole framework.
+if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
 Prizm.date_deps = {
 	dateOfNearestDay(startingDate, day) {
@@ -153,6 +153,8 @@ Prizm.date = function(date) { // request: string, addZero: boolean
 		};
 
 		out.year = () => d.getFullYear();
+
+
 	}
 
 

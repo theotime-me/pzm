@@ -25,6 +25,7 @@
     overflow: hidden;
     width: 370px;
     height: 130px;
+    margin: 16px;
     box-sizing: border-box;
     border-radius: var(--border-radius);
     -webkit-border-radius: var(--border-radius);
@@ -51,6 +52,7 @@
 
 [prizm-package] .icon {
     width: 42px;
+    height: 20px;
     display: block;
 }
 
