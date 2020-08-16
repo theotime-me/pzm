@@ -1,8 +1,30 @@
 {"packages": {
 	"ajax": {
-		"desc": "Access any file over the Internet, with any browser.",
+		"desc": "Access any file(s) over the Internet, using any browser.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"],
+		"size": 1.02
+	},
+	
+	"hoverview": {
+		"desc": "A COLASBIM better experience regarding links, which are a main part of the web !",
+		"examples": ["hoverview(selector: element)"],
+		"dependencies": ["prettify", "cutty", "ajax", "browser"],
+		"keywords": ["link", "links", "hover", "overview"],
+		"size": 1.02
+	},
+	
+	"prettify": {
+		"desc": "Clean and beautify any string. As simple as that !",
+		"examples": ["hoverview(selector: element)"],
+		"keywords": ["pretty", "beauty", "clean", "string"],
+		"size": 1.02
+	},
+	
+	"cutty": {
+		"desc": "Cut any string sharper or prettier as possible !",
+		"examples": ["hoverview(selector: element)"],
+		"keywords": ["cut"],
 		"size": 1.02
 	},
 
