@@ -17,6 +17,7 @@ ______________________________________________
 ================================== */
 
 Element.prototype.isNodeList = function() {return false;};
+Array.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
 NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
 
 /**
@@ -73,6 +74,8 @@ function Prizm(q, ctx) {
 this.selector.forEach((el, index) => {
 	this[index] = el;
 });
+
+this.length = this.selector.length;
 
 /* 01 / DOM
 ===============
@@ -180,6 +183,28 @@ this.parents = (cb) =>{
 	// Return our parent array
 	return Prizm(parents);
 };
+
+/**
+ * @param {function} cb Find parents of an element
+ */
+
+this.children = (cb) =>{
+
+	// Set up a parent array
+	let elem = this.selector[0],
+		children = elem.childNodes,
+		list = [];
+
+		elem.childNodes.forEach(el => {
+			list.push(el);
+		});
+
+		list = list.filter(el => el.nodeName != "#text");
+
+	// Return our parent array
+	return Prizm(list);
+};
+
 
 /**
  * @param {function} cb Will be call for each HTML element
@@ -807,6 +832,8 @@ Prizm.info = () => {
 Prizm.config = () => {
 	return "http://pzm.rf.gd/c/"+Prizm.alias+"/"+Prizm.packages.join("|");
 };
+
+Prizm.data = {};
 
 if (window.pzm == undefined) window.pzm = {};
 
