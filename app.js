@@ -38,8 +38,6 @@ var PRIZM_ENGINE = {
 		return ret_arr;
 	},
 
-
-
 	preload() {
 		this.preload_bar = new ProgressBar(chalk.bgWhite.black("COMPRESSING")+' :name | [:bar] :percent :etas remaining...', {
 			complete: '█',
@@ -173,12 +171,12 @@ var PRIZM_ENGINE = {
 					if (registry[pkg].dependencies) {
 						registry[pkg].dependencies.forEach(el => {
 							if (!packages.includes(el)) {
-								minify += "\n\n// "+el+" package (dep) \n"+this.compress("./packages/"+el+".js");
+								minify += "\n\n// "+el+" package (dep) \n"+PRIZM_ENGINE.compress("./packages/"+el+".js");
 							}
 						});
 					}
 	
-					minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+"\n"+this.compress("./packages/"+pkg+".js");
+					minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+"\n"+PRIZM_ENGINE.compress("./packages/"+pkg+".js");
 				});
 	
 				if (alias) {
