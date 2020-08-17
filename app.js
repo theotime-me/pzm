@@ -41,6 +41,13 @@ var PRIZM_ENGINE = {
 
 
 	preload() {
+		this.preload_bar = new ProgressBar(chalk.bgWhite.black("COMPRESSING")+' :name | [:bar] :percent :etas remaining...', {
+			complete: '█',
+			incomplete: ' ',
+			width: 25,
+			total: Object.keys(registry).length+1
+		});
+
 		this.compress("./prizm.js");
 
 		Object.keys(registry).forEach(pkg => {
@@ -52,6 +59,14 @@ var PRIZM_ENGINE = {
 		if (Object.keys(this.cache).includes(url)) {
 			return this.cache[url];
 		}
+		
+		if (!fs.existsSync(url)) {
+			this.preload_bar.tick(1, {
+				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")+" NOT FOUND"
+			});
+
+			return false;
+		}
 	
 		let code = fs.readFileSync(url, "utf8"),
 			lines = code.split("\n");
@@ -61,14 +76,15 @@ var PRIZM_ENGINE = {
 		}
 	
 			code = lines.join("\n");
-		let	result = Terser.minify(code, {
-			ecma: 2016,
-			ie8: false
-		});
+		let	result = Terser.minify(code);
 	
 		if (result.error) {
-			throw url;
+			throw result.error;
 		} else {
+			this.preload_bar.tick(1, {
+				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")
+			});
+
 			this.cache[url] = result.code;
 			return result.code;
 		}
@@ -145,8 +161,8 @@ var PRIZM_ENGINE = {
 				id = hashids.encode(id);
 	
 				config += id;
-
-				minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+PRIZM_ENGINE.compress("./prizm.js");
+	
+				minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+PRIZM.compress("./prizm.js");
 	
 				packages.forEach(pkg => {
 					(function() {
