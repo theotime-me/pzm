@@ -41,13 +41,6 @@ var PRIZM_ENGINE = {
 
 
 	preload() {
-		this.preload_bar = new ProgressBar(chalk.bgWhite.black("COMPRESSING")+' :name | [:bar] :percent :etas remaining...', {
-			complete: '█',
-			incomplete: ' ',
-			width: 25,
-			total: Object.keys(registry).length+1
-		});
-
 		this.compress("./prizm.js");
 
 		Object.keys(registry).forEach(pkg => {
@@ -69,16 +62,14 @@ var PRIZM_ENGINE = {
 	
 			code = lines.join("\n");
 		let	result = Terser.minify(code, {
-			ecma: 2016
+			ecma: 2016,
+			ie8: false
 		});
 	
 		if (result.error) {
+			console.log(url);
 			throw result.error;
 		} else {
-			this.preload_bar.tick(1, {
-				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")
-			});
-
 			this.cache[url] = result.code;
 			return result.code;
 		}
