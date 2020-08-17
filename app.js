@@ -59,14 +59,6 @@ var PRIZM_ENGINE = {
 		if (Object.keys(this.cache).includes(url)) {
 			return this.cache[url];
 		}
-		
-		if (!fs.existsSync(url)) {
-			this.preload_bar.tick(1, {
-				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")+" NOT FOUND"
-			});
-
-			return "loul";
-		}
 	
 		let code = fs.readFileSync(url, "utf8"),
 			lines = code.split("\n");
