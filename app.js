@@ -69,7 +69,7 @@ var PRIZM_ENGINE = {
 	
 			code = lines.join("\n");
 		let	result = Terser.minify(code, {
-			keep_fnames: true
+			ecma: 2016
 		});
 	
 		if (result.error) {
