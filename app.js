@@ -162,7 +162,7 @@ var PRIZM_ENGINE = {
 	
 				config += id;
 	
-				minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+this.compress("./prizm.js");
+				minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+PRIZM_ENGINE.compress("./prizm.js");
 	
 				packages.forEach(pkg => {
 					(function() {
