@@ -65,7 +65,7 @@ var PRIZM_ENGINE = {
 				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")+" NOT FOUND"
 			});
 
-			return false;
+			return "loul";
 		}
 	
 		let code = fs.readFileSync(url, "utf8"),

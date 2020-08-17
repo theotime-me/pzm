@@ -32,5 +32,3 @@ Prizm.prettify = function(str) {
 
     return str;
 };
-
-console.log(Prizm.prettify(" euh     au fait    tu viEns quand ????"))
