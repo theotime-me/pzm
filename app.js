@@ -67,8 +67,7 @@ var PRIZM_ENGINE = {
 		});
 	
 		if (result.error) {
-			console.log(url);
-			throw result.error;
+			throw url;
 		} else {
 			this.cache[url] = result.code;
 			return result.code;
