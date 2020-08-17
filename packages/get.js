@@ -11,4 +11,4 @@ Prizm.get = param => { // param: string
 		return vars[param] ? vars[param] : null;	
 	}
 	return vars;
-};?core=start
+};
