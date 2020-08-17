@@ -1,30 +1,31 @@
 /* PREVENT */if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
+Prizm.getStyle("https://raw.githubusercontent.com/theotime-me/pzm/master/packages/hoverview.css");
+
 if (typeof Prizm.data.cache === "undefined") Prizm.data.cache = {};
 
 Prizm.data.hoverview_selector = "a";
 
 Prizm.hoverview = function(selector) {
-    selector = Prizm(selector);
-
     Prizm.data.hoverview_selector = selector;
+
+    selector = Prizm(selector);
 
     selector.each(el => {
 
         if (el[0].nodeName === "A") {
             let href = el[0].href,
                 url = new URL(href),
-                host = url.hostname,
+				host = url.hostname,
+				protocol = url.protocol,
 				path = url.pathname,
 				params = new URLSearchParams(url.search);
 
             if (host.startsWith("www.")) {
                 host = host.substring(4);
-            }
-
+			}
+			
             if (Object.keys(Prizm.data.cache).includes(href)) return false;
-
-            console.log(host, href);
 
             switch (host) {
 				case "youtube.com":
@@ -112,11 +113,18 @@ Prizm.hoverview = function(selector) {
                             // complete relative paths correctly
                             let isAbsolute = new RegExp('^(?:[a-z]+:)?//', 'i');
                             
-                            if (typeof favicon == "string" && favicon.startsWith("/")) favicon = favicon.substring(1);
-        
-                            if (!isAbsolute.test(favicon) && favicon) favicon = baseURI + favicon;
-                            if (!isAbsolute.test(image) && image) image = baseURI + image;
-                            
+							if (favicon) {
+								if (favicon.startsWith("/")) {
+									favicon = protocol+"//"+host+favicon;
+								} else if (!isAbsolute.test(favicon)) favicon = baseURI + favicon;
+							}
+							
+							if (image) {
+								if (image.startsWith("/")) {
+									image = protocol+"//"+host+image;
+								} else if (!isAbsolute.test(image)) image = baseURI + image;	
+							}
+
                             Prizm.data.cache[href] = {
                                 title: title,
 								desc: desc,
@@ -207,6 +215,7 @@ Prizm.hoverview_display = function(href, type, element) {
     setTimeout(() => {
         Prizm(".hoverview, .hoverview-arrow").removeClass("hidden");
 
+			element = element || Prizm(Prizm.data.hoverview_selector)[0];
         let rect = element.getBoundingClientRect(),
 			left = rect.left,
 			width = element.offsetWidth,
