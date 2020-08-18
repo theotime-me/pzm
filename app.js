@@ -1,11 +1,8 @@
 var fs = require("fs"),
 	registry = require("./registry.json").packages,
-	db = require("level")("stats"),
-	pkgsStats = {},
 	configs = [],
 	path = require("path"),
 	chalk = require("chalk"),
-	ProgressBar = require("progress"),
 	app = require("express")(),
 	serve = require("serve-static"),
 	Terser = require("terser"),
@@ -38,19 +35,45 @@ var PRIZM_ENGINE = {
 		return ret_arr;
 	},
 
-	preload() {
-		this.preload_bar = new ProgressBar(chalk.bgWhite.black("COMPRESSING")+' :name | [:bar] :percent :etas remaining...', {
-			complete: '█',
-			incomplete: ' ',
-			width: 25,
-			total: Object.keys(registry).length+1
-		});
+	log(msg, type) {
+		let before = chalk(" ");
 
+		switch (type) {
+			case "error":
+				console.log(chalk.bgRed.white(before)+" "+msg);
+			break;
+
+			case "warn":
+				console.log(chalk.bgYellow(before)+" "+msg);
+			break;
+
+			case "info":
+				console.log(chalk.bgBlueBright(before)+" "+msg);
+			break;
+
+			case "wait":
+				console.log(chalk.bgGreen(before)+" "+msg);
+			break;
+
+			case "request":
+				console.log(chalk.bgMagenta(before)+" "+msg);
+			break;
+
+			default:
+				console.log(chalk.bgWhite(before)+" "+msg);
+		}
+	},
+
+	preload() {
 		this.compress("./prizm.js");
+		this.log("Prizm CORE "+chalk.blueBright("cached"), "info");
 
 		Object.keys(registry).forEach(pkg => {
 			this.compress("./packages/"+pkg+".js");
 		});
+
+		this.log((Object.keys(this.cache).length -1)+" packages "+chalk.blueBright("cached"), "info");
+		this.log(chalk.green("Ready")+" to process...", "wait");
 	},
 
 	compress(url) {
@@ -59,10 +82,6 @@ var PRIZM_ENGINE = {
 		}
 		
 		if (!fs.existsSync(url)) {
-			this.preload_bar.tick(1, {
-				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")+" NOT FOUND"
-			});
-
 			return false;
 		}
 	
@@ -79,16 +98,26 @@ var PRIZM_ENGINE = {
 		if (result.error) {
 			throw result.error;
 		} else {
-			this.preload_bar.tick(1, {
-				name: url.replace(/\/|\.js|packages|\./g, "").replace("prizm", "CORE")
-			});
-
 			this.cache[url] = result.code;
 			return result.code;
 		}
 	},
 
+	sortPackages(list) {
+		list.sort(function(a, b) {
+			if (registry[a].dependencies && registry[a].dependencies.includes(b)) {
+				return +1;
+			} else {
+				return -1;
+			}
+		});
+
+		return list;
+	},
+
 	handle(req, res) {
+		let start_time = new Date().getTime();
+
 		if (req.params.alias == "dev") {
 			res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 			res.end(fs.readFileSync("./dev.js", "utf-8"));
@@ -96,21 +125,12 @@ var PRIZM_ENGINE = {
 		} else if (req.params.alias == "stats") {
 			stats(req.params.packages, res);
 			return false;
-		} else if (req.params.alias == "config") {
-			if (configs[hashids.decode(req.params.packages)] != undefined) {
-				res.writeHead(200, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
-				res.end(JSON.stringify(configs[hashids.decode(req.params.packages)]));
-			} else {
-				res.writeHead(404, {"content-type": "application/json;charset=utf8", "Access-Control-Allow-Origin": "*"});
-				res.end(JSON.stringify({error: 404, message: 'The "'+req.params.packages+'" configuration wasn\'t found. Remember that configs codes are not permanent...'}));
-			}
-	
-			return false;
 		}
 
 		req.params.alias = req.params.alias ? req.params.alias.replace(/ /g, "") : undefined;
 
-		let minify = cp,
+		let minify = "// PRIZM core */ \n"+PRIZM_ENGINE.compress("./prizm.js"),
+			ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress,
 			alias = req.params.alias ? ["$", "_", "p", "z"].includes(req.params.alias) ? req.params.alias : false : false,
 			packages = req.params.packages ? req.params.packages.split("|") : [""],
 			all = Object.keys(registry),
@@ -118,7 +138,9 @@ var PRIZM_ENGINE = {
 			configToAdd = {
 				alias: alias,
 				pkgs: packages
-			};
+			},
+
+			list = [];
 	
 			if (packages[packages.length -1] == "") {
 				packages.pop();
@@ -136,7 +158,7 @@ var PRIZM_ENGINE = {
 					allRegistered = false;
 				}
 			});
-	
+
 			// Write
 			if (allRegistered) {
 				let found = false,
@@ -159,31 +181,44 @@ var PRIZM_ENGINE = {
 				id = hashids.encode(id);
 	
 				config += id;
-	
-				minify += "  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))+"\n\n    "+config+"\n\n  ? http://pzm.rf.gd/docs\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")+"\n\n\n// PRIZM core */ \n"+PRIZM_ENGINE.compress("./prizm.js");
-	
+
 				packages.forEach(pkg => {
-					(function() {
-						let current = pkgsStats[pkg] || 0;
-						pkgsStats[pkg] = current+1;
-					})();
 					pkg = pkg.replace(/ /g, "");
 					if (registry[pkg].dependencies) {
 						registry[pkg].dependencies.forEach(el => {
 							if (!packages.includes(el)) {
-								minify += "\n\n// "+el+" package (dep) \n"+PRIZM_ENGINE.compress("./packages/"+el+".js");
+								list.push(el);
 							}
 						});
 					}
 	
-					minify += "\n\n// "+pkg+" package | http://pkg.rf.gd/"+pkg+"\n"+PRIZM_ENGINE.compress("./packages/"+pkg+".js");
+					list.push(pkg);
+				});
+
+				list = PRIZM_ENGINE.sortPackages(list);
+
+				list.forEach(pkg => {
+					let	depFor = packages.filter(el => registry[el].dependencies && registry[el].dependencies.includes(pkg)),
+						dep = [!packages.includes(pkg) ? " (required by "+(depFor.length == 1 ? depFor : depFor.length)+" package"+(depFor.length > 1 ? "s" : "")+")" : ""],
+						code = PRIZM_ENGINE.compress('./packages/'+pkg+".js");
+
+					minify += '\n\n// '+pkg+' package'+dep+'\n'+code;
 				});
 	
 				if (alias) {
-					minify += "\n\n// PRIZM metadata\n"+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";Prizm.config='"+config+"';window['"+alias+"'] = Prizm;";
+					minify += "// PRIZM metadata\n"+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";window['"+alias+"'] = Prizm;";
 	
+					let time = new Date().getTime() - start_time;
+
+					minify = cp+"\n\n  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))
+						   +"\n\n  ? https://prizm.herokuapp.com/docs"
+						   +"\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")
+						   +"\n\n  ! "+(Buffer.byteLength(minify, 'utf8') / 1000)+"kB / minify / sent on "+new Date().toISOString()+"\n\n\n"+minify;	
+
 					res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 					res.end(minify);
+
+					PRIZM_ENGINE.log(chalk.magenta("Sending")+" Prizm to "+chalk.underline(ip)+" with "+packages.length+" package"+(packages.length > 1 ? "s" : "")+" and "+(list.length - packages.length)+" dependencie"+(list.length - packages.length > 1 ? "s" : "")+". "+chalk.dim("Done in ")+time+"ms"+chalk.dim("."), "request");
 				} else {
 					alias = req.params.alias;
 					if (!alias) {
@@ -216,4 +251,8 @@ app.use(function(req, res, next) {
 	res.render("notfound.ejs");
 });
 
-app.listen(process.env.PORT || 80);
+let port = process.env.PORT || 80;
+
+app.listen(port, () => {
+	PRIZM_ENGINE.log(chalk.green("Listening ")+":"+port+chalk.dim(" for HTTP request..."), "wait");
+});
