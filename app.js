@@ -213,7 +213,7 @@ var PRIZM_ENGINE = {
 					minify = cp+"\n\n  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))
 						   +"\n\n  ? https://prizm.herokuapp.com/docs"
 						   +"\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")
-						   +"\n\n  ! "+(Buffer.byteLength(minify, 'utf8') / 1000)+"kB / minify / sent on "+new Date().toISOString()+"\n\n\n"+minify;	
+						   +"\n\n  ! "+(Buffer.byteLength(minify, 'utf8') / 1000)+"kB / minify / sent on "+new Date().toISOString()+"in "+time+"ms\n\n\n"+minify;	
 
 					res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
 					res.end(minify);
