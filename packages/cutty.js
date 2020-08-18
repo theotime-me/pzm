@@ -1,4 +1,4 @@
-if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
+/* PREVENT */ if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
 Prizm.cutty = function(param, length, pretty, dots) {
     let str, cut = "";

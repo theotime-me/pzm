@@ -173,17 +173,23 @@
 	let url=document.location.pathname.split("/"),
 		p = document.querySelector("p"),
 		newUrl="";
+
+	console.log(url);
 	
 	url.shift();
 	
 	if(url[0] == ""){
 		newUrl+="/<span>&lt;alias&gt;</span>/";
 	} else if (!["$","_","p","z"].includes(url[0])) {
-		newUrl+="/<span>"+url[0].toLowerCase()+"</span>/";
+		let alias = url[1].toLowerCase();
+
+		alias = alias.length > 15 ? alias.substring(0, 12)+"..." : alias;
+
+		newUrl+="/<span>"+alias+"</span>/";
 		p.innerHTML = "Invalid alias.";
 	}
 
-	if(url[1] != ""){
+	if(url[1] != undefined){
 		let pkgs=url[1];
 		if(pkgs.includes("|")){
 			let splited=pkgs.split("|");
