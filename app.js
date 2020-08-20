@@ -1,6 +1,5 @@
 var fs = require("fs"),
 	registry = require("./registry.json").packages,
-	configs = [],
 	path = require("path"),
 	chalk = require("chalk"),
 	app = require("express")(),
