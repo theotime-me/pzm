@@ -2,7 +2,7 @@
 	"platform": {
 		"desc": "Integrate all the power of Prizm's interfaces into your website.",
 		"examples": ["platform.load()"],
-		"dependencies": ["ajax", "getStyle"],
+		"dependencies": ["getStyle"],
 		"keywords": ["api", "package"],
 		"size": 1.02
 	},
