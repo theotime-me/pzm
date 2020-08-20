@@ -1,4 +1,12 @@
 {"packages": {
+	"platform": {
+		"desc": "Integrate all the power of Prizm's interfaces into your website.",
+		"examples": ["platform.load()"],
+		"dependencies": ["ajax", "getStyle"],
+		"keywords": ["api", "package"],
+		"size": 1.02
+	},
+
 	"ajax": {
 		"desc": "Access any file(s) over the Internet, using any browser.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],

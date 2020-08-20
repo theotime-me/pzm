@@ -1,5 +1,7 @@
 if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
+Prizm.getStyle('https://raw.githubusercontent.com/theotime-me/pzm/master/packages/platform.css');
+
 Prizm.platform = {
     registry: false,
 	promise_finished: false,
@@ -11,23 +13,13 @@ Prizm.platform = {
             Prizm.ajax({
 				urls: [Prizm.platform.baseURI+"registry.json", "../packages/platform.css"],
 				async: true,
-                success: [
-					(obj, type) => { // when registry.json is received
-                    	Prizm.platform.registry = JSON.parse(obj);
-						
-						resolve(Prizm.platform.registry);
-						
-						Prizm.platform.replaceElements();
-					},
-
-					(response, type) => {
-						var style  = document.createElement('style');
-						style.innerHTML = response;
-		
-						document.head.appendChild(style);
-					}
-				],
-				error() {
+                success(obj, type) { // when registry.json is received
+                    Prizm.platform.registry = JSON.parse(obj);
+					
+					resolve(Prizm.platform.registry);
+					
+					Prizm.platform.replaceElements();
+				}, error() {
 					reject();
 				}
             });
