@@ -134,16 +134,24 @@
 		"size": 0.261
 	},
 
+	"getStyle": {
+		"desc": "Import a css file using Javascript. Stylish !",
+		"examples": ["getStyle(url: string, cb: function)"],
+		"dependencies": ["ajax"],
+		"keywords": ["import", "download", "style", "css", "fetch", "get"],
+		"size": 1.02
+	},
+
 	"getScript": {
-		"desc": "Gets a javascript or css script from an url and execute it.",
+		"desc": "Import a javascript file using Javascript ! Script-ception.",
 		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
-		"keywords": ["get", "script", "eval", "download", "fetch"],
+		"keywords": ["get", "script", "eval", "download", "fetch", "include", "js", "javascript"],
 		"size": 0.424
 	},
 
 	"getJSON": {
-		"desc": "Gets a JSON file from an url and return it.",
+		"desc": "Get a JSON file from any url and return it.",
 		"examples": ["getJSON(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
