@@ -11,7 +11,7 @@ Prizm.platform = {
     load() {
         Prizm.platform.promise_finished = new Promise((resolve, reject) => {
             Prizm.ajax({
-				urls: [Prizm.platform.baseURI+"registry.json", "../packages/platform.css"],
+				url: Prizm.platform.baseURI+"registry.json",
 				async: true,
                 success(obj, type) { // when registry.json is received
                     Prizm.platform.registry = JSON.parse(obj);
