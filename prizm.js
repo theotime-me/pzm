@@ -829,10 +829,6 @@ Prizm.info = () => {
 	};
 };
 
-Prizm.config = () => {
-	return "http://pzm.rf.gd/c/"+Prizm.alias+"/"+Prizm.packages.join("|");
-};
-
 if (window.pzm == undefined) window.pzm = {};
 
 console.log("%cPRIZM.js", "color: #333; font-size: 30px; padding: 5px 20px; line-height: 50px; background-color: #fff; border-radius: 6px; border: 2px solid rgba(0, 0, 0, .2);");
