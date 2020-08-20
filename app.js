@@ -15,7 +15,7 @@ var fs = require("fs"),
    |_|   |_|  |_/___|_| |_| |_|
 ___________________________________________________
 --- Prizm Framework © CC-BY-SA-ND ${new Date().getFullYear()} theotime.me ---
-"""""""""""""""""""""""""""""""""""""""""""""""""""\n\n`;
+"""""""""""""""""""""""""""""""""""""""""""""""""""`;
 
 const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
@@ -104,15 +104,25 @@ var PRIZM_ENGINE = {
 	},
 
 	sortPackages(list) {
-		list.sort(function(a, b) {
-			if (registry[a].dependencies && registry[a].dependencies.includes(b)) {
-				return +1;
-			} else {
-				return -1;
-			}
+		if (list.length <= 0) {
+			return list;
+		}
+
+		let out = [list[0]];
+
+		list.forEach(pkg => {
+			out.forEach((el, index) => {
+				let deps = registry[el].dependencies || [];
+
+				if (deps.includes(pkg) || index == out.length -1) {
+					out.splice(index, 0, pkg);
+				}
+			});;
 		});
 
-		return list;
+		out = this.remove_duplicates(out);
+
+		return out;
 	},
 
 	handle(req, res) {
@@ -161,26 +171,7 @@ var PRIZM_ENGINE = {
 
 			// Write
 			if (allRegistered) {
-				let found = false,
-					id = 0,
-					config = "http://pzm.rf.gd/c/";
-	
-				for (let i = 0; i<configs.length; i++) {
-					if (JSON.stringify(configs[i]) == JSON.stringify(configToAdd)) {
-						found = i;
-					}
-				}
-	
-				if (found == false) {
-					configs.push(configToAdd);
-					id = configs.length-1;
-				} else {
-					id = found;
-				}
-	
-				id = hashids.encode(id);
-	
-				config += id;
+				let found = false;
 
 				packages.forEach(pkg => {
 					pkg = pkg.replace(/ /g, "");
@@ -195,10 +186,33 @@ var PRIZM_ENGINE = {
 					list.push(pkg);
 				});
 
+				// Check if dependencies have all their dependencies... DEPENDEN-CEPTION !
+
+				let added_dependency = true;
+
+				while (added_dependency) {
+					added_dependency = false;
+
+					list.forEach((pkg, index) => { // check dependencies for each packages
+						let deps = registry[pkg].dependencies || [];
+	
+						deps.forEach(dep => { // check if all dependencies have been correctly added
+							if (!list.includes(dep)) { // if not, it'll been added.
+								list.splice(index, 0, dep); // add the forgotten dependency to the array
+
+								// Something happens ! let's loop again through the "list" array to check if the newly added package needs another to work !
+								added_dependency = true;
+							}
+						});
+					});
+				}
+
+				// Sort the different packages to make sure no one is using a package that is below it, and so prevent stupid errors like: SMTH is not defined... ^^
 				list = PRIZM_ENGINE.sortPackages(list);
 
+				// then we add each packages to the final minify string.
 				list.forEach(pkg => {
-					let	depFor = packages.filter(el => registry[el].dependencies && registry[el].dependencies.includes(pkg)),
+					let	depFor = list.filter(el => registry[el].dependencies && registry[el].dependencies.includes(pkg)),
 						dep = [!packages.includes(pkg) ? " (required by "+(depFor.length == 1 ? depFor : depFor.length)+" package"+(depFor.length > 1 ? "s" : "")+")" : ""],
 						code = PRIZM_ENGINE.compress('./packages/'+pkg+".js");
 
@@ -206,17 +220,20 @@ var PRIZM_ENGINE = {
 				});
 	
 				if (alias) {
-					minify += "// PRIZM metadata\n"+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";window['"+alias+"'] = Prizm;";
+					minify += "\n\n// PRIZM metadata\n"+(packages.length > 0 ? "Prizm.packages=['"+packages.join("','")+"'];" : "")+"Prizm.alias="+(alias ? "'"+alias+"'" : false)+";window['"+alias+"'] = Prizm;";
 	
+					// calculate execution time in milliseconds
 					let time = new Date().getTime() - start_time;
 
+					// Don't forget to add the copyright/metadata to the top of the code !
 					minify = cp+"\n\n  > core"+(alias ? "("+alias+")" : "")+(packages.length != 0 ? " | "+packages.join(" | ") : packages.join(" | "))
 						   +"\n\n  ? https://prizm.herokuapp.com/docs"
 						   +"\n\n  } https://github.com/theotime-me/pzm"+(req.originalUrl.includes(" ") ? "\n\n  ! Pretty URL: "+req.originalUrl.replace(/ /g, "") : "")
 						   +"\n\n  ! "+(Buffer.byteLength(minify, 'utf8') / 1000)+"kB / minify / sent on "+new Date().toISOString()+" in "+time+"ms\n\n\n"+minify;	
 
+					// HTTP(s) headers
 					res.writeHead(200, {"content-type": "text/javascript;charset=utf8", "Access-Control-Allow-Origin": "*"});
-					res.end(minify);
+					res.end(minify); // And we send to the client !
 
 					PRIZM_ENGINE.log(chalk.magenta("Sending")+" Prizm to "+chalk.underline(ip)+" with "+packages.length+" package"+(packages.length > 1 ? "s" : "")+" and "+(list.length - packages.length)+" dependencie"+(list.length - packages.length > 1 ? "s" : "")+". "+chalk.dim("Done in ")+time+"ms"+chalk.dim("."), "request");
 				} else {
