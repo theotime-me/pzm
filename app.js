@@ -17,9 +17,6 @@ ___________________________________________________
 --- Prizm Framework © CC-BY-SA-ND ${new Date().getFullYear()} theotime.me ---
 """""""""""""""""""""""""""""""""""""""""""""""""""`;
 
-const Hashids = require('hashids/cjs');
-const hashids = new Hashids();
-
 var PRIZM_ENGINE = {
 	cache: {},
 
@@ -213,7 +210,7 @@ var PRIZM_ENGINE = {
 				// then we add each packages to the final minify string.
 				list.forEach(pkg => {
 					let	depFor = list.filter(el => registry[el].dependencies && registry[el].dependencies.includes(pkg)),
-						dep = [!packages.includes(pkg) ? " (required by "+(depFor.length == 1 ? depFor : depFor.length)+" package"+(depFor.length > 1 ? "s" : "")+")" : ""],
+						dep = !packages.includes(pkg) ? " (required by "+(depFor.length == 1 ? depFor : depFor.length+" packages")+")" : "",
 						code = PRIZM_ENGINE.compress('./packages/'+pkg+".js");
 
 					minify += '\n\n// '+pkg+' package'+dep+'\n'+code;
