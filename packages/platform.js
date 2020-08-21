@@ -70,9 +70,18 @@ Prizm.platform = {
 
 			if (Object.keys(Prizm.platform.registry.packages).includes(name)) {
 				let package = this.get(name),
-					out = `${!noDiv ?'<div prizm-package="'+name+'">' : ""}
+					icon_color = "blue-deepblue";
+					
+				switch (package.type) {
+					case "basics": icon_color = "yellow"; break;
+					case "network": icon_color = "blue-deepblue"; break;
+					case "experience": icon_color = "orange-red"; break;
+					case "client": icon_color = "orange-red"; break;
+				}
+
+				let	out = `${!noDiv ?'<div prizm-package="'+name+'">' : ""}
 						<div class="text">
-							<img class="icon" src="https://prizm-website.herokuapp.com/icons/package/blue-deepblue.svg" alt="">
+							<img class="icon" src="https://prizm-website.herokuapp.com/icons/package/${icon_color}.svg" alt="">
 							<h4>${name}</h4>
 							<p>${package.desc}</p>
 						</div>
@@ -90,7 +99,12 @@ Prizm.platform = {
 			if (el.hasClass("prizm-processed")) return false;
 
 			if (el.attr("prizm-package")) {
-				el.append(Prizm.platform.package.stringify(el.attr("prizm-package"), true));
+				let pkg = el.attr("prizm-package");
+
+				console.log(Prizm.platform.package.get(pkg));
+
+				el.attr("prizm-package-type", Prizm.platform.package.get(pkg).type);
+				el.append(Prizm.platform.package.stringify(pkg, true));
 			}
 
 			el.addClass("prizm-processed");
