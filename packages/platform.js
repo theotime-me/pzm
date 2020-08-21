@@ -86,11 +86,17 @@ Prizm.platform = {
 	
 	replaceElements() {
 		Prizm("[prizm-package]").each(el => {
+			if (el.hasClass("prizm-processed")) return false;
+
 			if (el.attr("prizm-package")) {
 				el.append(Prizm.platform.package.stringify(el.attr("prizm-package"), true));
 			}
+
+			el.addClass("prizm-processed");
 		});
 	}
 };
+
+setInterval(Prizm.platform.replaceElements, 2500);
 
 Prizm.platform.load();
