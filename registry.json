@@ -1,137 +1,156 @@
 {"packages": {
 	"platform": {
-		"desc": "Integrate all the power of Prizm's interfaces into your website.",
+		"desc": "Integrate Prizm apis into your website.",
 		"examples": ["platform.load()"],
 		"dependencies": ["getStyle"],
 		"keywords": ["api", "package"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "client"
 	},
 
 	"ajax": {
 		"desc": "Access any file(s) over the Internet, using any browser.",
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "network"
 	},
 	
 	"hoverview": {
-		"desc": "A COLASBIM better experience regarding links, which are a main part of the web !",
+		"desc": "A better experience regarding links, which are a main part of the web !",
 		"examples": ["hoverview(selector: element)"],
 		"dependencies": ["prettify", "cutty", "ajax", "browser"],
 		"keywords": ["link", "links", "hover", "overview"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "experience"
 	},
 	
 	"prettify": {
 		"desc": "Clean and beautify any string. As simple as that !",
 		"examples": ["hoverview(selector: element)"],
 		"keywords": ["pretty", "beauty", "clean", "string"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "basics"
 	},
 	
 	"cutty": {
 		"desc": "Cut any string sharper or prettier as possible !",
 		"examples": ["hoverview(selector: element)"],
 		"keywords": ["cut"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "basics"
 	},
 
 	"date": {
 		"desc": "A unique way to manipulate time values.",
 		"examples": ["date(parameter: string|number|Date)"],
 		"keywords": ["month", "day", "year", "hour", "minute", "second"],
-		"size": 0.921
+		"size": 0.921,
+		"type": "basics"
 	},
 
 	"scrolltop": {
 		"desc": "Scroll to the top of the page with one function.",
 		"examples": ["scrolltop()"],
 		"keywords": ["page", "scroll", "top"],
-		"size": 0.220
+		"size": 0.220,
+		"type": "basics"
 	},
 
 	"cookies": {
 		"desc": "Allow to set and get cookies quickly and easily in Javascript !",
 		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
 		"keywords": ["cookie", "set", "get", "save", "navigator"],
-		"size": 0.744
+		"size": 0.744,
+		"type": "client"
 	},
 
 	"os": {
 		"desc": "Get the OS of any user.",
 		"examples": ["os(name: string)"],
 		"keywords": ["system", "computer", "operating"],
-		"size": 0.406
+		"size": 0.406,
+		"type": "client"
 	},
 
 	"browser": {
 		"desc": "Detects and compares the user's web browser.",
 		"examples": ["browser(name: string)"],
 		"keywords": ["navigator", "detect"],
-		"size": 0.688
+		"size": 0.688,
+		"type": "client"
 	},
 
 	"history": {
 		"desc": "Browse into the browser's history.",
 		"examples": ["history(go: string|number)"],
 		"keywords": ["back", "prev", "next", "previous", "browse"],
-		"size": 0.468
+		"size": 0.468,
+		"type": "client"
 	},
 
 	"isMobile": {
 		"desc": "Check if the page is displayed on a mobile device.",
 		"examples": ["isMobile()"],
 		"keywords": ["phone", "responsive", "mobile"],
-		"size": 0.288
+		"size": 0.288,
+		"type": "client"
 	},
 
 	"lang": {
 		"desc": "Detects and compares the user language.",
 		"examples": ["lang(lang: string)"],
 		"keywords": ["language", "translate", "speak", "speaking"],
-		"size": 0.233
+		"size": 0.233,
+		"type": "client"
 	},
 
 	"popup": {
 		"desc": "Shows a popup page on the browser.",
 		"examples": ["popup(url: string, title: string, height: number, width: number)"],
 		"keywords": ["url", "show", "window"],
-		"size": 0.363
+		"size": 0.363,
+		"type": "client"
 	},
 
 	"print": {
 		"desc": "Asks the user about print the page.",
 		"examples": ["print()"],
 		"keywords": ["page"],
-		"size": 0.157
+		"size": 0.157,
+		"type": "client"
 	},
 
 	"screen": {
 		"desc": "Gets info about the screen width and height.",
 		"examples": ["screen(value: \"height\" OR \"width\")"],
 		"keywords": ["width", "height", "page"],
-		"size": 0.245
+		"size": 0.245,
+		"type": "client"
 	},
 
 	"title": {
 		"desc": "Gets or set the current title of the page.",
 		"examples": ["title(newTitle: string)"],
 		"keywords": ["tab"],
-		"size": 0.249
+		"size": 0.249,
+		"type": "client"
 	},
 
 	"get": {
 		"desc": "Gets url parameters after the \"?\".",
 		"examples": ["url(param: string)"],
 		"keywords": ["get", "param", "url"],
-		"size": 0.340
+		"size": 0.340,
+		"type": "basics"
 	},
 
 	"url": {
 		"desc": "Sets or gets the current url to a new destination.",
 		"examples": ["url(target: string)"],
 		"keywords": ["set", "target", "link"],
-		"size": 0.261
+		"size": 0.261,
+		"type": "basics"
 	},
 
 	"getStyle": {
@@ -139,7 +158,8 @@
 		"examples": ["getStyle(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["import", "download", "style", "css", "fetch", "get"],
-		"size": 1.02
+		"size": 1.02,
+		"type": "network"
 	},
 
 	"getScript": {
@@ -147,7 +167,8 @@
 		"examples": ["getScript(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download", "fetch", "include", "js", "javascript"],
-		"size": 0.424
+		"size": 0.424,
+		"type": "network"
 	},
 
 	"getJSON": {
@@ -155,14 +176,16 @@
 		"examples": ["getJSON(url: string, cb: function)"],
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
-		"size": 0.487
+		"size": 0.487,
+		"type": "network"
 	},
 
 	"id": {
 		"desc": "Creates a random and unique identifier",
 		"examples": ["id(params: object, cb: function)"],
 		"keywords": ["identifier", "get", "random", "unique"],
-		"size": 0
+		"size": 0,
+		"type": "basics"
 	}
 },
 

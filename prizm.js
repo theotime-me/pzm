@@ -430,7 +430,7 @@ this.attr = (name, value, data) => {
 
 	if (typeof value === "function") {
 		this.each(el => {
-			el[0].setAttribute(data+name, value(el.innerHTML));
+			el[0].setAttribute(data+name, value(el));
 		});
 
 		return this;
