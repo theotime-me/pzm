@@ -49,9 +49,9 @@
 		"type": "basics"
 	},
 
-	"scrolltop": {
+	"scrollTop": {
 		"desc": "Scroll to the top of the page with one function.",
-		"examples": ["scrolltop()"],
+		"examples": ["scrollTop()"],
 		"keywords": ["page", "scroll", "top"],
 		"size": 0.220,
 		"type": "basics"
