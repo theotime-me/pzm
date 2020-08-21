@@ -79,6 +79,7 @@
     background: var(--red);
     height: 130px;
     width: 30px;
+    position: absolute;
     margin-left: -15px;
     display: block;
     transform: skew(12deg);
