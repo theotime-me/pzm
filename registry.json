@@ -17,7 +17,7 @@
 	},
 	
 	"hoverview": {
-		"desc": "A better experience regarding links, which are a main part of the web !",
+		"desc": "A better user experience with links.",
 		"examples": ["hoverview(selector: element)"],
 		"dependencies": ["prettify", "cutty", "ajax", "browser"],
 		"keywords": ["link", "links", "hover", "overview"],
@@ -42,7 +42,7 @@
 	},
 
 	"date": {
-		"desc": "A unique way to manipulate time values.",
+		"desc": "A smart way to manipulate time values.",
 		"examples": ["date(parameter: string|number|Date)"],
 		"keywords": ["month", "day", "year", "hour", "minute", "second"],
 		"size": 0.921,
@@ -114,7 +114,7 @@
 	},
 
 	"print": {
-		"desc": "Asks the user about print the page.",
+		"desc": "Asks the user to print the page with the default browser popup.",
 		"examples": ["print()"],
 		"keywords": ["page"],
 		"size": 0.157,
