@@ -1,9 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,700;1,400;1,800&family=Raleway:wght@500;600&family=IBM+Plex+Mono&display=swap');
 
-* {
+[prizm-package], [prizm-package] * {
     margin: 0px;
     padding: 0px;
-    overflow-x: hidden;
     font-family: "Poppins", sans-serif;
 
     --ultradarkblue: #1b253f;
@@ -81,7 +80,6 @@
     height: 130px;
     width: 30px;
     margin-left: -15px;
-    position: absolute;
     display: block;
     transform: skew(12deg);
     -webkit-transform: skew(12deg);
