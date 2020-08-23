@@ -101,8 +101,6 @@ Prizm.platform = {
 			if (el.attr("prizm-package")) {
 				let pkg = el.attr("prizm-package");
 
-				console.log(Prizm.platform.package.get(pkg));
-
 				el.attr("prizm-package-type", Prizm.platform.package.get(pkg).type);
 				el.append(Prizm.platform.package.stringify(pkg, true));
 			}
