@@ -822,6 +822,8 @@ Prizm.ready = cb => { // cb: function
 	return cb;
 };
 
+Prizm.packages = [];
+
 Prizm.info = () => {
 	return {
 		packages: Prizm.packages || [],
