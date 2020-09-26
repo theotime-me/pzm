@@ -1,4 +1,4 @@
-.ultralink {
+[ultralink] {
     text-decoration: none;
     padding: 8px;
     margin: 0;
@@ -18,17 +18,17 @@
     -o-transition: .1s ease;
 }
 
-.ultralink:hover {
+[ultralink]:hover {
     background-color: #425385;
 }
 
-.ultralink svg {
+[ultralink] svg {
     width: 32px;
     margin-right: 8px;
     float: left;
 }
 
-.ultralink h4 {
+[ultralink] h4 {
     font-family: "Poppins", sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -36,7 +36,7 @@
     margin-top: -3px;
 }
 
-.ultralink p {
+[ultralink] p {
     font-family: "IBM Plex Mono", sans-serif;
     font-size: 10px;
     margin-top: -3px;
@@ -48,7 +48,7 @@
     -o-transition: .1s ease;
 }
 
-.ultralink:hover p {
+[ultralink]:hover p {
     text-decoration: underline;
     color: rgba(255, 255, 255, 0.55);
 }
