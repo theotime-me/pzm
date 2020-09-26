@@ -114,12 +114,15 @@ Prizm.date = function(date) { // request: string, addZero: boolean
 
 		out.Date = d;
 		out.month = () => Prizm.date_deps.month_to_string(d.getMonth());
+		out.MONTH = () => d.getMonth();
 		out.day = () => Prizm.date_deps.day_to_string(d.getDay());
+		out.DAY = () => d.getDay();
 		out.date = () => d.getDate();
 
-		out.hour = out.hours = () => d.getHours();
-		out.minutes = () => d.getMinutes();
-		out.seconds = () => d.getSeconds();
+		out.hour = out.hours = out.hr = out.hrs = () => d.getHours();
+		out.minutes = out.min = out.mn = out.minute = () => d.getMinutes();
+		out.seconds = out.s = out.sec = out.secs = () => d.getSeconds();
+		out.milliseconds = out.ms = out.miliseconds = () => d.getMilliseconds();
 
 		out.clock = (seconds) => out.hours()+":"+out.minutes() + (seconds ? ":"+out.seconds() : "");
 
@@ -160,5 +163,3 @@ Prizm.date = function(date) { // request: string, addZero: boolean
 
 	return out;
 };
-
-console.log(Prizm.date("today"));

@@ -85,7 +85,7 @@ Prizm.platform = {
 							<h4>${name}</h4>
 							<p>${package.desc}</p>
 						</div>
-						
+
 						<img class="background" src="" alt="">
 						${!noDiv ? '</div>' : ""}`;
 					
