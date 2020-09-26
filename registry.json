@@ -24,6 +24,15 @@
 		"size": 1.02,
 		"type": "experience"
 	},
+
+	"ultralink": {
+		"desc": "Makes links great again (really).",
+		"examples": ["ultralink()"],
+		"dependencies": ["getStyle"],
+		"keywords": ["link", "links", "ultra", "enhance", "improve"],
+		"size": 1.02,
+		"type": "experience"
+	},
 	
 	"prettify": {
 		"desc": "Clean and beautify any string. As simple as that !",
@@ -263,9 +272,9 @@
 	},
 
 	"remove": {
-		"examples": ["remove()"],
+		"examples": ["remove(selector)"],
 		"keywords": ["remove", "node", "element"],
-		"desc": "Removes all matched nodes."
+		"desc": "Removes nodes from different contexts."
 	},
 
 	"removeAttr": {
