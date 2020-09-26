@@ -1,6 +1,6 @@
 /* PREVENT */if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
-Prizm.getStyle("https://raw.githubusercontent.com/theotime-me/pzm/master/packages/hoverview.css");
+Prizm.getStyle("https://raw.githubusercontent.com/theotime-me/pzm/master/packages/ultralink.css");
 
 Prizm.ultralink = function() {
     Prizm("[ultralink]").each(el => {
