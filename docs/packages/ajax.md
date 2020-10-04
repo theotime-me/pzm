@@ -2,11 +2,11 @@ Ajax is a package that helps you to make requests with the [XMLHttpRequest](http
 
 ```js
 Prizm.ajax({
-  url: "https://randomuser.me/api/",
-  async: true,
-  success(data) {
-    $.log(data.results[0].name.first);
-  }
+    url: "https://randomuser.me/api/",
+    async: true,
+    success(data) {
+        $.log(data.results[0].name.first);
+    }
 });
 ```
 `log "hedwig" in the console`
