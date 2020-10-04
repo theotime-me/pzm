@@ -36,7 +36,7 @@
 	
 	"prettify": {
 		"desc": "Clean and beautify any string. As simple as that !",
-		"examples": ["hoverview(selector: element)"],
+		"examples": ["prettify(string: string)"],
 		"keywords": ["pretty", "beauty", "clean", "string"],
 		"size": 1.02,
 		"type": "basics"
