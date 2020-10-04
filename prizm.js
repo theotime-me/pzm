@@ -257,7 +257,7 @@ this.parent = cb =>{
  */
 
 this.find = selector =>{
-	if (data instanceof Prizm) data = data[0];
+	if (selector instanceof Prizm) selector = selector[0];
 
 	if (Prizm.isElement(selector)) {
 		return Prizm(selector.cloneNode(true));
