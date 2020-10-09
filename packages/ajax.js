@@ -2,7 +2,7 @@
 
 Prizm.data.ajax = {};
 
-Prizm.ajax = ({ url, urls, method, data, async, headers, success, error, progress, parse, id}) => { // url: string, method: string, async: boolean, success: function, error: function, progress: function
+Prizm.ajax = ({ url, urls, method, callback, cb, data, async, headers, success, error, progress, parse, id}) => { // url: string, method: string, async: boolean, success: function, error: function, progress: function
     method = method != undefined ? method.toUpperCase() : "GET";
 	async = async || false;
 	parse = parse != undefined ? parse : true;
@@ -52,6 +52,9 @@ Prizm.ajax = ({ url, urls, method, data, async, headers, success, error, progres
     xhr.open(method, url, async);
     xhr.onload = function () {
       if (xhr.readyState === 4) {
+		if (callback) callback();
+		if (cb) cb();
+
         if (xhr.status === 200) {
 			if (success) {
 				if (xhr.getResponseHeader("content-type") != null && xhr.getResponseHeader("content-type").startsWith("application/json") && parse == true) {
