@@ -45,7 +45,7 @@
 	
 	"cutty": {
 		"desc": "Cut any string sharper or prettier as possible !",
-		"examples": ["hoverview(selector: element)"],
+		"examples": ["cutty(string: string, length: number, pretty: boolean, dots: boolean)"],
 		"keywords": ["cut"],
 		"size": 1.02,
 		"type": "basics"
@@ -152,7 +152,7 @@
 
 	"get": {
 		"desc": "Gets url parameters after the \"?\".",
-		"examples": ["url(param: string)"],
+		"examples": ["get(param: string)"],
 		"keywords": ["get", "param", "url"],
 		"size": 0.340,
 		"type": "basics"
