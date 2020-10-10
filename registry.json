@@ -13,6 +13,7 @@
 		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
 		"keywords": ["xhr", "fetch", "get", "post"],
 		"size": 1.02,
+		"docs": true,
 		"type": "network"
 	},
 	
@@ -71,6 +72,7 @@
 		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
 		"keywords": ["cookie", "set", "get", "save", "navigator"],
 		"size": 0.744,
+		"docs": true,
 		"type": "client"
 	},
 
@@ -87,6 +89,7 @@
 		"examples": ["browser(name: string)"],
 		"keywords": ["navigator", "detect"],
 		"size": 0.688,
+		"docs": true,
 		"type": "client"
 	},
 
@@ -127,6 +130,7 @@
 		"examples": ["print()"],
 		"keywords": ["page"],
 		"size": 0.157,
+		"docs": true,
 		"type": "client"
 	},
 
