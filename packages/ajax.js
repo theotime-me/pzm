@@ -58,7 +58,7 @@ Prizm.ajax = ({ url, urls, method, callback, cb, data, async, headers, success, 
         if (xhr.status === 200) {
 			if (success) {
 				if (xhr.getResponseHeader("content-type") != null && xhr.getResponseHeader("content-type").startsWith("application/json") && parse == true) {
-					success(JSON.parse(xhr.response));
+					success(JSON.parse(xhr.response), xhr.getResponseHeader("content-type"));
 				} else {
 					if (xhr.getResponseHeader("content-type")) {
 						success(xhr.response, xhr.getResponseHeader("content-type"));

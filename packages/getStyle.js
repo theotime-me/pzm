@@ -1,6 +1,6 @@
 /* PREVENT */if (typeof Prizm === "undefined") alert(`====== Prizm's core is missing ======\nYou have to install Prizm to continue\n>>>>>> https://bit.ly/prizm-js <<<<<<`);
 
-Prizm.getStyle = function(url) {
+Prizm.getStyle = function(url, cb) {
     Prizm.ajax({
         url: url,
         async: true,
@@ -9,9 +9,11 @@ Prizm.getStyle = function(url) {
                 style.type = "text/css";
                 style.innerHTML = obj;
                 Prizm("head").append(style);
-        },
-        error() {
 
+            if (cb) cb(200);
+        },
+        error(status) {
+            if (cb) cb(status);
         }
     });
 };

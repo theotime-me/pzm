@@ -8,11 +8,12 @@ Prizm.getScript = (url, cb) => {
             } else if (type.startsWith("text/css")) {
                 $("head").append("<style prizm>"+res+"</style>");
             }
-            cb();
+
+            if (cb) cb(200);
         },
 
         error(status) {
-            cb(status);
+            if (cb) cb(status);
         }
     });
 };
