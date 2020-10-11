@@ -10,7 +10,80 @@
 
 	"ajax": {
 		"desc": "Access any file(s) over the Internet, using any browser.",
-		"examples": ["ajax({url: string, async: boolean, success: function, error: function, progress: function, parse: boolean})"],
+		"examples": ["ajax({url, urls, method, async, success, error, progress, parse})"],
+		"args": {
+			"url": {
+				"type": "string",
+				"desc": "The url you want to fetch.",
+				"required": true
+			},
+
+			"urls": {
+				"type": "array",
+				"desc": "Fetch multiples urls with the same settings.",
+				"note": "Incompatible with «url» parameter («urls» has priority)"
+			},
+
+			"async": {
+				"type": "boolean",
+				"desc": "Sets the query to \"asynchronous\" (true) and \"synchronous\" (false)",
+				"default": true
+			},
+
+			"method": {
+				"type": "string",
+				"desc": "Sets the method of the request",
+				"values": ["GET", "POST", "PUT", "PATCH", "DELETE"],
+				"default": "GET"
+			},
+
+			"success": {
+				"type": "function",
+				"desc": "This function is executed only when the request succeed. (200)",
+				"args": {
+					"result": {
+						"type": "string|obj",
+						"desc": "The full content of the requested file."
+					},
+
+					"type": {
+						"type": "string",
+						"desc": "HTTP content-type",
+						"ex": "text/css"
+					}
+				}
+			},
+
+			"error": {
+				"type": "function",
+				"desc": "This function is executed only when the request failed.",
+				"args": {
+					"status": {
+						"type": "number",
+						"desc": "The request's HTTP status code",
+						"ex": 404
+					}
+				}
+			},
+
+			"progress": {
+				"type": "function",
+				"desc": "The url you want to fetch.",
+				"args": {
+					"percent": {
+						"type": "number",
+						"desc": "The evolution of the HTTP request, in a percentage format.",
+						"ex": 75
+					}
+				}
+			},
+
+			"parse": {
+				"type": "boolean",
+				"desc": "Parse or not parseable files (like json)",
+				"default": true
+			}
+		},
 		"keywords": ["xhr", "fetch", "get", "post"],
 		"size": 1.02,
 		"docs": true,
@@ -19,7 +92,15 @@
 	
 	"hoverview": {
 		"desc": "A better user experience with links.",
-		"examples": ["hoverview(selector: element)"],
+		"examples": ["hoverview(selector)"],
+		"args": {
+			"selector": {
+				"type": "element",
+				"desc": "The Hoverview will appear around these elements when they will be hovered.",
+				"ex"  : "#article a",
+				"default": "$(\"a\")"
+			}
+		},
 		"dependencies": ["prettify", "cutty", "ajax", "browser"],
 		"keywords": ["link", "links", "hover", "overview"],
 		"size": 1.02,
@@ -37,7 +118,15 @@
 	
 	"prettify": {
 		"desc": "Clean and beautify any string. As simple as that !",
-		"examples": ["prettify(string: string)"],
+		"examples": ["prettify(string)"],
+		"args": {
+			"string": {
+				"type": "string",
+				"desc": "The string that will be prettified",
+				"ex": "#article a",
+				"required": true
+			}
+		},
 		"keywords": ["pretty", "beauty", "clean", "string"],
 		"size": 1.02,
 		"type": "basics"
@@ -45,7 +134,32 @@
 	
 	"cutty": {
 		"desc": "Cut any string sharper or prettier as possible !",
-		"examples": ["cutty(string: string, length: number, pretty: boolean, dots: boolean)"],
+		"examples": ["cutty(string, length, pretty, dots)"],
+		"args": {
+			"string": {
+				"type": "string",
+				"desc": "The string that'll be cut.",
+				"required": true
+			},
+
+			"length": {
+				"type": "number",
+				"desc": "The future length of the string",
+				"required": true
+			},
+
+			"pretty": {
+				"type": "boolean",
+				"desc": "Set whether it's pretty or not.",
+				"default": true
+			},
+
+			"dots": {
+				"type": "boolean",
+				"desc": "Configure the addition of suspension points at the end of the cut string.",
+				"default": true
+			}
+		},
 		"keywords": ["cut"],
 		"size": 1.02,
 		"type": "basics"
@@ -53,7 +167,14 @@
 
 	"date": {
 		"desc": "A smart way to manipulate time values.",
-		"examples": ["date(parameter: string|number|Date)"],
+		"examples": ["date(parameter)"],
+		"args": {
+			"parameter": {
+				"type": "string|number|Date",
+				"desc": "A date from which to start to perform operations (or not) with.",
+				"ex": "yesterday"
+			}
+		},
 		"keywords": ["month", "day", "year", "hour", "minute", "second"],
 		"size": 0.921,
 		"type": "basics"
@@ -69,7 +190,36 @@
 
 	"cookies": {
 		"desc": "Allow to set and get cookies quickly and easily in Javascript !",
-		"examples": ["getCookie(name: string)", "setCookie(name: string, value:string|number, days:number)"],
+		"examples": ["getCookie(name)", "setCookie(name, value, days)"],
+		"args": [
+			{
+				"name": {
+					"type": "string",
+					"desc": "Compare the os provided as argument with the actual os.",
+					"ex": "foo"
+				}
+			},
+
+			{
+				"name": {
+					"type": "string",
+					"desc": "What will be the name of this all new cookie ?",
+					"ex": "foo"
+				},
+
+				"value": {
+					"type": "string|number",
+					"desc": "The value of the new cookie.",
+					"ex": "bar"
+				},
+
+				"days": {
+					"type": "number",
+					"desc": "How many days will this cookie stay ?",
+					"ex": 31
+				}
+			}
+		],
 		"keywords": ["cookie", "set", "get", "save", "navigator"],
 		"size": 0.744,
 		"docs": true,
@@ -78,7 +228,14 @@
 
 	"os": {
 		"desc": "Get the OS of any user.",
-		"examples": ["os(name: string)"],
+		"examples": ["os(name)"],
+		"args": {
+			"name": {
+				"type": "string",
+				"desc": "Compare the os provided as argument with the actual os.",
+				"ex": "macOS"
+			}
+		},
 		"keywords": ["system", "computer", "operating"],
 		"size": 0.406,
 		"type": "client"
@@ -86,7 +243,14 @@
 
 	"browser": {
 		"desc": "Detects and compares the user's web browser.",
-		"examples": ["browser(name: string)"],
+		"examples": ["browser(name)"],
+		"args": {
+			"name": {
+				"type": "string",
+				"desc": "Compare the browser name provided as argument with the actual browser.",
+				"ex": "Firefox"
+			}
+		},
 		"keywords": ["navigator", "detect"],
 		"size": 0.688,
 		"docs": true,
@@ -95,7 +259,15 @@
 
 	"history": {
 		"desc": "Browse into the browser's history.",
-		"examples": ["history(go: string|number)"],
+		"examples": ["history(go)"],
+		"args": {
+			"go": {
+				"type": "string|number",
+				"desc": "Provide a keyword or a number (like -2) to move into the browser's history.",
+				"values": ["forward", "back", "next", "previous", "after", "before"],
+				"required": true
+			}
+		},
 		"keywords": ["back", "prev", "next", "previous", "browse"],
 		"size": 0.468,
 		"type": "client"
@@ -111,7 +283,14 @@
 
 	"lang": {
 		"desc": "Detects and compares the user language.",
-		"examples": ["lang(lang: string)"],
+		"examples": ["lang(lang)"],
+		"args": {
+			"lang": {
+				"type": "string",
+				"desc": "A lang to compare with the actual language of the browser.",
+				"ex": "fr-fr"
+			}
+		},
 		"keywords": ["language", "translate", "speak", "speaking"],
 		"size": 0.233,
 		"type": "client"
@@ -119,7 +298,32 @@
 
 	"popup": {
 		"desc": "Shows a popup page on the browser.",
-		"examples": ["popup(url: string, title: string, height: number, width: number)"],
+		"examples": ["popup(url, title, height, width)"],
+		"args": {
+			"url": {
+				"type": "string",
+				"desc": "The url that will be opened in the popup window.",
+				"required": true
+			},
+
+			"title": {
+				"type": "number",
+				"desc": "The title of the window",
+				"required": true
+			},
+
+			"height": {
+				"type": "string",
+				"desc": "The height of the popup window in pixels.",
+				"required": true
+			},
+
+			"width": {
+				"type": "string",
+				"desc": "The width of the popup window in pixels.",
+				"required": true
+			}
+		},
 		"keywords": ["url", "show", "window"],
 		"size": 0.363,
 		"type": "client"
@@ -136,7 +340,16 @@
 
 	"screen": {
 		"desc": "Gets info about the screen width and height.",
-		"examples": ["screen(value: \"height\" OR \"width\")"],
+		"examples": ["screen(value)"],
+		"args": {
+			"value": {
+				"type": "string",
+				"desc": "Select which data you want to know about.",
+				"values": ["width", "height"],
+				"required": false,
+				"default": "«width»*«height»"
+			}
+		},
 		"keywords": ["width", "height", "page"],
 		"size": 0.245,
 		"type": "client"
@@ -144,7 +357,13 @@
 
 	"title": {
 		"desc": "Gets or set the current title of the page.",
-		"examples": ["title(newTitle: string)"],
+		"examples": ["title(newTitle)"],
+		"args": {
+			"newTitle": {
+				"type": "string",
+				"desc": "Set the new title of the page"
+			}
+		},
 		"keywords": ["tab"],
 		"size": 0.249,
 		"type": "client"
@@ -152,7 +371,13 @@
 
 	"get": {
 		"desc": "Gets url parameters after the \"?\".",
-		"examples": ["get(param: string)"],
+		"examples": ["get(param)"],
+		"args": {
+			"param": {
+				"type": "string",
+				"desc": "Get the url query having this name."
+			}
+		},
 		"keywords": ["get", "param", "url"],
 		"size": 0.340,
 		"type": "basics"
@@ -160,7 +385,13 @@
 
 	"url": {
 		"desc": "Sets or gets the current url to a new destination.",
-		"examples": ["url(target: string)"],
+		"examples": ["url(target)"],
+		"args": {
+			"target": {
+				"type": "string",
+				"desc": "New url to redirect to."
+			}
+		},
 		"keywords": ["set", "target", "link"],
 		"size": 0.261,
 		"type": "basics"
@@ -168,7 +399,19 @@
 
 	"getStyle": {
 		"desc": "Import a css file using Javascript. Stylish !",
-		"examples": ["getStyle(url: string, cb: function)"],
+		"examples": ["getStyle(url, cb)"],
+		"args": {
+			"url": {
+				"type": "string",
+				"desc": "The css stylesheet's url you want to execute.",
+				"required": true
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "Executed when the request succeed and when the css was executed."
+			}
+		},
 		"dependencies": ["ajax"],
 		"keywords": ["import", "download", "style", "css", "fetch", "get"],
 		"size": 1.02,
@@ -177,7 +420,26 @@
 
 	"getScript": {
 		"desc": "Import a javascript file using Javascript ! Script-ception.",
-		"examples": ["getScript(url: string, cb: function)"],
+		"examples": ["getScript(url, cb)"],
+		"args": {
+			"url": {
+				"type": "string",
+				"desc": "The script's url you want to download and run.",
+				"required": true
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "Ran when the script has been executed",
+				"args": {
+					"status": {
+						"type": "number",
+						"desc": "The request's HTTP status code",
+						"ex": 404
+					}
+				}
+			}
+		},
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download", "fetch", "include", "js", "javascript"],
 		"size": 0.424,
@@ -186,7 +448,25 @@
 
 	"getJSON": {
 		"desc": "Get a JSON file from any url and return it.",
-		"examples": ["getJSON(url: string, cb: function)"],
+		"examples": ["getJSON(url, cb)"],
+		"args": {
+			"url": {
+				"type": "string",
+				"desc": "The JSON's url you want to fetch.",
+				"required": true
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "Returns the JSON file parsed into javascript object.",
+				"args": {
+					"status": {
+						"type": "obj",
+						"desc": "The javascript object contained in the file."
+					}
+				}
+			}
+		},
 		"dependencies": ["ajax"],
 		"keywords": ["get", "json", "data", "api", "fetch"],
 		"size": 0.487,
@@ -195,7 +475,25 @@
 
 	"id": {
 		"desc": "Creates a random and unique identifier",
-		"examples": ["id(params: object, cb: function)"],
+		"examples": ["id(params, cb)"],
+		"args": {
+			"params": {
+				"type": "string",
+				"desc": "Configure the way the «id» is generated."
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "Returns the id as function's argument.",
+				"args": {
+					"id": {
+						"type": "string",
+						"desc": "The identifier requested.",
+						"ex": "WKydF_3gxfw"
+					}
+				}
+			}
+		},
 		"keywords": ["identifier", "get", "random", "unique"],
 		"size": 0,
 		"type": "basics"
