@@ -123,7 +123,7 @@
 			"string": {
 				"type": "string",
 				"desc": "The string that will be prettified",
-				"ex": "#article a",
+				"ex": "The quick brown fox jumps over the lazy dog.",
 				"required": true
 			}
 		},
