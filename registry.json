@@ -15,7 +15,8 @@
 			"url": {
 				"type": "string",
 				"desc": "The url you want to fetch.",
-				"required": true
+				"required": true,
+				"ex": "https://randomuser.me/api/"
 			},
 
 			"urls": {
@@ -303,7 +304,8 @@
 			"url": {
 				"type": "string",
 				"desc": "The url that will be opened in the popup window.",
-				"required": true
+				"required": true,
+				"ex": "https://raw.githubusercontent.com/theotime-me/pzm/master/prizm.js"
 			},
 
 			"title": {
@@ -389,7 +391,8 @@
 		"args": {
 			"target": {
 				"type": "string",
-				"desc": "New url to redirect to."
+				"desc": "New url to redirect to.",
+				"ex": "http://prizm-website.herokuapp.com/"
 			}
 		},
 		"keywords": ["set", "target", "link"],
@@ -404,7 +407,8 @@
 			"url": {
 				"type": "string",
 				"desc": "The css stylesheet's url you want to execute.",
-				"required": true
+				"required": true,
+				"ex": "https://raw.githubusercontent.com/theotime-me/pzm/master/packages/hoverview.css"
 			},
 
 			"cb": {
@@ -425,7 +429,8 @@
 			"url": {
 				"type": "string",
 				"desc": "The script's url you want to download and run.",
-				"required": true
+				"required": true,
+				"ex": "https://raw.githubusercontent.com/theotime-me/pzm/master/packages/hoverview.js"
 			},
 
 			"cb": {
