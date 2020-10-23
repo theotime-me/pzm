@@ -504,6 +504,69 @@
 		"keywords": ["identifier", "get", "random", "unique"],
 		"size": 0,
 		"type": "basics"
+	},
+
+	"copy": {
+		"desc": "Copy anything to clipboard easily.",
+		"examples": ["copy(data, cb)"],
+		"args": {
+			"data": {
+				"type": "string|number|file",
+				"desc": "The data to copy."
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "To check the success of operation.",
+				"args": {
+					"status": {
+						"type": "boolean",
+						"desc": "Returns \"true\" when it worked, false otherwise.",
+						"ex": "true"
+					},
+
+					"err": {
+						"type": "string",
+						"desc": "If it failed, here is the problem."
+					}
+				}
+			}
+		},
+		"keywords": ["copyboard", "paste", "data", "file"],
+		"size": 0,
+		"dependencies": ["shift"],
+		"type": "client"
+	},
+
+	"shift": {
+		"desc": "Convert any file to any format.",
+		"examples": ["shift(file, ext, cb)"],
+		"args": {
+			"data": {
+				"type": "file|blob",
+				"desc": "File/Blob you want to convert."
+			},
+
+			"ext": {
+				"type": "string|number|file",
+				"desc": "Future extension of the file",
+				"ex": "png"
+			},
+
+			"cb": {
+				"type": "function",
+				"desc": "The only way to get the new file.",
+				"args": {
+					"blob": {
+						"type": "blob",
+						"desc": "The blob freshly converted."
+					}
+				}
+			}
+		},
+		"keywords": ["convert"],
+		"size": 0,
+		"type": "basics"
 	}
 },
 
