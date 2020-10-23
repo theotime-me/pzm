@@ -163,6 +163,7 @@
 		},
 		"keywords": ["cut"],
 		"size": 1.02,
+		"docs": true,
 		"type": "basics"
 	},
 
@@ -448,6 +449,7 @@
 		"dependencies": ["ajax"],
 		"keywords": ["get", "script", "eval", "download", "fetch", "include", "js", "javascript"],
 		"size": 0.424,
+		"docs": true,
 		"type": "network"
 	},
 
