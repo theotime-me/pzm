@@ -16,9 +16,7 @@ ______________________________________________
 // 00 / CORE - selector engine
 ================================== */
 
-Element.prototype.isNodeList = function() {return false;};
-Array.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
-NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
+NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList =  true;
 
 /**
  * @function Prizm
@@ -647,13 +645,19 @@ this.hide = function(data, cb) {
 	return this;
 };
 
-    this.remove = () => {
-        this.each(el => {
-            if (el[0].parentNode) {
-                el[0].parentNode.removeChild(el[0]);
-            }
-		});
-		
+    this.remove = (selector) => {
+		if (selector) { // remove the node FROM THE PRIZM's OBJECT
+			this.selector = this.filter(val => {
+				return !Prizm(val).is(selector);
+			});
+		} else { // remove the node FROM THE DOCUMENT
+			this.each(el => {
+				if (el[0].parentNode) {
+					el[0].parentNode.removeChild(el[0]);
+				}
+			});
+		}
+
 		return this;
     };
 
@@ -775,7 +779,7 @@ Prizm.toNodeList = function(arrayOfNodes){
 };
 
 Prizm.toArray = function(list){
-	if (list.isNodeList()) {
+	if (list.isNodeList) {
 		let array = [];
 
 		list.forEach(el => {
