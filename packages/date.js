@@ -65,6 +65,8 @@ Prizm.date = function(date) { // request: string, addZero: boolean
 		now = new Date(),
 		d = new Date();
 
+	if (new Date(date) != "Invalid Date") return Prizm.date(new Date(date));
+
 	// Clean the string if it's one
 	if (typeof date === "string") {
 		date = date.toLowerCase(); // put the str. in lowercase
