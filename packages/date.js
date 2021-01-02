@@ -50,7 +50,7 @@ Prizm.date_deps = {
 			case 1: return "monday"; // No need of "break" because "return" already do its job
 			case 2: return "tuesday";
 			case 3: return "wednesday";
-			case 4: return "thurday";
+			case 4: return "thursday";
 			case 5: return "friday";
 			case 6: return "saturday";
 			case 0: return "sunday";
